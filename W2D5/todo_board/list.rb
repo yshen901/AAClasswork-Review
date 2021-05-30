@@ -38,13 +38,14 @@ class List
 
   def print
     puts "-----------------------------------------------"
-    puts @label.ljust(40)
+    puts "          " + @label.ljust(20) + "          "
     puts "-----------------------------------------------"
     puts "Index | Item               | Deadline   | Done "
     puts "-----------------------------------------------"
     @items.each_with_index do |item, i|
       puts i.to_s.ljust(5) + " | " + item.title.ljust(18) + " | " + item.deadline.ljust(10) + " | " + (item.done ? "[X]  " : "[ ]  ")
-    end
+    end   
+    puts "-----------------------------------------------"
     nil
   end
 
