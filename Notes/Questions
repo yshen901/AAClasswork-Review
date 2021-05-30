@@ -1,0 +1,11 @@
+Project Notes
+-------------
+W2D5 Todo Project
+	- Use cmd, *args = gets.chomp.split(' ') to freely pull out values
+	- When printing with a one line if, use quotes ... (condition ? truthy : falsey)
+
+
+
+Questions
+---------
+How to use ruby.print if my class has a method called print?
