@@ -9,7 +9,7 @@ class Player
   end
 
   def guess
-    print "\nIt is #{@name}'s turn, please play a letter: "
+    print "It is #{@name}'s turn, please play a letter: "
     return gets.chomp
   end
 

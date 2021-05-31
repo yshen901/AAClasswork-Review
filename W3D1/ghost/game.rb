@@ -31,14 +31,23 @@ class Game
   end
   
   def play_move
+    puts "\nCurrent fragment: #{@fragment}"
     player = @players[@current]
     guess = player.guess
 
-    if guess.length == 1 && @letters.include?(guess)
+    if valid_move?(guess)
       update_frag(guess)
     else
       player.alert_invalid_guess(guess)
     end
+  end
+
+  def valid_move?(guess)
+    return false unless guess.length == 1 && @letters.include?(guess)
+
+    new_frag = @fragment + guess
+    @dictionary.each { |word| return true if word.start_with?(new_frag) }
+    false
   end
 
   def update_frag(guess)
