@@ -9,7 +9,12 @@ class Player
   end
 
   def guess
-    print "It is #{@name}'s turn, please play a letter: "
+    print "It is #{@name}'s turn, please play a letter or enter 'challenge' to challenge the previous player: "
+    return gets.chomp
+  end
+
+  def challenge
+    print "#{@name} has been challenged! Please enter a valid word: "
     return gets.chomp
   end
 

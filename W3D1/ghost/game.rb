@@ -35,10 +35,22 @@ class Game
     player = @players[@current]
     guess = player.guess
 
-    if valid_move?(guess)
-      update_frag(guess)
+    if guess == "challenge"
+      word = @players[@current - 1].challenge
+      if word.start_with?(@fragment) && @dictionary.include?(word)
+        puts "Challenge unsuccessful!"
+        @players[@current].add_letter
+      else
+        puts "Challenge successful!"
+        @players[@current - 1].remove_letter
+      end
+      print_stats
     else
-      player.alert_invalid_guess(guess)
+      if valid_move?(guess)
+        update_frag(guess)
+      else
+        player.alert_invalid_guess(guess)
+      end
     end
   end
 
@@ -74,6 +86,10 @@ class Game
     print "\n-------------------------------\n"
     print "".ljust(10) + "Round Over!" + "".ljust(10) + "\n"
     print "-------------------------------\n"
+    print_stats
+  end
+
+  def print_stats
     @players.each do |player|
       print "#{player.name.ljust(10)}: #{"GHOST"[0...(5 - player.lives)]}\n"
     end
