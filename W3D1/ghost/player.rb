@@ -8,14 +8,14 @@ class Player
     @lives = 5
   end
 
-  def guess
+  def guess(frag)
     print "It is #{@name}'s turn, please play a letter or enter 'challenge' to challenge the previous player: "
-    return gets.chomp
+    return gets.chomp.downcase
   end
 
-  def challenge
+  def challenge(frag)
     print "#{@name} has been challenged! Please enter a valid word: "
-    return gets.chomp
+    return gets.chomp.downcase
   end
 
   def alert_invalid_guess(guess)

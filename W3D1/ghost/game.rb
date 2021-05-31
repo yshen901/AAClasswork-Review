@@ -1,16 +1,19 @@
 require "set"
 require_relative "./player.rb"
+require_relative "./ai_player.rb"
 
 class Game
-  def initialize(players)
-    @players = players.map { |name| Player.new(name) }
-    @players_left = players.length
-    @fragment = ""
-    @current = 0
-
+  def initialize(players, ai)
     words = File.open("./dictionary.txt")
     @dictionary = Set.new(words.readlines.map(&:chomp))
     @letters = Set.new([*('a'..'z'), *('A'..'Z')])
+
+    @players = players.map { |name| Player.new(name) }
+    @players << AiPlayer.new(@dictionary) if ai
+    
+    @players_left = @players.length
+    @fragment = "a"
+    @current = 0
   end
 
   def run
@@ -33,23 +36,32 @@ class Game
   def play_move
     puts "\nCurrent fragment: #{@fragment}"
     player = @players[@current]
-    guess = player.guess
+    guess = player.guess(@fragment)
 
     if guess == "challenge"
-      word = @players[@current - 1].challenge
+      word = @players[@current - 1].challenge(@fragment)
       if word.start_with?(@fragment) && @dictionary.include?(word)
         puts "Challenge unsuccessful!"
-        @players[@current].add_letter
+
+        possibilities = @dictionary.to_a.count { |word| word.start_with?(@fragment) }
+        if possibilities == 1
+          reset_round
+        else
+          @players[@current].add_letter
+          print_stats
+        end
       else
         puts "Challenge successful!"
-        @players[@current - 1].remove_letter
+        @players[@current - 1].add_letter
+        print_stats
       end
-      print_stats
     else
       if valid_move?(guess)
         update_frag(guess)
       else
         player.alert_invalid_guess(guess)
+        player.add_letter
+        print_stats
       end
     end
   end
@@ -102,6 +114,6 @@ class Game
       end
       player.reset
     end
-    @players_left = players.length
+    @players_left = @players.length
   end
 end
