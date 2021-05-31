@@ -3,7 +3,20 @@ Project Notes
 W2D5 Todo Project
 	- Use cmd, *args = gets.chomp.split(' ') to freely pull out values
 	- When printing with a one line if, use quotes ... (condition ? truthy : falsey)
-
+	- String.ljust(20) to add padding until it is 20 chars long
+W3D1 Enumerables
+	- &blk looks for situations where you do method_call {stuff}
+	- prc looks for situations where you do method_call(prc), where prc = Proc.new(...)
+	- & turns things into procs if they aren't already
+	- yield(...) is the same as prc.call(...)
+	
+W3D1 Ghost
+	- words = File.open("./dictionary.txt")
+	- Set.new([...])
+	- words.readlines.map(&:chomp)
+		... :chomp creates a simple proc, & turns it into a proc
+		... readlines reads each line as items in an array
+	- Use print for getting user input, as it leaves out the string quotes
 
 
 Questions
