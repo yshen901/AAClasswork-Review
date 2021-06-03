@@ -59,4 +59,9 @@ class Board
     x, y = pos
     @board[x][y] = val
   end
+
+  def in_bound(pos)
+    x, y = pos
+    x >= 0 && x < @size && y >=0 && y < @size
+  end
 end
