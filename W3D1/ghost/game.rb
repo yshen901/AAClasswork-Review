@@ -36,7 +36,7 @@ class Game
   def play_move
     puts "\nCurrent fragment: #{@fragment}"
     player = @players[@current]
-    guess = player.guess(@fragment)
+    guess = player.guess(@fragment, @players.length)
 
     if guess == "challenge"
       word = @players[@current - 1].challenge(@fragment)
