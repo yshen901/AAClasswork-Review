@@ -1,4 +1,4 @@
-require_relative "./Code.rb"
+require_relative "./code.rb"
 
 class Board
   def initialize(size)
