@@ -9,6 +9,7 @@ W3D1 Enumerables
 	- prc looks for situations where you do method_call(prc), where prc = Proc.new(...)
 	- & turns things into procs if they aren't already
 	- yield(...) is the same as prc.call(...)
+	- if __FILE__ == $PROGRAM_NAME  checks to see if we're using pry or not, and runs if we are running the file
 	
 W3D1 Ghost
 	- words = File.open("./dictionary.txt")
@@ -17,8 +18,16 @@ W3D1 Ghost
 		... :chomp creates a simple proc, & turns it into a proc
 		... readlines reads each line as items in an array
 	- Use print for getting user input, as it leaves out the string quotes
+	
+W3D2 Sudoku
+	- Returning a string that has been colorized doesn't work, you must return a ColorizedString
 
 
 Questions
 ---------
 How to use ruby.print if my class has a method called print?
+
+
+TBD
+	W3D1: eight_queens, maze_solver, project_euler
+	W3D2: sudoku_solver
