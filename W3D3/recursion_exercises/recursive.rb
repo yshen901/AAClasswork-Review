@@ -87,10 +87,26 @@ end
 
 
 
-def bsearch_iter(array, target)
-end
+def bsearch_rec(arr, target)
+  return nil if arr.empty?
+  return nil if arr.length == 1 && arr[0] != target
+  return 0 if arr[0] == target
 
-def bsearch_rec(array, target)
+  mid = arr.length / 2
+  if arr[mid] == target
+    return mid
+  elsif arr[mid] > target
+    return bsearch_iter(arr[0...mid], target)
+  else
+    call = bsearch_iter(arr[mid..-1], target) 
+    if call
+      return mid + call
+    else
+      return nil
+    end
+  end
+
+  nil
 end
 
 
