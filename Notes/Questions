@@ -23,6 +23,13 @@ W3D2 Sudoku
 	- Returning a string that has been colorized doesn't work, you must return a ColorizedString
 
 
+W3D3 Recursion
+	- idx_1, idx_2 = 0 only sets idx_1...idx_2 remains nil
+	- IMPORTANT: maybe avoid using pop when dealing with input arrays, as it is in place.
+	             and will modify the original array passed into the argument.
+	- An empty array won't trigger an each...dumbass
+
+
 Questions
 ---------
 How to use ruby.print if my class has a method called print?

@@ -1,3 +1,5 @@
+require 'byebug'
+
 def range_rec(first,last)
   return [] if last <= first
   return [first] if last - first == 1
@@ -111,40 +113,108 @@ end
 
 
 
-def merge_sort_iter(arr)
-end
-
 def merge_sort_rec(arr)
+  return [] if arr.length == 0
+  return arr if arr.length == 1
+
+  mid = arr.length / 2
+  left = merge_sort_rec(arr[0...mid])
+  right = merge_sort_rec(arr[mid..-1])
+
+  merge(left, right)
 end
 
+def merge(arr_1, arr_2)
+  return [] if arr_1.empty? && arr_2.empty?
+  return arr_1 if arr_2.empty?
+  return arr_2 if arr_1.empty?
 
+  merged_arr = Array.new(arr_1.length + arr_2.length)
 
-def subsets_iter(arr)
+  idx_1 = 0
+  idx_2 = 0
+  while idx_1 < arr_1.length || idx_2 < arr_2.length
+    spot = idx_1 + idx_2
+    val_1, val_2 = arr_1[idx_1], arr_2[idx_2]
+
+    if !val_1
+      merged_arr[spot] = val_2
+      idx_2 += 1
+    elsif !val_2
+      merged_arr[spot] = val_1
+      idx_1 += 1   
+    elsif val_1 > val_2  #if val_1 is out of bounds or is larger
+      merged_arr[spot] = val_2
+      idx_2 += 1
+    else
+      merged_arr[spot] = val_1
+      idx_1 += 1
+    end
+  end
+
+  merged_arr
 end
+
 
 def subsets_rec(arr)
+  return [] if arr.empty?
+  
+  # debugger 
+
+  last_val = arr[-1]
+  lesser_sets = subsets_rec(arr[0...-1])
+
+  greater_sets = [[last_val]]
+  lesser_sets.each do |set|
+    new_set = set.clone
+    new_set << last_val
+    greater_sets << new_set
+  end
+
+  lesser_sets.concat(greater_sets)
 end
 
 
-
-def permutations_iter(arr)
-end
 
 def permutations_rec(arr)
+  return [] if arr.empty?
+  return arr if arr.length == 1
+
+  permutations = []
+  arr.each_with_index do |ele, i|
+    remaining_nums = arr[0...i] + arr[i+1..-1]
+    partial_permutations = permutations_rec(remaining_nums)
+    partial_permutations.each do |partial|
+      permutations << [ele, *partial]
+    end
+  end
+
+  permutations
 end
 
 
 
-def greedy_make_change_iter(amt, coins)
+def greedy_make_change(amt, coins)
+  return [] if amt == 0
+
+  # debugger
+
+  largest = -1
+  coins.each { |coin| largest = coin if coin > largest && amt >= coin }
+
+  [largest].concat(greedy_make_change(amt - largest, coins))
 end
 
-def greedy_make_change_rec(amt, coins)
-end
+def make_better_change(amt, coins)
+  return [] if amt == 0
 
+  better_change = nil
+  coins.each do |coin|  
+    next if amt < coin
+    refactored_coins = coins.select { |option| option <= coin }
+    change = [coin].concat(make_better_change(amt - coin, refactored_coins))
+    better_change = change if !better_change || change.length < better_change.length
+  end
 
-
-def make_better_change_iter(amt,coins)
-end
-
-def make_better_change_rec(amt,coins)
+  better_change
 end
