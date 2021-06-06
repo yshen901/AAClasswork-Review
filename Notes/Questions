@@ -28,6 +28,7 @@ W3D3 Recursion
 	- IMPORTANT: maybe avoid using pop when dealing with input arrays, as it is in place.
 	             and will modify the original array passed into the argument.
 	- An empty array won't trigger an each...dumbass
+	- Often you don't need a array.length == 1 case, just keep iterating until array is empty
 	
 W3D3 WordChainer
 	- Use a hash to build a relations list?

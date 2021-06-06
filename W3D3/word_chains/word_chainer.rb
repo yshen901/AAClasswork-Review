@@ -22,8 +22,7 @@ class WordChainer
   end
 
   def run(source, target)
-    relationships = Hash.new { |h,k| h[k] = [] }
-    all_seen_words = Set.new([source])
+    all_seen_words = Hash.new
 
     current_words = [source]
     until current_words.empty?
@@ -31,18 +30,17 @@ class WordChainer
       new_adjacent_words = adjacent_words(new_word)
 
       new_adjacent_words.each do |word|
-        unless all_seen_words.include?(word)
-          all_seen_words << word
-          relationships[word] << new_word
+        unless all_seen_words[word]
+          all_seen_words[word] = new_word
           current_words << word
         end
       end
 
-      break if all_seen_words.include?(target)
+      break if all_seen_words[target]
     end
 
-    raise "No path found" unless all_seen_words.include?(target)
-    build_path(source, target, relationships)
+    raise "No path found" unless all_seen_words[target]
+    build_path(source, target, all_seen_words)
   end
 
   def build_path(source, target, relationships)
