@@ -2,8 +2,6 @@ require 'byebug'
 
 def range_rec(first,last)
   return [] if last <= first
-  return [first] if last - first == 1
-
   [first].concat(range_rec(first+1, last))
 end
 
@@ -17,9 +15,9 @@ end
 
 def sum_rec(arr)
   return 0 if arr.empty?
-  return arr[0] if arr.length == 1
+  # return arr[0] if arr.length == 1
 
-  arr.pop + sum_rec(arr)
+  arr[0] + sum_rec(arr.drop(1))
 end
 
 
@@ -98,9 +96,9 @@ def bsearch_rec(arr, target)
   if arr[mid] == target
     return mid
   elsif arr[mid] > target
-    return bsearch_iter(arr[0...mid], target)
+    return bsearch_rec(arr[0...mid], target)
   else
-    call = bsearch_iter(arr[mid..-1], target) 
+    call = bsearch_rec(arr[mid..-1], target) 
     if call
       return mid + call
     else

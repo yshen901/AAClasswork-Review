@@ -1,6 +1,6 @@
 def sum_to(n)
   return nil if n < 1
-  return n if n == 1
+  return 1 if n == 1
   n + sum_to(n-1)
 end
 p sum_to(5)  # => returns 15
@@ -13,7 +13,7 @@ def add_numbers(arr)
   return nil if arr.empty?
   return arr[0] if arr.length == 1
 
-  return arr.pop + add_numbers(arr)
+  return arr[0] + add_numbers(arr.drop(1))
 end
 p add_numbers([1,2,3,4]) # => returns 10
 p add_numbers([3]) # => returns 3
@@ -37,8 +37,8 @@ def ice_cream_shop(flavors, favorite)
   return false if flavors.empty?
   return false if favorite.length == 0
 
-  return true if flavors.pop == favorite
-  ice_cream_shop(flavors, favorite)
+  return true if flavors[0] == favorite
+  ice_cream_shop(flavors.drop(1), favorite)
 end
 p ice_cream_shop(['vanilla', 'strawberry'], 'blue moon')  # => returns false
 p ice_cream_shop(['pistachio', 'green tea', 'chocolate', 'mint chip'], 'green tea')  # => returns true
@@ -49,7 +49,7 @@ puts
 
 def reverse(str)
   return str if str.length <= 1
-  reverse(str[1..-1]) + str[0]
+  reverse(str.drop) + str[0]
 end
 p reverse("house") # => "esuoh"
 p reverse("dog") # => "god"

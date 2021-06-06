@@ -46,7 +46,7 @@ class WordChainer
   def build_path(source, target, relationships)
     path = [target]
     until path.last == source
-      path << relationships[path.last].first
+      path << relationships[path.last]
     end
 
     path.reverse
