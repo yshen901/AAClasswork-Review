@@ -20,7 +20,7 @@ class Board
   
   def initialize(board)
     @board = board
-    @valid_num = Set.new([*('1'..'9')])
+    @valid_num = Set.new([*('0'..'9')])
     @valid_pos = Set.new([*('0'..'8')])
   end
 
@@ -96,16 +96,18 @@ class Board
   def get_input(try_agian=false)
     render
     print "Invalid input! " if try_agian
-    print "Please enter a position and a value (e.g. 2,3,2 for position 2,3 and value 2)\n"
-    input = gets.chomp.split(",")
+    print "Please enter a position (e.g. 3,4)\n"
+    x,y = gets.chomp.split(",")
+    print "Please enter a value (1-9 or 0 to clear)\n"
+    val = gets.chomp
 
-    x, y, val = input
+    debugger
     return false unless @valid_pos.include?(x) && @valid_pos.include?(y)
     return false unless @valid_num.include?(val)
 
     return false if @board[x.to_i][y.to_i].given
 
-    input.map(&:to_i)
+    [x.to_i, y.to_i, val]
   end
 
   def [](pos)

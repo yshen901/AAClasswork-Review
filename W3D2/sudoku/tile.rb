@@ -15,6 +15,7 @@ class Tile
   end
 
   def to_s
+    return " " if @val == "0"
     @given ? ColorizedString[@val].colorize(:light_blue) : ColorizedString[@val].colorize(:white)
   end
 
