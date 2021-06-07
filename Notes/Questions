@@ -21,6 +21,7 @@ W3D1 Ghost
 	
 W3D2 Sudoku
 	- Returning a string that has been colorized doesn't work, you must return a ColorizedString
+	- Use transpose to flip rows into columns
 
 
 W3D3 Recursion
@@ -32,6 +33,10 @@ W3D3 Recursion
 	
 W3D3 WordChainer
 	- Use a hash to build a relations list?
+	
+W3D4 susduku
+	- require_relative doesn't need to specify file name!
+	- resucue => error gives u access to the error
 
 
 Questions
@@ -42,3 +47,4 @@ How to use ruby.print if my class has a method called print?
 TBD
 	W3D1: eight_queens, maze_solver, project_euler
 	W3D2: sudoku_solver
+	W3D4: minesweeper
