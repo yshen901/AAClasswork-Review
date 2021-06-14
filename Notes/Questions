@@ -34,9 +34,12 @@ W3D3 Recursion
 W3D3 WordChainer
 	- Use a hash to build a relations list?
 	
-W3D4 susduku
+W3D4 sudoku
 	- require_relative doesn't need to specify file name!
 	- resucue => error gives u access to the error
+	
+W4D2 company
+	- Use is_a?(class_type) to determine behavior
 
 
 Questions
