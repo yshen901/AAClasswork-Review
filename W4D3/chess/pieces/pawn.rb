@@ -1,4 +1,5 @@
 require_relative "./piece"
+require "byebug"
 
 class Pawn < Piece
   def initialize(color, board, pos)
@@ -28,21 +29,26 @@ class Pawn < Piece
     dx = forward_dir
     poss_moves = []
 
-    poss_moves << [x + dx, y] if @board.valid_pos?([x + dx, y])
+    poss_move = [x + dx, y]
+
+    return poss_moves unless @board.valid_pos?(poss_move) && @board[poss_move].symbol == :- #can't move forward anymore
+    poss_moves << poss_move
 
     if at_start_row?
-      poss_moves << [x + dx*2, y] if @board.valid_pos?([x + dx*2, y])
+      poss_move = [x + dx*2, y]
+      poss_moves << poss_move if @board.valid_pos?(poss_move) && @board[poss_move].symbol == :-
     end
 
     poss_moves
   end
 
   def side_attacks
+    x, y = @pos
     moves = [
-      [forward_dir, -1],
-      [forward_dir,  1]
+      [x + forward_dir, y - 1],
+      [x + forward_dir, y + 1]
     ]
-
+    
     moves.select do |move|
       @board.valid_pos?(move) && @board[move].color == @opponent_color
     end
