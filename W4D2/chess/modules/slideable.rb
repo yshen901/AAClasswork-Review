@@ -34,19 +34,22 @@ module Slideable
   def mode_dirs #overwritten by subclass
   end
 
-  def grow_unblocked_moves_in_dir(dx, dy)
-    x, y = @pos
+  def grow_unblocked_moves_in_dir(dir)
     moves = []
+    new_pos = @pos.dup
+    dx, dy = dir
 
     while true
-      x += dx
-      y += dy
+      new_pos[0] += dx
+      new_pos[1] += dy
 
-      break unless x.between?(0, 7) && y.between(0, 7)
-      break if @board[[x,y]].color == @color
+      break unless @board.valid_pos?(new_pos)
+      break if @board[new_pos].color == @color
       
-      moves << [x, y]
-      break if @board[[x,y]].color == @opponent_color
+      moves << new_pos.dup
+      break if @board[new_pos].color == @opponent_color
     end
+
+    moves
   end
 end
