@@ -76,8 +76,10 @@ class Cursor
   end
 
   def handle_key(key)
+    puts key
   end
 
   def update_pos(diff)
+    @cursor_pos = diff if @board.valid_pos?(diff)
   end
 end
