@@ -1,10 +1,11 @@
 require "colorize"
 require_relative "cursor.rb"
+require_relative "board.rb"
 
 class Display
-  def initialize(board)
+  def initialize
     @board = Board.new
-    @cursor = Cursor.new([0,0], board)
+    @cursor = Cursor.new([0,0], @board)
   end
 
   def render
