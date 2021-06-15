@@ -80,7 +80,7 @@ class Board
       end
     end
 
-    symbols.each do |row|
+    chars.each do |row|
       puts row.join(" ")
     end
     puts
