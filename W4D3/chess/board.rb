@@ -68,6 +68,13 @@ class Board
     self[start_pos] = @null_piece
   end
 
+  def undo_move(original_pos, curr_pos, displaced_piece)
+    self[original_pos], self[curr_pos] = self[curr_pos], displaced_piece
+
+    self[original_pos].pos = original_pos unless self[original_pos].symbol == :-
+    self[curr_pos].pos = curr_pos unless self[curr_pos].symbol == :-
+  end
+
   def valid_move?(piece, end_pos)
     return false if piece == @null_piece
     return false unless valid_pos?(end_pos)
@@ -97,10 +104,12 @@ class Board
   def checkmate?(color)
     return false unless in_check?(color)
 
-    @rows.all? do |row|
-      row.all? do |piece|
-        piece.color != color || piece.valid_moves.length == 0 #all of the player's pieces has no valid moves
+    @rows.each do |row|
+      row.each do |piece|
+        return false if piece.color == color && piece.valid_moves.length > 0
       end
     end
+
+    true
   end
 end
