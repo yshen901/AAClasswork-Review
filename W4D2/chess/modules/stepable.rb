@@ -3,13 +3,16 @@ module Stepable
     valid_moves = []
     move_diffs.each do |move|
       x, y = pos
-      x += move[0]
-      y += move[1]
+      dx, dy = move
+      new_pos = [x + dx, y + dy]
       
-      next unless x.between?(0, 7) && y.between?(0, 7)
-      next if @board[[x,y]].color == @color
-      valid_moves << [x, y]
+      next unless @board.valid_pos?(new_pos)
+      p new_pos
+      next if @board[new_pos].color == @color
+      valid_moves << new_pos
     end
+
+    valid_moves
   end
 
   private
