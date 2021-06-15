@@ -1,22 +1,19 @@
 module Slideable
   def moves
-    horizontal_dirs + diagonal_dirs
+    all_moves = []
+    move_dirs.each do |dir|
+      new_moves = grow_unblocked_moves_in_dir(dir)
+      all_moves.concat(new_moves)
+    end
+    all_moves
   end
 
   def horizontal_dirs
-    total_moves = []
-    HORIZONTAL_DIRS.each do |dir|
-      new_moves = grow_unblocked_moves_in_dir(dir)
-      horizontal_dirs.concat(new_moves)
-    end
+    HORIZONTAL_DIRS
   end
 
   def diagonal_dirs
-    total_moves = []
-    DIAGONAL_DIRS.each do |dir|
-      new_moves = grow_unblocked_moves_in_dir(dir)
-      total_moves.concat(new_moves)
-    end
+    DIAGONAL_DIRS
   end
 
   private
