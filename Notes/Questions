@@ -40,6 +40,9 @@ W3D4 sudoku
 	
 W4D2 company
 	- Use is_a?(class_type) to determine behavior
+	
+W4D2 chess
+	- Circular require_relative is dangerous, can cause uninitialized constant error!
 
 
 Questions

@@ -1,5 +1,3 @@
-require_relative "./pieces/piece"
-
 require_relative "./pieces/bishop"
 require_relative "./pieces/queen"
 require_relative "./pieces/rook"
@@ -14,7 +12,7 @@ class Board
   attr_reader :rows
   def initialize
     @rows = Array.new(8) { Array.new(8) }
-    @null_piece = NullPiece.new
+    @null_piece = NullPiece.instance
 
     self.place_pieces
   end
@@ -22,7 +20,7 @@ class Board
   def place_pieces
     @rows.each_with_index do |row, x|
       if x.between?(2,5)
-        row.each_with_index do |spot, y| { @rows[x][y] = @null_piece }
+        row.each_with_index { |spot, y| @rows[x][y] = @null_piece }
         next
       end
 
