@@ -12,7 +12,7 @@ require "byebug"
 
 class Board
   attr_reader :rows, :null_piece
-  
+
   def initialize
     @rows = Array.new(8) { Array.new(8) }
     @null_piece = NullPiece.instance
@@ -92,5 +92,15 @@ class Board
     end
 
     opposing_pieces.any? { |opposing_piece| opposing_piece.symbol == :H && opposing_piece.moves.include?(king_pos) }
+  end
+
+  def checkmate?(color)
+    return false unless in_check?(color)
+
+    @rows.all? do |row|
+      row.all? do |piece|
+        piece.color != color || piece.valid_moves.length == 0 #all of the player's pieces has no valid moves
+      end
+    end
   end
 end
