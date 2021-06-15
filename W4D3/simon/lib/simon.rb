@@ -19,26 +19,35 @@ class Simon
 
   def take_turn
     show_sequence
-    answer = require_sequence
-    
-    if answer == @seq.join(" ")
+    require_sequence
+    sleep(0.5)
+
+    unless @game_over
       round_success_message
       @sequence_length += 1
-    else
-      @game_over = true
+      system("clear")
     end
   end
 
   def show_sequence
     add_random_color
-    puts seq.join
-    # sleep(2)
-    # system("clear")
+    @seq.each do |color|
+      puts color
+      sleep(0.5)
+      system("clear")
+      sleep(0.5)
+    end
   end
 
   def require_sequence
     puts "Please enter a sequence!"
-    gets.chomp
+    @seq.each do |color|
+      answer = gets.chomp
+      if color[0] != answer
+        @game_over = false
+        return
+      end
+    end
   end
 
   def add_random_color
