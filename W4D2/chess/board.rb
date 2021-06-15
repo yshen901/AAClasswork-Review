@@ -8,6 +8,8 @@ require_relative "./pieces/knight"
 
 require_relative "./pieces/null_piece"
 
+require "byebug"
+
 class Board
   attr_reader :rows
   def initialize
@@ -24,7 +26,7 @@ class Board
         next
       end
 
-      x <= 1 ? row_color = :w : row_color = :B
+      x <= 1 ? row_color = :w : row_color = :b
       if x == 1 || x == 6
         row.each_with_index { |spot, y| @rows[x][y] = Pawn.new(row_color, self, [x, y]) }
       else
