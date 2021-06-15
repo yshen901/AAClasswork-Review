@@ -21,7 +21,8 @@ class Board
 
   def place_pieces
     @rows.each_with_index do |row, x|
-      if x.between?(2,5)
+      # if x.between?(1,6)
+      if x.between?(2, 5)
         row.each_with_index { |spot, y| @rows[x][y] = @null_piece }
         next
       end
@@ -61,11 +62,13 @@ class Board
     raise "Invalid start!" unless self[start_pos]
     raise "Invalid move!" unless valid_move?(self[start_pos], end_pos)
 
+    self[start_pos].pos = end_pos
     self[end_pos] = self[start_pos]
     self[start_pos] = @null_piece
   end
 
   def valid_move?(piece, end_pos)
+    return false if piece == @null_piece
     return false unless valid_pos?(end_pos)
     piece.moves.include?(end_pos)
   end
