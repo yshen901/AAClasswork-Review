@@ -76,9 +76,9 @@ class Board
 
   def render
     puts
-    symbols = @rows.map do |row|
+    chars = @rows.map do |row|
       row.map do |piece|
-        piece.symbol
+        piece.to_s
       end
     end
 

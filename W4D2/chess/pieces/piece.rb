@@ -14,7 +14,7 @@ class Piece
   end
 
   def empty?
-    false if @color == :b || @color == :w
+    self.symbol == :-
   end
 
   def valid_moves
