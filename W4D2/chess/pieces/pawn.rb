@@ -5,6 +5,10 @@ class Pawn < Piece
     super
   end
 
+  def moves
+    forward_steps + side_attacks
+  end
+
   def symbol
     :P
   end
