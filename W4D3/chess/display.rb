@@ -34,9 +34,18 @@ class Display
 
   def loop
     inputs = []
+    done = 1
     while true
+      if done == 1
+        @board.move_piece([1,5], [2, 5])
+        @board.move_piece([1,6], [3, 6])
+        @board.move_piece([6,4], [5, 4])
+        @board.move_piece([7,3], [3, 7])
+        done -= 1
+      end
       self.render
 
+      
       print "White is in check!\n" if @board.in_check?(:w)
       print "Black is in check!\n" if @board.in_check?(:b)
       
@@ -45,7 +54,7 @@ class Display
       else
         puts "Move the cursor with the arrow keys, and put down the piece with space/enter: "
       end
-
+      
       input = @cursor.get_input
       if input && inputs.empty?
         inputs << input if @board[input].color

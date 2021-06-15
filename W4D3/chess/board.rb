@@ -91,7 +91,7 @@ class Board
       end
     end
 
-    opposing_pieces.any? { |opposing_piece| opposing_piece.symbol == :H && opposing_piece.moves.include?(king_pos) }
+    opposing_pieces.any? { |opposing_piece| opposing_piece.moves.include?(king_pos) }
   end
 
   def checkmate?(color)
