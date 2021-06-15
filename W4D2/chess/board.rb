@@ -62,11 +62,12 @@ class Board
     raise "Invalid move!" unless valid_move?(self[start_pos], end_pos)
 
     self[end_pos] = self[start_pos]
-    self[start_pos] = nil
+    self[start_pos] = @null_piece
   end
 
   def valid_move?(piece, end_pos)
-    valid_pos?(end_pos)
+    return false unless valid_pos?(end_pos)
+    piece.moves.include?(end_pos)
   end
 
   def valid_pos?(pos)
@@ -82,8 +83,9 @@ class Board
       end
     end
 
-    chars.each do |row|
-      puts row.join(" ")
+    puts "  " + [*(0..7)].join(" ")
+    chars.each_with_index do |row, i|
+      puts "#{i} " + row.join(" ")
     end
     puts
 
