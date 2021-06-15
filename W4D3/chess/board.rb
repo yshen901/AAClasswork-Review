@@ -11,7 +11,8 @@ require_relative "./pieces/null_piece"
 require "byebug"
 
 class Board
-  attr_reader :rows
+  attr_reader :rows, :null_piece
+  
   def initialize
     @rows = Array.new(8) { Array.new(8) }
     @null_piece = NullPiece.instance
@@ -76,5 +77,20 @@ class Board
   def valid_pos?(pos)
     x, y = pos
     x.between?(0,7) && y.between?(0,7)
+  end
+
+  def in_check?(color)
+    king_pos = nil
+    opposing_pieces = []
+    opposing_color = color == :w ? :b : :w
+
+    @rows.each do |row|
+      row.each do |piece|
+        king_pos = piece.pos if piece.color == color && piece.symbol == :K
+        opposing_pieces << piece if piece.color == opposing_color
+      end
+    end
+
+    opposing_pieces.any? { |opposing_piece| opposing_piece.symbol == :H && opposing_piece.moves.include?(king_pos) }
   end
 end
