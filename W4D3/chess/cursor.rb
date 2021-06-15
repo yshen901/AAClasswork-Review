@@ -77,7 +77,7 @@ class Cursor
 
   def handle_key(key)
     case key
-    when MOVES.has_key?(key):
+    when :left, :right, :up, :down
       dx, dy = MOVES[key]
       x, y = @cursor_pos
       update_pos([x + dx, y + dy])

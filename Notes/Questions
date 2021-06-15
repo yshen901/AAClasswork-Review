@@ -47,6 +47,10 @@ W4D2 chess
 	
 W4D3 simon
 	- COLORS = %w(red blue green yellow) ... makes an array with 4 strings
+	
+W4D3 Chess
+	- p does not work well as it outputs what the value literally is...becomes a mess with colorize
+		... use print instead
 
 
 Questions

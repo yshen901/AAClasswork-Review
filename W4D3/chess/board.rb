@@ -77,21 +77,4 @@ class Board
     x, y = pos
     x.between?(0,7) && y.between?(0,7)
   end
-
-  def render
-    puts
-    chars = @rows.map do |row|
-      row.map do |piece|
-        piece.to_s
-      end
-    end
-
-    puts "  " + [*(0..7)].join(" ")
-    chars.each_with_index do |row, i|
-      puts "#{i} " + row.join(" ")
-    end
-    puts
-
-    nil
-  end
 end
