@@ -3,6 +3,8 @@ require_relative "cursor.rb"
 require_relative "board.rb"
 
 class Display
+  attr_reader :board, :cursor
+
   def initialize
     @board = Board.new
     @cursor = Cursor.new([0,0], @board)
@@ -12,6 +14,7 @@ class Display
     background = nil
     font_color = nil
 
+    system("clear")
     puts "  " + [*(0..7)].join("  ")
     @board.rows.each_with_index do |row, x|
       print "#{x}"
@@ -30,10 +33,30 @@ class Display
   end
 
   def loop
+    inputs = []
     while true
-      system("clear")
       self.render
-      @cursor.get_input
+      
+      if inputs.empty?
+        puts "Move the cursor with the arrow keys, and select a piece to move with space/enter: " 
+      else
+        puts "Move the cursor with the arrow keys, and put down the piece with space/enter: "
+      end
+
+      input = @cursor.get_input
+      inputs << input if input
+      if inputs.length == 2
+        begin
+          @board.move_piece(inputs[0], inputs[1])
+          inputs = []
+        rescue => e
+          puts e
+          sleep(2)
+        end
+      end
     end
   end
 end
+
+display = Display.new
+display.loop
