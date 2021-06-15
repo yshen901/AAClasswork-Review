@@ -3,6 +3,7 @@ require_relative "../board"
 class Piece
   def initialize(color, board, pos)
     @color, @board, @pos = color, board, pos
+    @opponent_color = @color == :b ? :w : :b
   end
 
   def to_s
