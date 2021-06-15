@@ -24,11 +24,17 @@ class Pawn < Piece
   end
 
   def forward_steps
+    x, y = pos
+    dx = forward_dir
+    poss_moves = []
+
+    poss_moves << [x + dx, y] if @board.valid_pos?([x + dx, y])
+
     if at_start_row?
-      return [forward_dir, forward_dir * 2]
-    else
-      return [forward_dir]
+      poss_moves << [x + dx*2, y] if @board.valid_pos?([x + dx*2, y])
     end
+
+    poss_moves
   end
 
   def side_attacks
@@ -38,7 +44,7 @@ class Pawn < Piece
     ]
 
     moves.select do |move|
-      @board[move].color == @opponent_color
+      @board.valid_pos?(move) && @board[move].color == @opponent_color
     end
   end
 end
