@@ -7,7 +7,6 @@ module Stepable
       new_pos = [x + dx, y + dy]
       
       next unless @board.valid_pos?(new_pos)
-      p new_pos
       next if @board[new_pos].color == @color
       valid_moves << new_pos
     end
