@@ -51,6 +51,9 @@ W4D3 simon
 W4D3 Chess
 	- p does not work well as it outputs what the value literally is...becomes a mess with colorize
 		... use print instead
+	- Clean up terminal rendering by doing all logic first, then printing the whole thing, rather than
+	  printing one chunk at a time.
+	- Be careful of double nested "none?" functions...it behaves strangely.
 
 
 Questions
@@ -62,3 +65,5 @@ TBD
 	W3D1: eight_queens, maze_solver, project_euler
 	W3D2: sudoku_solver
 	W3D4: minesweeper
+	W4D3: chess phase VI
+	W4D4: everything (TDD)

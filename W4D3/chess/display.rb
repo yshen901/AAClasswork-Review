@@ -12,23 +12,22 @@ class Display
   def render
     background = nil
     font_color = nil
-
-    system("clear")
-    puts "  " + [*(0..7)].join("  ")
+    
+    output = "  " + [*(0..7)].join("  ") + "\n"
     @board.rows.each_with_index do |row, x|
-      print "#{x}"
+      output << "#{x}"
       row.each_with_index do |piece, y|
         background = (x + y) % 2 == 0 ? :light_blue : :light_black
         background = :red if [x,y] == @cursor.cursor_pos
         
         font_color = piece.color == :w ? :white : :black
-        print " #{piece.to_s} ".colorize(:color => font_color, :background => background)
+        output << " #{piece.to_s} ".colorize(:color => font_color, :background => background)
       end
-      print "\n"
+      output << "\n"
     end
-    puts
 
-    nil
+    system("clear")
+    puts output + "\n"
   end
 
   # def loop #for testing
