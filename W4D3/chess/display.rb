@@ -36,6 +36,9 @@ class Display
     inputs = []
     while true
       self.render
+
+      print "White is in check!\n" if @board.in_check?(:w)
+      print "Black is in check!\n" if @board.in_check?(:b)
       
       if inputs.empty?
         puts "Move the cursor with the arrow keys, and select a piece to move with space/enter: " 
@@ -44,14 +47,20 @@ class Display
       end
 
       input = @cursor.get_input
-      inputs << input if input
+      if input && inputs.empty?
+        inputs << input if @board[input].color
+      elsif input
+        inputs << input
+      end
+
       if inputs.length == 2
         begin
           @board.move_piece(inputs[0], inputs[1])
           inputs = []
         rescue => e
-          puts e
-          sleep(2)
+          puts "#{e}"
+          @cursor.get_input
+          inputs = []
         end
       end
     end
