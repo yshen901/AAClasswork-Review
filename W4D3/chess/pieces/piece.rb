@@ -16,7 +16,18 @@ class Piece
   end
 
   def valid_moves
-    []
+    selected = moves.select do |move|
+      displaced_piece = @board[move]
+      original_pos = @pos.dup
+      
+      @board.move_piece(@pos, move)
+      valid = !@board.in_check?(@color)
+
+      @board.undo_move(original_pos, move, displaced_piece)
+      valid
+    end
+
+    selected
   end
 
   def pos=(val)

@@ -1,6 +1,6 @@
 module Stepable
   def moves
-    valid_moves = []
+    poss_moves = []
     move_diffs.each do |move|
       x, y = pos
       dx, dy = move
@@ -8,10 +8,10 @@ module Stepable
       
       next unless @board.valid_pos?(new_pos)
       next if @board[new_pos].color == @color
-      valid_moves << new_pos
+      poss_moves << new_pos
     end
 
-    valid_moves
+    poss_moves
   end
 
   private

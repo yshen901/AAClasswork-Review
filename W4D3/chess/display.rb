@@ -45,9 +45,12 @@ class Display
       end
       self.render
 
-      
       print "White is in check!\n" if @board.in_check?(:w)
       print "Black is in check!\n" if @board.in_check?(:b)
+
+      print "White is checkmated!" if @board.checkmate?(:w)
+      print "Black is checkmated!" if @board.checkmate?(:b)
+
       
       if inputs.empty?
         puts "Move the cursor with the arrow keys, and select a piece to move with space/enter: " 
