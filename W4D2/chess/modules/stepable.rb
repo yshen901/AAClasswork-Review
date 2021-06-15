@@ -6,7 +6,7 @@ module Stepable
       x += move[0]
       y += move[1]
       
-      next unless x.between?(0, 7) && y.between(0, 7)
+      next unless x.between?(0, 7) && y.between?(0, 7)
       next if @board[[x,y]].color == @color
       valid_moves << [x, y]
     end
