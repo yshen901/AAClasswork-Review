@@ -54,6 +54,9 @@ W4D3 Chess
 	- Clean up terminal rendering by doing all logic first, then printing the whole thing, rather than
 	  printing one chunk at a time.
 	- Be careful of double nested "none?" functions...it behaves strangely.
+	
+W4D5 Octopus
+	- Use sort_by(&:method) to sort by specific attributes.
 
 
 Questions
