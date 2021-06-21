@@ -55,8 +55,9 @@ W4D3 Chess
 	  printing one chunk at a time.
 	- Be careful of double nested "none?" functions...it behaves strangely.
 	
-W4D5 Octopus
+W4D5
 	- Use sort_by(&:method) to sort by specific attributes.
+	- Think of edge cases, don't get trapped by scenarios that will never happen. (largest_contiguous_subsum)
 
 
 Questions
@@ -70,3 +71,4 @@ TBD
 	W3D4: minesweeper
 	W4D3: chess phase VI
 	W4D4: everything (TDD)
+	W4D5: anagrams(permutations)
