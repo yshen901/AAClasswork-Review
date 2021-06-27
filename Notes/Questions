@@ -58,6 +58,8 @@ W4D3 Chess
 W4D5
 	- Use sort_by(&:method) to sort by specific attributes.
 	- Think of edge cases, don't get trapped by scenarios that will never happen. (largest_contiguous_subsum)
+	- MinMaxStackQueue updates the min/max after pushing all of the items in pusher onto popper such that
+	  min/max is accurate after popping items.
 
 
 Questions
