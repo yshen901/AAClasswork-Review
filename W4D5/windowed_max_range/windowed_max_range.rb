@@ -1,5 +1,6 @@
 require_relative "./data_structures"
 require "byebug"
+require "benchmark"
 
 # O(size^2) time, O(1) space
 def naive_windowed_max_range(arr, size)
@@ -30,6 +31,8 @@ p naive_windowed_max_range([1, 0, 2, 5, 4, 8], 3) == 5 # 0, 2, 5
 p naive_windowed_max_range([1, 0, 2, 5, 4, 8], 4) == 6 # 2, 5, 4, 8
 p naive_windowed_max_range([1, 3, 2, 5, 4, 8], 5) == 6 # 3, 2, 5, 4, 8
 
+p Benchmark.measure { windowed_max_range([*(1..100000)], 1000) == 6 } # 2, 5, 4, 8
+
 
 def windowed_max_range(arr, size)
   return nil if arr.length < size
@@ -56,3 +59,5 @@ p windowed_max_range([1, 0, 2, 5, 4, 8], 2) == 4 # 4, 8
 p windowed_max_range([1, 0, 2, 5, 4, 8], 3) == 5 # 0, 2, 5
 p windowed_max_range([1, 0, 2, 5, 4, 8], 4) == 6 # 2, 5, 4, 8
 p windowed_max_range([1, 3, 2, 5, 4, 8], 5) == 6 # 3, 2, 5, 4, 8
+
+p Benchmark.measure { windowed_max_range([*(1..100000)], 1000) == 6 } # 2, 5, 4, 8 ... there is a time difference when window size is large
