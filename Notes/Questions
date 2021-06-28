@@ -60,6 +60,10 @@ W4D5
 	- Think of edge cases, don't get trapped by scenarios that will never happen. (largest_contiguous_subsum)
 	- MinMaxStackQueue updates the min/max after pushing all of the items in pusher onto popper such that
 	  min/max is accurate after popping items.
+	  
+W5D1
+	- echo '--color' >> ~/.rspec  ... to make rspec output pretty
+	- 'a'.ord returns the ascii of a character
 
 
 Questions
