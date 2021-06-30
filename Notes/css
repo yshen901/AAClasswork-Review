@@ -1,0 +1,62 @@
+BOX Model
+	margin		does not affect size of the box, but enforces a private space around the box
+	padding	between the box content and the border of the box
+	border		between the padding of the box and the margin of a box	
+	
+	
+Display Types
+	display:
+		   inline	 	keeps line height
+		   		 	pushes other elements horizontally not vertically
+		   		 	can't specify height and width properties
+		   		 	
+		   block	 	does not respect line height
+		   		 	takes up as much horizontal space as possible
+		   			can specify width and height
+		   			
+		   inline-block	inline, but forces elements around to respect horiontal
+		   				and vertical space
+		   			can specify width and height		
+		   			
+		   none		nothing
+		   
+		   flex		makes a flexbox
+		   				flex items use flex-direction
+		   				flex containers use justify-content and align-items
+		   
+		   
+Inheritance (can put :inherit for any property)
+
+CSS Reset (can copy paste this from somewhere, useful to clear everything)
+
+Float
+	should never have float and position for the same element
+	float is like images in magazines that have text floating around them
+	allows us to align elements horizontally
+	
+Clearfix	
+	a parent with only floated elements has 0 height
+	use a :after pseudo-selector to insert an empty string
+		section:after {
+		  content: ""; 	/* Empty content string */
+		  display: block; 	/* Only block elements can clear */
+		  clear: both; 	/* Tells element to fall below any floated elements
+		  			   it shares a line with */ 
+		}
+
+Grid System
+	Making a grid container
+		#garden {
+		  display: grid;
+		  grid-template-columns: 20% 20% 20% 20% 20%; /* 1fr, 100px, 3em, and 40% alo work */
+		  grid-template-rows: 20% 20% 20% 20% 20%;
+		  grid-template-columns: repeat(5, 20%); 	/* functions same as above */
+		}
+	Affecting grid position (all below also work with grid-row..)
+		#water {
+		  grid-column-start:1;	/* One value at the spot */	
+		  grid-column-end:5;	/* Keeps adding until the end */
+		  grid-column: 2/4;	/* Starts at 2, ends at 4 */
+		  grid-area: 1/4/6/5; 	/* row-start / col-start / row-end / col-end */
+		}
+

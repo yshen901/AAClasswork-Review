@@ -72,11 +72,14 @@ How to use ruby.print if my class has a method called print?
 
 
 TBD
-	W3D1: eight_queens, maze_solver, project_euler
-	W3D2: sudoku_solver
-	W3D4: minesweeper
-	W4D3: chess phase VI
-	W4D4: everything (TDD)
-	W4D5: anagrams(permutations)
-	W5D1: dynamic_arrays
-	W5D2: 07a_bonus (last), 09_self_joins (last)
+	W3D1: 	eight_queens, maze_solver, project_euler	(algo practice)
+	W3D2: 	sudoku_solver					(oop practice)
+	W3D4: 	minesweeper
+	W4D3: 	chess phase VI
+	W4D4: 	everything 					(no need to learn specs)
+	W4D5: 	anagrams					(review permutations)
+	W5D1: 	dynamic_arrays
+	W5D2: 	07a_bonus, 09_self_joins
+	W5D3: 	plays_orm, aa_questions_orm			(orm sql is made obselete by ActiveRecord)
+		flexbox_froggy, shakshuka 			(css already known)	
+		
