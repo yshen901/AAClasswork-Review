@@ -48,7 +48,7 @@ Grid System
 	Making a grid container
 		#garden {
 		  display: grid;
-		  grid-template-columns: 20% 20% 20% 20% 20%; /* 1fr, 100px, 3em, and 40% alo work */
+		  grid-template-columns: 20% 20% 20% 20% 20%; /* 1fr (fraction), 100px, 3em alo work */
 		  grid-template-rows: 20% 20% 20% 20% 20%;
 		  grid-template-columns: repeat(5, 20%); 	/* functions same as above */
 		}
