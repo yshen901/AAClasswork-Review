@@ -82,4 +82,5 @@ TBD
 	W5D2: 	07a_bonus, 09_self_joins
 	W5D3: 	plays_orm, aa_questions_orm			(orm sql is made obselete by ActiveRecord)
 		flexbox_froggy, shakshuka 			(css already known)	
+	W5D4:	url_shortener 					(phases 4+ involve things that later days will cover)
 		
