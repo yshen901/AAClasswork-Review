@@ -1,9 +1,6 @@
 class Response < ApplicationRecord
   validates :user_id, presence: true
-  validates :answer_choice_id, presence: true, uniqueness: {
-    scope: :user_id,
-    message: "User can only have one response per answer choice."
-  }
+  validates :answer_choice_id, presence: true
 
   belongs_to :respondent,
     primary_key: :id,
