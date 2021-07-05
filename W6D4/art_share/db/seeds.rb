@@ -17,3 +17,5 @@ artwork_3 = Artwork.create(title: "artwork_3", image_url: "artwork_3.com", artis
 
 share_1_2 = ArtworkShare.create(artwork_id: 1, viewer_id: 2)
 share_1_3 = ArtworkShare.create(artwork_id: 1, viewer_id: 3)
+
+comment_1_1 = Comment.create(artwork_id: 1, user_id: 1, body: "Comment for artwork 1.")
