@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   resources :users do
     resources :artworks, only: [:index]
     resources :comments, only: [:index]
+
+    collection do
+      get "search"
+    end
   end
 
   resources :artworks, only: [:show, :update, :create, :destroy]

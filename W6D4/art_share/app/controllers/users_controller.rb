@@ -6,10 +6,20 @@ class UsersController < ApplicationController
   end
 
   def show
-    if user = User.find_by(id: params[:id])
-      render json: user
+    if params[:id] = "search"
+      if !params.has_key?(:username)
+        render json: "Error: must input a username to search with."
+      elsif user = User.find_by(username: params[:username])
+        render json: user
+      else
+        render json: user.errors.full_messages
+      end
     else
-      render json: "User not found."
+      if user = User.find_by(id: params[:id])
+        render json: user
+      else
+        render json: params
+      end
     end
   end
 
