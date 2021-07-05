@@ -27,11 +27,14 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    comment = Comment.find_by(id: params[:id])
-    if comment.destroy
-      render json: comment
+    if comment = Comment.find_by(id: params[:id])
+      if comment.destroy
+        render json: comment
+      else
+        render json: comment.errors.full_messages
+      end
     else
-      render json: comment.errors.full_messages
+      render json: "Comment not found or already delete."
     end
   end
 
