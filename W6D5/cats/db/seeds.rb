@@ -13,3 +13,11 @@ cat_1 = Cat.create(
   sex: "F",
   description: "Values"
 )
+
+cat_2 = Cat.create(
+  birth_date: "2014-06-18",
+  color: "white",
+  name: "Molly",
+  sex: "F",
+  description: "Values"
+)
