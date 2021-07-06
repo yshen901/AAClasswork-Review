@@ -1,0 +1,32 @@
+<% action_url = action == :edit ? cat_url(cat) : cats_url %>
+<% submit_value = action == :edit ? "Update Cat" : "Create Cat"%>
+
+<form action=<%= action_url %> method="post">
+  <% if action == :edit %>
+    <input type="hidden" name="_method" value="patch">
+  <% end %>
+
+  <label for="cat_name">Name</label>
+  <input type="text" name="cat[name]" id="cat_name" value=<%= cat.name %>>
+  
+  <label for="cat_sex_m">Male</label>
+  <input type="radio" id="cat_sex_m" name="cat[sex]" value="M" <%= cat.sex == "M" ? "checked" : "" %>>
+  <label for="cat_sex_f">Female</label>
+  <input type="radio" id="cat_sex_f" name="cat[sex]" value="F" <%= cat.sex == "F" ? "checked" : "" %>>
+
+
+  <select name="cat[color]">
+    <option disabled>--Please select a color--</option>
+    <% Cat::COLORS.each do |color| %>
+      <option value=<%= color %> <%= cat.color == color ? "selected" : "" %>><%= color %></option>
+    <% end %>
+  </select>
+
+  <label for="cat_birth_date">Birth Date</label>
+  <input type="date" name="cat[birth_date]" id="cat_birth_date" value=<%= cat.birth_date %>>
+
+  <label for="cat_description">Description</label>
+  <input type="textarea" name="cat[description]" id="cat_description" value=<%= cat.description %>></textarea>
+
+  <input type="submit" value=<%= submit_value %>>
+</form>
