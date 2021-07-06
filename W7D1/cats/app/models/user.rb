@@ -18,11 +18,11 @@ class User < ApplicationRecord
   def self.find_by_credentials(username, pwd)
     user = User.find_by(username: username)
     return nil unless user
-    is_password? ? user : nil 
+    user.is_password?(pwd) ? user : nil 
   end
 
   def is_password?(pwd)
-    BCrypt::Password.new(user.password_digest).is_password?(pwd)
+    BCrypt::Password.new(self.password_digest).is_password?(pwd)
   end
 
   def password=(pwd)
