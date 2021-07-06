@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :require_no_current_user, only: [:new, :create]
+
   def new
     render :new
   end
@@ -26,5 +28,11 @@ class SessionsController < ApplicationController
   private
   def session_params
     params.require(:session).permit(:username, :password)
+  end
+
+  def require_no_current_user
+    if current_user
+      redirect_to cats_url
+    end
   end
 end
