@@ -23,6 +23,8 @@ class Cat < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
 
+  has_many :cat_rental_requests, dependent: :destroy
+
   def age
     time_ago_in_words(self.birth_date)
   end
