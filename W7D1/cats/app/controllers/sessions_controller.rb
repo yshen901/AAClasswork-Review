@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
 
   def create
     if user = User.find_by_credentials(session_params[:username], session_params[:password])
-      session[:session_token] = user.reset_session_token!
+      login!(user)
       redirect_to cats_url
     else
       flash[:error] << "Username/password combination is incorrect."
@@ -15,8 +15,7 @@ class SessionsController < ApplicationController
 
   def destroy
     if user = current_user
-      user.reset_session_token!
-      session[:session_token] = nil
+      logout!(user)
       redirect_to new_session_url
     else
       flash[:error] << "No one is logged in!"
