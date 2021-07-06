@@ -12,7 +12,9 @@ class CatRentalRequest < ApplicationRecord
     in: STATUSES,
     message: "Status must be either PENDING, APPROVED, or DENIED."
   }
-  validate :does_not_have_overlap
+  
+  # overlaps can be pushed to database, and are dealt with by the approve/deny system
+  # validate :does_not_have_overlap 
 
   belongs_to :cat
 
@@ -28,5 +30,18 @@ class CatRentalRequest < ApplicationRecord
     if overlapping_requests.exists?
       errors[:overlap_error] << "Request overlaps with another."
     end
+  end
+
+  def approve!
+    CatRentalRequest.transaction do
+      self.update(status: "APPROVED")
+      overlapping_requests.each do |request|
+        request.update(status: "DENIED")
+      end
+    end
+  end
+
+  def deny!
+    self.update(status: "DENIED")
   end
 end

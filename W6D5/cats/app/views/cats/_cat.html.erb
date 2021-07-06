@@ -6,10 +6,8 @@
     <td><%= cat.description %></td>
     <td>
         <ul>
-            <% cat.cat_rental_requests.each do |request| %>
-                <li>
-                    <%= "#{request.start_date} to #{request.end_date}" %>
-                </li>
+            <% cat.cat_rental_requests.order(:start_date).each do |request| %>
+                <%= render "cat_rental_requests/cat_rental_request", request: request %>
             <% end %>
         </ul>
     </td>

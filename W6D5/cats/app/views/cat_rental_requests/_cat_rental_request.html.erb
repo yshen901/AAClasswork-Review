@@ -1,0 +1,13 @@
+<li>
+    <%= "#{request.start_date} to #{request.end_date}" %>
+    <% if request.status == "PENDING" %>
+        <form action= <%= approve_cat_rental_request_url(request) %> method="get">
+            <input type="submit" value="Approve">
+        </form>
+        <form action= <%= deny_cat_rental_request_url(request) %> method="get">
+            <input type="submit" value="Deny">
+        </form>
+    <% else %>
+      <%= request.status %>
+    <% end %>
+</li>
