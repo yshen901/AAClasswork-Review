@@ -14,6 +14,14 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    if user = current_user
+      user.reset_session_token!
+      session[:session_token] = nil
+      redirect_to new_session_url
+    else
+      flash[:error] << "No one is logged in!"
+      redirect_to new_session_url
+    end
   end
 
   private
