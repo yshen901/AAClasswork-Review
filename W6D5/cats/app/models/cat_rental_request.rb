@@ -33,6 +33,7 @@ class CatRentalRequest < ApplicationRecord
   end
 
   def approve!
+    debugger
     CatRentalRequest.transaction do
       self.update(status: "APPROVED")
       overlapping_requests.each do |request|
