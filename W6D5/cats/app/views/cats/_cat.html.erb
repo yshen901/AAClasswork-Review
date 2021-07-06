@@ -4,4 +4,13 @@
     <td><%= cat.color %></td>
     <td><%= cat.birth_date %></td>
     <td><%= cat.description %></td>
+    <td>
+        <ul>
+            <% cat.cat_rental_requests.each do |request| %>
+                <li>
+                    <%= "#{request.start_date} to #{request.end_date}" %>
+                </li>
+            <% end %>
+        </ul>
+    </td>
 </tr>
