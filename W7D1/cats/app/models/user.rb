@@ -6,7 +6,7 @@ class User < ApplicationRecord
   validates :username, presence: true
   validates :session_token, presence: true
 
-  validates :password, limit: { minimum: 6, allow_nil: true}
+  validates :password, length: { minimum: 6, allow_nil: true}
   validates :password_digest, presence: { message: "Password cannot be blank." }
 
   before_validation :ensure_session_token
@@ -27,6 +27,7 @@ class User < ApplicationRecord
 
   def password=(pwd)
     @password = pwd
+    self.password_digest = BCrypt::Password.create(pwd)
   end
 
   def reset_session_token! 
