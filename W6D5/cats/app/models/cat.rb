@@ -26,4 +26,8 @@ class Cat < ApplicationRecord
   def age
     time_ago_in_words(self.birth_date)
   end
+
+  def persisted?
+    !!self.id
+  end
 end
