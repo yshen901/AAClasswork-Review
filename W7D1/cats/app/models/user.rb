@@ -11,6 +11,10 @@ class User < ApplicationRecord
 
   before_validation :ensure_session_token
 
+  has_many :cats,
+    class_name: :Cat,
+    dependent: :destroy
+
   def self.generate_session_token
     SecureRandom::urlsafe_base64
   end
