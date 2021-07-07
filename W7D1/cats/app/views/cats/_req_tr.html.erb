@@ -5,7 +5,7 @@
     <%= req.requester.username %>
   </td>
   <td>
-    <% if req.pending? && req.requester == current_user %>
+    <% if req.pending? && req.cat.owner == current_user %>
         <form action="<%= approve_cat_rental_request_url(req) %>" method="post">
           <input
             type="hidden"
