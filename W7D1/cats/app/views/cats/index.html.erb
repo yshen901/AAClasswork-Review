@@ -1,3 +1,7 @@
+<% unless current_user %>
+    <a href=<%= new_session_url%>>Login</a>
+<% end %>
+
 <h1>Cats upon cats!</h1>
 
 <ul>

@@ -8,15 +8,16 @@
     <%= javascript_include_tag 'application' %>
   </head>
 
-  <% if current_user %>
-    <head>
-      <p><%= current_user.username %></p>
-      <form action=<%= session_url %> method="post">
-        <input type="hidden" name="_method" value="delete">
-        <input type="submit" value="Logout">
-      </form>
-    </head>
-  <% end %>
+  <head>
+    <% if current_user %>
+        <p><%= current_user.username %></p>
+        <form action=<%= session_url %> method="post">
+          <input type="hidden" name="_method" value="delete">
+          <input type="submit" value="Logout">
+        </form>
+    <% end %>
+  </head>
+
   <body>
     <% if flash[:errors] %>
       <p>Errors: </p>
