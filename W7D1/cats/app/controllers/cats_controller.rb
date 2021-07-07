@@ -50,10 +50,11 @@ class CatsController < ApplicationController
   end
 
   def ensure_owner
-    redirect_to cats_url unless @cat.owner == current_user
+    cat = Cat.find_by(id: params[:id])
+    redirect_to new_session_url unless cat.owner == current_user
   end
 
   def ensure_logged_in
-    redirect_to cats_url unless current_user
+    redirect_to new_session_url unless current_user
   end
 end
