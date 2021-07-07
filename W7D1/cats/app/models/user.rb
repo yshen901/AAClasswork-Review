@@ -15,6 +15,10 @@ class User < ApplicationRecord
     class_name: :Cat,
     dependent: :destroy
 
+  has_many :requests,
+    class_name: :CatRentalRequest,
+    dependent: :destroy
+
   def self.generate_session_token
     SecureRandom::urlsafe_base64
   end
