@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       login!(user)
       redirect_to cats_url
     else
-      flash[:error] << "Username/password combination is incorrect."
+      flash[:errors] = ["Username/password combination is incorrect."]
       redirect_to new_session_url
     end
   end
@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
       logout!(user)
       redirect_to new_session_url
     else
-      flash[:error] << "No one is logged in!"
+      flash[:errors] = ["No one is logged in!"]
       redirect_to new_session_url
     end
   end

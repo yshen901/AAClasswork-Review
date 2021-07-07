@@ -19,10 +19,10 @@
   </head>
 
   <body>
-    <% if flash[:errors] %>
+    <% if flash.now[:errors] %>
       <p>Errors: </p>
       <ul>
-        <% flash[:errors].each do |error| %>
+        <% flash.now[:errors].each do |error| %>
           <li><%= error %></li>
         <% end %>
       </ul>
