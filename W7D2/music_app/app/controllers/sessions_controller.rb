@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     user = User.find_by_credentials(session_params[:username], session_params[:password])
     if user
       login!(user)
-      # redirect_to music_url
+      render :new
     else
       flash.now[:errors] = ["Couldn't find a user with those credentials."]
       render :new
@@ -15,8 +15,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    if @current_user
-      logout!(@current_user)
+    if current_user
+      logout!(current_user)
       redirect_to new_session_url
     else
       flash[:errors] = ["No active session found."]
