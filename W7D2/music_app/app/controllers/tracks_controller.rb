@@ -42,6 +42,16 @@ class TracksController < ApplicationController
     end
   end
 
+  def destroy
+    @track = Track.find_by(id: params[:id])
+    if @track.destroy
+      redirect_to albums_url + "/#{@track.album_id}"
+    else
+      flash[:errors] = @track.errors.full_messages
+      redirect_to albums_url + "/#{@track.album_id}"
+    end
+  end
+
   private
   def track_params
     params.require(:track).permit(:title, :ord, :album_id, :bonus)

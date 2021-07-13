@@ -24,6 +24,7 @@
     <li>
       <a href=<%= track_url(track) %>> <%= track.title %></a>
       <a href=<%= edit_track_url(track)%>> Edit </a>
+      <%= delete_form(track_url(track), "Delete") %>
     </li>
   <% end %>
 </ul>
