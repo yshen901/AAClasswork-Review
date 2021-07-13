@@ -1,7 +1,11 @@
 class AlbumsController < ApplicationController
   def show
-    @album = Album.includes(:band).find_by(id: params[:id])
-    render :show
+    if @album = Album.includes(:band).find_by(id: params[:id])
+      render :show
+    else
+      flash[:errors] = ["Album does not exist"]
+      redirect_to bands_url
+    end
   end
 
   def new
