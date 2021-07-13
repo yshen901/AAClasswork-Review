@@ -35,6 +35,13 @@ class AlbumsController < ApplicationController
   end
 
   def destroy
+    @album = Album.find_by(id: params[:id])
+    if @album.destroy
+      redirect_to "#{bands_url}/#{@album.band_id}"
+    else
+      flash.now[:errors] = @album.errors.full_messages
+      render :show
+    end
   end
 
   private
