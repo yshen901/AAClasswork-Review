@@ -1,0 +1,7 @@
+<h4>Track Info</h4>
+<ul>
+  <li>Title: <%= @track.title %></li>
+  <li>Ord: <%= @track.ord %></li>
+  <li>Album: <a href=<%= album_url(@track.album) %>> <%= @track.album.title %> </a></li>
+  <li>Band: <a href=<%= band_url(@track.band) %>> <%= @track.band.name %> </a></li>
+</ul>

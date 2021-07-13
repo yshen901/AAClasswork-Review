@@ -13,6 +13,15 @@
     Band: <a href=<%= band_url(@album.band) %>><%= @album.band.name %></a>
   </li>
 </ul>
-
 <a href=<%= edit_album_url(@album) %>>Edit</a>
 <%= delete_form(album_url, "Delete") %>
+
+<br>
+
+<h4>Tracks</h4>
+<ul>
+  <% @album.tracks.each do |track| %>
+    <li><a href=<%= track_url(track) %>> <%= track.title %></a></li>
+  <% end %>
+</ul>
+<a href=<%= new_album_track_url(@album) %>>Create Track</a>

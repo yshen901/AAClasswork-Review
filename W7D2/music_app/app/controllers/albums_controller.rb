@@ -1,6 +1,6 @@
 class AlbumsController < ApplicationController
   def show
-    if @album = Album.includes(:band).find_by(id: params[:id])
+    if @album = Album.includes(:band, :tracks).find_by(id: params[:id])
       render :show
     else
       flash[:errors] = ["Album does not exist"]
