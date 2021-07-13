@@ -18,9 +18,27 @@ class TracksController < ApplicationController
     if @track.save
       redirect_to albums_url + "/#{@track.album_id}"
     else
-      debugger
-      flash[:errors] = @track.errors.full_messages
+      flash.now[:errors] = @track.errors.full_messages
       render :new
+    end
+  end
+
+  def edit
+    if @track = Track.find_by(id: params[:id])
+      render :edit
+    else
+      flash[:errors] = ["Track not found."]
+      redirect_to bands_url
+    end
+  end
+
+  def update
+    @track = Track.find_by(id: params[:id])
+    if @track.update(track_params)
+      redirect_to albums_url + "/#{@track.album_id}"
+    else
+      flash.now[:errors] = @track.errors.full_messages
+      render :edit
     end
   end
 
