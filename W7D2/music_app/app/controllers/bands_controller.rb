@@ -1,11 +1,11 @@
 class BandsController < ApplicationController
   def index
-    @bands = Band.all
+    @bands = Band.all.includes(:albums)
     render :index
   end
 
   def show
-    @band = Band.find_by(id: params[:id])
+    @band = Band.includes(:albums).find_by(id: params[:id])
     if @band
       render :show
     else

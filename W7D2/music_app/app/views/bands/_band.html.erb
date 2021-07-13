@@ -1,10 +1,7 @@
 <div class="band-show">
-  <%= band.name %>
+  <a href=<%= band_url(band)%>>
+    <%= band.name %>
+  </a>
   <a href=<%= edit_band_url(band) %>>Edit</a>
-  <form action=<%= band_url(band) %> method="post">
-    <%= authenticity_form %>
-    <%= delete_form %>
-
-    <input type="submit" value="Delete">
-  </form>
+  <%= delete_form(band_url(band), "Delete") %>
 </div>

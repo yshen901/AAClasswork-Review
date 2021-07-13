@@ -1,4 +1,18 @@
-Title: <%= album.title %>
-Year: <%= album.year %>
-Type: <%= album.live ? "live" : "studio" %>
-Band: <%= album.band %>
+<h4>Album Info</h4>
+<ul>
+  <li>
+    Title: <%= @album.title %>
+  </li>
+  <li>
+    Year: <%= @album.year %>
+  </li>
+  <li>
+    Type: <%= @album.live ? "live" : "studio" %>
+  </li>
+  <li>
+    Band: <a href=<%= band_url(@album.band) %>><%= @album.band.name %></a>
+  </li>
+</ul>
+
+<a href=<%= edit_album_url(@album) %>>Edit</a>
+<%= delete_form(album_url, "Delete") %>

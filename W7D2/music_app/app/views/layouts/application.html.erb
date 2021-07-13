@@ -18,7 +18,9 @@
   <% end %>
 
   <div id="app-header">
-    <h1 id="app-name">Music App</h1>
+    <h1 id="app-name">
+      <a href=<%= bands_url %>>Music App</a>
+    </h1>
     <div id="session-info">
       <% if current_user %>
         <p> <%= current_user.username %></p>

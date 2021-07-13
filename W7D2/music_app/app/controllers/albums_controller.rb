@@ -1,6 +1,6 @@
 class AlbumsController < ApplicationController
   def show
-    @album = Album.find_by(id: params[:id])
+    @album = Album.includes(:band).find_by(id: params[:id])
     render :show
   end
 
@@ -11,20 +11,27 @@ class AlbumsController < ApplicationController
 
   def create
     @album = Album.new(album_params)
-    @album.live = album_params[:live] == "true"
-    debugger
     if @album.save
-      redirect_to bands_url
+      redirect_to "#{bands_url}/#{album_params[:band_id]}"
     else
-      flash[:errors] = @album.errors.full_messages
-      redirect_to bands_url
+      flash.now[:errors] = @album.errors.full_messages
+      render :new
     end
   end
 
   def edit
+    @album = Album.find_by(id: params[:id])
+    render :edit
   end
 
   def update
+    @album = Album.find_by(id: params[:id])
+    if @album.update(album_params)
+      redirect_to album_url(@album)
+    else
+      flash.now[:errors] = @album.errors.full_messages
+      render :edit
+    end
   end
 
   def destroy
