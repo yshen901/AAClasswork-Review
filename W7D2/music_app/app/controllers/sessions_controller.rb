@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     user = User.find_by_credentials(session_params[:username], session_params[:password])
     if user
       login!(user)
-      render :new
+      redirect_to bands_url
     else
       flash.now[:errors] = ["Couldn't find a user with those credentials."]
       render :new
