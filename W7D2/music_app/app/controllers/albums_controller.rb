@@ -1,4 +1,6 @@
 class AlbumsController < ApplicationController
+  before_action :require_login
+
   def show
     if @album = Album.includes(:band, :tracks).find_by(id: params[:id])
       render :show

@@ -1,4 +1,6 @@
 class TracksController < ApplicationController
+  before_action :require_login
+
   def show
     if @track = Track.includes(:album, :band).find_by(id: params[:id])
       render :show
