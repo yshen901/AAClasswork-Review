@@ -76,12 +76,12 @@ TBD
 	W3D2: 	sudoku_solver					(oop practice)
 	W3D4: 	minesweeper
 	W4D3: 	chess phase VI
-	W4D4: 	everything 					(no need to learn specs)
+	W4D4: 	EVERYTHING					(no need to learn specs)
 	W4D5: 	anagrams					(review permutations)
 	W5D1: 	dynamic_arrays
 	W5D2: 	07a_bonus, 09_self_joins
 	W5D3: 	plays_orm, aa_questions_orm			(orm sql is made obselete by ActiveRecord)
-		flexbox_froggy, shakshuka 			(css already known)	
+		flexbox_froggy, shakshuka 			(css already known)	W
 	W5D4:	url_shortener 					(phases 4+ involve things that later days will cover)
 	W6D1:	polls_app					(2 bonus sections, complex ActiveRecord, good for practice)
 	W6D2:	metaprogramming				(unecessary, come back later if you have time)
@@ -89,3 +89,8 @@ TBD
 	W6D5:	99_cats					(style to look like the demo)
 	W7D1:	99_cats					(multiple session bonus)
 	W7D2:	music_app					(notes, helpers, activated, admin, tags ... repetitive practice).
+	W7D3:	EVERYTHING					(no need to learn capybara rn)
+	W7D4: 	EVERYTHING					(took notes, but no need to do css practice...do that in project)
+	W7D5:	EVERYTHING					(took notes, but no need to do css practice...do that in project)
+	W8D1: 	EVERYTHING					(concerns, checkboxes and id setters to make a tag_ids=[array of tag_ids]...good for checkboxes)
+	W8D2:	EVERYTHING					(rails lite...breaking down what happens behind the scenes for rails, servers, controllerbase, etc)
