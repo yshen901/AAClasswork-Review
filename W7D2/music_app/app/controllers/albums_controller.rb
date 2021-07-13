@@ -24,8 +24,12 @@ class AlbumsController < ApplicationController
   end
 
   def edit
-    @album = Album.find_by(id: params[:id])
-    render :edit
+    if @album = Album.find_by(id: params[:id])
+      render :edit
+    else
+      flash[:errors] = ["Album not found."]
+      redirect_to bands_url
+    end
   end
 
   def update
