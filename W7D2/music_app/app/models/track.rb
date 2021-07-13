@@ -24,8 +24,8 @@ class Track < ApplicationRecord
   }
 
   belongs_to :album
-  
-  belongs_to :band,
+
+  has_one :band,
     through: :album,
     source: :band
 end
