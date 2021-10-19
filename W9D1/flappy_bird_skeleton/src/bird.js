@@ -31,8 +31,8 @@ export default class Bird {
 
   getBounds() {
     return {
-      topLeft: [this.positionX - 15, this.positionY - 20],
-      bottomRight: [this.positionX + 15, this.positionY + 20]
+      topLeft: [this.positionX - 15 - CONSTANTS.hitBoxAdjustment, this.positionY - 20 - CONSTANTS.hitBoxAdjustment],
+      bottomRight: [this.positionX + 15 + CONSTANTS.hitBoxAdjustment, this.positionY + 20 + CONSTANTS.hitBoxAdjustment]
     };
   }
 }

@@ -91,4 +91,12 @@ export default class Level {
     this.initializePipes();
     this.score = 0;
   }
+
+  printFinalScore(ctx) {
+    ctx.fillStyle = "black";
+    ctx.font = "36px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("You've Died!", 320, 200);
+    ctx.fillText(`Score: ${this.score}`, 320, 236)
+  }
 }

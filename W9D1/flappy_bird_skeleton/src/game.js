@@ -7,6 +7,7 @@ export const CONSTANTS = {
   pipeInterval: 220,
   pipeSpeed: -5,
   pipeWidth: 20,
+  hitBoxAdjustment: -3
 }
 
 export default class FlappyBird {
@@ -17,10 +18,14 @@ export default class FlappyBird {
 
     this.animate = this.animate.bind(this);
     this.click = this.click.bind(this);
+
+    this.dead = false;
   }
 
   click() {
-    if (!this.running)
+    if (this.dead) 
+      this.restart();
+    else if (!this.running)
       this.play();
     this.bird.flap();
   }
@@ -34,10 +39,8 @@ export default class FlappyBird {
     this.level.animate(this.ctx);
     this.bird.animate(this.ctx);
 
-    if (this.level.collidesWith(this.bird.getBounds())) {
-      console.log("You've died! Click to restart!");
-      this.restart();
-    }
+    if (this.level.collidesWith(this.bird.getBounds()))
+      this.gameOver();
     
     if (this.running)
       requestAnimationFrame(this.animate);
@@ -47,8 +50,15 @@ export default class FlappyBird {
     this.level = new Level(this.dimensions);
     this.bird = new Bird(this.dimensions);
     this.running = false;
-    this.score = 0;
+    this.dead = false;
 
     this.animate();
+  }
+
+  gameOver() {
+    this.dead = true;
+    this.running = false;
+
+    this.level.printFinalScore(this.ctx);
   }
 }
