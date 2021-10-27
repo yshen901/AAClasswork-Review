@@ -1,4 +1,7 @@
+import Asteroid from "./asteroid";
 import MovingObject from "./moving_object";
+import Game from "./game"
+import GameView from "./game_view";
 
 document.addEventListener("DOMContentLoaded", () => {
   let canvas = document.getElementById("game-canvas");
@@ -11,4 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   circle.draw(ctx);
+
+  let asteroid = new Asteroid({
+    pos: [20,20]
+  });
+  asteroid.draw(ctx);
+
+  let gameView = new GameView(ctx);
+  gameView.start();
 });

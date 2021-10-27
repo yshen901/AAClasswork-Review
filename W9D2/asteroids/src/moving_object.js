@@ -1,9 +1,12 @@
+import { CONSTANTS } from "./game";
+import Util from "./util";
+
 export default class MovingObject {
-  constructor(params) {
-    this.pos = params.pos;
-    this.vel = params.vel;
-    this.radius = params.radius;
-    this.color = params.color;
+  constructor({pos, vel, radius, color}) {
+    this.pos = pos;
+    this.vel = vel;
+    this.radius = radius;
+    this.color = color;
   }
 
   draw(ctx) {
@@ -20,5 +23,20 @@ export default class MovingObject {
     )
 
     ctx.fill();
+  }
+
+  move() {
+    this.pos[0] += this.vel[0];
+    this.pos[1] += this.vel[1];
+
+    this.pos[0] += CONSTANTS.DIM_X;
+    this.pos[0] %= CONSTANTS.DIM_X;
+
+    this.pos[1] += CONSTANTS.DIM_Y;
+    this.pos[1] %= CONSTANTS.DIM_Y;
+  }
+
+  collidesWith(otherObject) {
+    return Util.distanceBetween(this.pos, otherObject.pos) < this.radius + otherObject.radius
   }
 }
