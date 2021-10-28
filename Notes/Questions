@@ -94,3 +94,7 @@ TBD
 	W7D5:	EVERYTHING					(took notes, but no need to do css practice...do that in project)
 	W8D1: 	EVERYTHING					(concerns, checkboxes and id setters to make a tag_ids=[array of tag_ids]...good for checkboxes)
 	W8D2:	EVERYTHING					(rails lite...breaking down what happens behind the scenes for rails, servers, controllerbase, etc)
+	W8D4:	reversi					(make an AI bot)
+	W8D5:	tic-tac-toe					(make an unbeatable AI bot...use a BST)
+	W9D1:	flappyBird					(bonus: art, moving background, difficulty, sound)
+	W9D2:	asteroids					(p6 - drawing a background, p7 - use request animation frame and deltaT to move instead of just ms)
