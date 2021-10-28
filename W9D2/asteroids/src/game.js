@@ -5,7 +5,7 @@ import Bullet from "./bullet";
 export const CONSTANTS = {
   DIM_X: 640,
   DIM_Y: 640,
-  NUM_ASTEROIDS: 0
+  NUM_ASTEROIDS: 20
 };
 
 // Could also make an allObjects class, as well as a single add/remove class, but
@@ -30,7 +30,7 @@ export default class Game {
   addBullet() {
     this.bullets.push( new Bullet({
       pos: this.ship.pos.slice(0),
-      vel: this.ship.vel.slice(0)
+      vel: [this.ship.vel[0] * 1.5, this.ship.vel[1]*1.5]
     }));
 
     console.log(this.bullets);
@@ -79,10 +79,7 @@ export default class Game {
       for (let j = 0; j < this.asteroids.length; j++) {
         if (this.asteroids[j].collidesWith(this.bullets[i])) {
           this.removeAsteroid(j);
-          this.removeBullet(i);
-          i--;
           j--;
-          break;
         }
       }
     }
@@ -117,7 +114,7 @@ export default class Game {
     }
   }
 
-  removeAsteriod(idx) {
+  removeAsteroid(idx) {
     this.asteroids.splice(idx, 1);
   }
 
