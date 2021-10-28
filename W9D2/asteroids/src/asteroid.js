@@ -9,5 +9,9 @@ export default class Asteroid extends MovingObject {
       color: "white",
       radius: 5,
     });
-  };
+  }
+
+  collidesWith(otherObject) {
+    return Util.distanceBetween(this.pos, otherObject.pos) < this.radius + otherObject.radius
+  }
 }

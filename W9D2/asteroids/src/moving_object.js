@@ -1,5 +1,4 @@
 import { CONSTANTS } from "./game";
-import Util from "./util";
 
 export default class MovingObject {
   constructor({pos, vel, radius, color}) {
@@ -37,6 +36,5 @@ export default class MovingObject {
   }
 
   collidesWith(otherObject) {
-    return Util.distanceBetween(this.pos, otherObject.pos) < this.radius + otherObject.radius
   }
 }
