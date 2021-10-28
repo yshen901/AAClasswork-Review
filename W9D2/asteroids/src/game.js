@@ -28,7 +28,6 @@ export default class Game {
   }
 
   addBullet() {
-    debugger;
     this.bullets.push( new Bullet({
       pos: this.ship.pos.slice(0),
       vel: this.ship.vel.slice(0)
@@ -67,7 +66,6 @@ export default class Game {
     for (let i = 0; i < this.bullets.length; i++) {
       this.bullets[i].move();
       if (this.bullets[i].outOfBounds()) {
-        debugger;
         this.removeBullet(i);
         i--;
       }
@@ -100,9 +98,9 @@ export default class Game {
       }
     }
 
-    for (let i = 0; i < this.asteroids.length; i++) {  //check bullet collisions
-      for (let j = i+1; j < this.asteroids.length; j++) {
-        if (this.asteroids[i].collidesWith(this.asteroids[j])) {
+    for (let i = 0; i < this.bullets.length; i++) {  //check bullet collisions
+      for (let j = i+1; j < this.bullets.length; j++) {
+        if (this.bullets[i].collidesWith(this.bullets[j])) {
           this.removeBullet(j); 
           this.removeBullet(i);
           i--;
@@ -111,8 +109,8 @@ export default class Game {
       }
     }
 
-    for (let i = 0; i < this.asteroids.length; i++) {
-      if (this.asteroids[i].collidesWith(this.ship)) { // relocate then recheck asteroids
+    for (let i = 0; i < this.asteroids.length; i++) { // relocate then recheck asteroids
+      if (this.asteroids[i].collidesWith(this.ship)) { 
         this.ship.relocate(this.randomPosition());
         i = -1;
       }

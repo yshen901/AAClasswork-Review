@@ -1,5 +1,4 @@
 import MovingObject from "./moving_object";
-import Util from "./util";
 
 export default class Ship extends MovingObject {
   constructor({pos}) {

@@ -1,5 +1,4 @@
 import MovingObject from "./moving_object";
-import { CONSTANTS } from "./game";
 
 export default class Bullet extends MovingObject {
   constructor({pos, vel}) {
