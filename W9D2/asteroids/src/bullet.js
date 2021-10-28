@@ -1,4 +1,5 @@
 import MovingObject from "./moving_object";
+import { CONSTANTS } from "./game";
 
 export default class Bullet extends MovingObject {
   constructor({pos, vel}) {
@@ -13,11 +14,5 @@ export default class Bullet extends MovingObject {
   move() {
     this.pos[0] += this.vel[0];
     this.pos[1] += this.vel[1];
-
-    this.pos[0] += CONSTANTS.DIM_X;
-    this.pos[0] %= CONSTANTS.DIM_X;
-
-    this.pos[1] += CONSTANTS.DIM_Y;
-    this.pos[1] %= CONSTANTS.DIM_Y;
   }
 }

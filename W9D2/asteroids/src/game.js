@@ -64,8 +64,14 @@ export default class Game {
     for (let i = 0; i < this.asteroids.length; i++) 
       this.asteroids[i].move();
     
-    for (let i = 0; i < this.bullets.length; i++)
+    for (let i = 0; i < this.bullets.length; i++) {
       this.bullets[i].move();
+      if (this.bullets[i].outOfBounds()) {
+        debugger;
+        this.removeBullet(i);
+        i--;
+      }
+    }
 
     this.ship.move();
   }

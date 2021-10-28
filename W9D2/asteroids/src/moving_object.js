@@ -24,6 +24,10 @@ export default class MovingObject {
     ctx.fill();
   }
 
+  outOfBounds() {
+    return this.pos[0] < 0 || this.pos[0] > CONSTANTS.DIM_X || this.pos[1] < 0 || this.pos[1] > CONSTANTS.DIM_Y
+  }
+
   move() {
     this.pos[0] += this.vel[0];
     this.pos[1] += this.vel[1];
