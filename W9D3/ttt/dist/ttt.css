@@ -15,9 +15,15 @@
   border: 3px solid black;
 
   background: yellow;
+
+  font-size: 100px;
 }
 
 .ttt-box:hover {
   background: white;
   transition-duration: 0.2s;
+}
+
+.white {
+  background: white;
 }

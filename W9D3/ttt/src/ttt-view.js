@@ -8,6 +8,9 @@ export default class View {
     this.bindEvents();
   }
 
+  // NOTE: An unintentional "bug" is that both events will fire on the same click
+  // upon victory. This is because gameOver will be updated before the DOM checks.
+  // This makes it refresh after clicking alert.
   bindEvents() {
     this.$el.on("click", ".ttt-box", event => {
       if (!this.gameOver)
@@ -23,12 +26,13 @@ export default class View {
   makeMove($square) {
     let id = parseInt($square.attr("id"));
 
-    $square.text(this.game.currentPlayer);
-    this.game.playMove([Math.floor(id / 3), id % 3]);
+    $square.text(this.game.currentPlayer); //update DOM square
+    $square.addClass("white");
 
-    let winner;
-    this.gameOver = this.game.isOver();
+    this.game.playMove([Math.floor(id / 3), id % 3]); //update game
 
+    let winner; 
+    this.gameOver = this.game.isOver(); //check whether game is over
     if (this.gameOver) {
       winner = this.game.winner();
       if (winner) 
