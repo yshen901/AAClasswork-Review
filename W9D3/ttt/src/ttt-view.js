@@ -1,11 +1,23 @@
 class View {
-  constructor(game, $el) {}
+  constructor(game, $el) {
+    this.game = game;
+    this.$el = $el;
 
-  bindEvents() {}
+    this.setupBoard(); //add board using jQuery
+  }
+
+  bindEvents() {
+    
+  }
 
   makeMove($square) {}
 
-  setupBoard() {}
+  setupBoard() { 
+    let $container = $("<ul class='ttt-board'></ul>");
+    for (let i = 0; i < 9; i++)
+      $container.append("<li class='ttt-box'></li>");
+    this.$el.append($container);
+  }
 }
 
 module.exports = View;
