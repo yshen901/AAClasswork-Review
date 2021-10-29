@@ -36,7 +36,7 @@ eval("const Board = __webpack_require__(/*! ./board */ \"./src/board.js\");\ncon
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ttt_view__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ttt-view */ \"./src/ttt-view.js\");\n/* harmony import */ var _ttt_view__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_ttt_view__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game */ \"./src/game.js\");\n/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_game__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\n$(() => {\n  let game = new (_game__WEBPACK_IMPORTED_MODULE_1___default())();\n  \n  let $el = $('.ttt');\n  let view = new (_ttt_view__WEBPACK_IMPORTED_MODULE_0___default())(game, $el);\n});\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ttt_view__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ttt-view */ \"./src/ttt-view.js\");\n/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game */ \"./src/game.js\");\n/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_game__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\n$(() => {\n  let game = new (_game__WEBPACK_IMPORTED_MODULE_1___default())();\n  \n  let $el = $('.ttt');\n  let view = new _ttt_view__WEBPACK_IMPORTED_MODULE_0__[\"default\"](game, $el);\n});\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -54,9 +54,10 @@ eval("\nconst MoveError = function (msg) { this.msg = msg; };\n\n// MoveError re
 /*!*************************!*\
   !*** ./src/ttt-view.js ***!
   \*************************/
-/***/ ((module) => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("class View {\n  constructor(game, $el) {\n    this.game = game;\n    this.$el = $el;\n\n    this.setupBoard(); //add board using jQuery\n  }\n\n  bindEvents() {\n    \n  }\n\n  makeMove($square) {}\n\n  setupBoard() { \n    let $container = $(\"<ul class='ttt-board'></ul>\");\n    for (let i = 0; i < 9; i++)\n      $container.append(\"<li class='ttt-box'></li>\");\n    this.$el.append($container);\n  }\n}\n\nmodule.exports = View;\n\n\n//# sourceURL=webpack:///./src/ttt-view.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ View)\n/* harmony export */ });\nclass View {\n  constructor(game, $el) {\n    this.game = game;\n    this.$el = $el;\n\n    this.setupBoard(); //add board using jQuery\n    this.bindEvents();\n  }\n\n  bindEvents() {\n    $(\".ttt-board\").on(\"click\", \".ttt-box\", event => {\n      this.makeMove($(event.currentTarget));\n    });\n  }\n\n  makeMove($square) {\n    let id = parseInt($square.attr(\"id\"));\n\n    $square.text(this.game.currentPlayer);\n    this.game.playMove([Math.floor(id / 3), id % 3]);\n\n    let winner;\n    if (this.game.isOver()) {\n      winner = this.game.winner();\n      if (winner) \n        alert (`${winner} has won!`);\n      else\n        alert (\"It's a tie!\")\n    }\n  }\n\n  setupBoard() { \n    let $container = $(\"<ul class='ttt-board'></ul>\");\n\n    //add an id to know which box you click\n    let $li;\n    for (let i = 0; i < 9; i++)\n      $container.append(`<li class='ttt-box' id='${i}'></li>`);\n\n    this.$el.append($container);\n  }\n}\n\n\n//# sourceURL=webpack:///./src/ttt-view.js?");
 
 /***/ })
 
