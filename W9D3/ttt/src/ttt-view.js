@@ -2,14 +2,21 @@ export default class View {
   constructor(game, $el) {
     this.game = game;
     this.$el = $el;
+    this.gameOver = false; // save this to avoid expensive checking
 
     this.setupBoard(); //add board using jQuery
     this.bindEvents();
   }
 
   bindEvents() {
-    $(".ttt-board").on("click", ".ttt-box", event => {
-      this.makeMove($(event.currentTarget));
+    this.$el.on("click", ".ttt-box", event => {
+      if (!this.gameOver)
+        this.makeMove($(event.currentTarget));
+    });
+
+    this.$el.on("click", ".ttt-box", event => {
+      if (this.gameOver)
+        this.resetGame();
     });
   }
 
@@ -20,13 +27,23 @@ export default class View {
     this.game.playMove([Math.floor(id / 3), id % 3]);
 
     let winner;
-    if (this.game.isOver()) {
+    this.gameOver = this.game.isOver();
+
+    if (this.gameOver) {
       winner = this.game.winner();
       if (winner) 
         alert (`${winner} has won!`);
       else
-        alert ("It's a tie!")
+        alert ("It's a tie!");
     }
+  }
+
+  resetGame() {
+    this.$el.children().remove();
+    this.setupBoard();
+    this.gameOver = false;
+
+    this.game.reset();
   }
 
   setupBoard() { 

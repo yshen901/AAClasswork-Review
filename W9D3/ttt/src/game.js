@@ -69,6 +69,11 @@ class Game {
   winner() {
     return this.board.winner();
   }
+
+  reset() {
+    this.board = new Board();
+    this.currentPlayer = Board.marks[0]; 
+  }
 }
 
 module.exports = Game;
