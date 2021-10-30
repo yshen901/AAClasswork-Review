@@ -1,3 +1,5 @@
+import { APIUtil } from "./api_util";
+
 export default class FollowToggle {
   constructor($el) {
     this.$el = $el;
@@ -7,7 +9,7 @@ export default class FollowToggle {
     this.followed = data['initial-follow-state'];
 
     this.render();
-    this.handleClick();
+    this.addClickHandler();
   }
 
   render() {
@@ -17,24 +19,22 @@ export default class FollowToggle {
       this.$el.text("Follow");
   }
 
-  handleClick() {
+  addClickHandler() {
     this.$el.on("click", event => {
       event.preventDefault();
 
-      let action = "POST";
       if (this.followed)
-        action = "DELETE";
-
-      $.ajax({
-        type: action, 
-        url: `${this.userId}/follow`,
-        dataType: 'json',
-        success: () => {
-          console.log("Success!");
-          this.followed = !this.followed;
+        APIUtil.unfollowUser(this.userId).then(() => {
+          console.log("Unfollowed!");
+          this.followed = false;
           this.render();
-        }
-      });
+        });
+      else
+        APIUtil.followUser(this.userId).then(() => {
+          console.log("Followed!");
+          this.followed = true;
+          this.render();
+        });
     });
   }
 }

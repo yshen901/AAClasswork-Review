@@ -2,6 +2,36 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./frontend/api_util.js":
+/*!******************************!*\
+  !*** ./frontend/api_util.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "APIUtil": () => (/* binding */ APIUtil)
+/* harmony export */ });
+const APIUtil = {
+  followUser: (id) => {
+    return $.ajax({
+      type: 'POST',
+      url: `${id}/follow`,
+      dataType: 'json'
+    });
+  },
+
+  unfollowUser: (id) => {
+    return $.ajax({
+      type: 'DELETE',
+      url:`${id}/follow`,
+      dataType:'json'
+    });
+  }
+}
+
+/***/ }),
+
 /***/ "./frontend/follow_toggle.js":
 /*!***********************************!*\
   !*** ./frontend/follow_toggle.js ***!
@@ -12,6 +42,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ FollowToggle)
 /* harmony export */ });
+/* harmony import */ var _api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api_util */ "./frontend/api_util.js");
+
+
 class FollowToggle {
   constructor($el) {
     this.$el = $el;
@@ -21,7 +54,7 @@ class FollowToggle {
     this.followed = data['initial-follow-state'];
 
     this.render();
-    this.handleClick();
+    this.addClickHandler();
   }
 
   render() {
@@ -31,24 +64,22 @@ class FollowToggle {
       this.$el.text("Follow");
   }
 
-  handleClick() {
+  addClickHandler() {
     this.$el.on("click", event => {
       event.preventDefault();
 
-      let action = "POST";
       if (this.followed)
-        action = "DELETE";
-
-      $.ajax({
-        type: action, 
-        url: `${this.userId}/follow`,
-        dataType: 'json',
-        success: () => {
-          console.log("Success!");
-          this.followed = !this.followed;
+        _api_util__WEBPACK_IMPORTED_MODULE_0__.APIUtil.unfollowUser(this.userId).then(() => {
+          console.log("Unfollowed!");
+          this.followed = false;
           this.render();
-        }
-      });
+        });
+      else
+        _api_util__WEBPACK_IMPORTED_MODULE_0__.APIUtil.followUser(this.userId).then(() => {
+          console.log("Followed!");
+          this.followed = true;
+          this.render();
+        });
     });
   }
 }
