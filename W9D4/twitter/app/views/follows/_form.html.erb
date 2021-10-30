@@ -1,4 +1,5 @@
 <button 
   class="follow-toggle" 
-  data-follow='{ "user-id": <%= user.id %>, "initial-follow-state": <%= current_user.follows?(user) %> }'>
+  data-user-id='<%= user.id %>'
+  data-initial-follow-state='<%= current_user.follows?(user) %>'>
 </button>
