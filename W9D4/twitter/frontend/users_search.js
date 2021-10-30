@@ -1,4 +1,5 @@
 import { APIUtil } from "./api_util";
+import FollowToggle from "./follow_toggle";
 
 export default class UsersSearch {
   constructor($el) {
@@ -16,14 +17,22 @@ export default class UsersSearch {
         debugger;
         this.$usersList.empty();
 
-        let $li, $a;
+        let $li, $a, $button;
         for (let i = 0; i < output.length; i++) {
           $a = $("<a></a>");
           $a.attr("href", `/users/${output[i].id}`);
           $a.text(output[i].username);
 
+          $button = $("<button></button>");
+          $button.addClass("follow-toggle");
+          new FollowToggle($button, {
+            userId: output[i].id,
+            followed: output[i].followed
+          });
+
           $li = $("<li></li>");
           $li.append($a);
+          $li.append($button);
           this.$usersList.append($li);
         }
       });

@@ -55,12 +55,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class FollowToggle {
-  constructor($el) {
+  constructor($el, options) {
     this.$el = $el;
 
     let data = this.$el.data("follow");
-    this.userId = data['user-id'];
-    this.followed = data['initial-follow-state'];
+    this.userId = data['user-id'] || options.userId;
+    this.followed = data['initial-follow-state'] || options.followed;
 
     this.render();
     this.addClickHandler();
@@ -112,6 +112,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ UsersSearch)
 /* harmony export */ });
 /* harmony import */ var _api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api_util */ "./frontend/api_util.js");
+/* harmony import */ var _follow_toggle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./follow_toggle */ "./frontend/follow_toggle.js");
+
 
 
 class UsersSearch {
@@ -130,14 +132,22 @@ class UsersSearch {
         debugger;
         this.$usersList.empty();
 
-        let $li, $a;
+        let $li, $a, $button;
         for (let i = 0; i < output.length; i++) {
           $a = $("<a></a>");
           $a.attr("href", `/users/${output[i].id}`);
           $a.text(output[i].username);
 
+          $button = $("<button></button>");
+          $button.addClass("follow-toggle");
+          new _follow_toggle__WEBPACK_IMPORTED_MODULE_1__["default"]($button, {
+            userId: output[i].id,
+            followed: output[i].followed
+          });
+
           $li = $("<li></li>");
           $li.append($a);
+          $li.append($button);
           this.$usersList.append($li);
         }
       });

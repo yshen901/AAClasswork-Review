@@ -1,12 +1,12 @@
 import { APIUtil } from "./api_util";
 
 export default class FollowToggle {
-  constructor($el) {
+  constructor($el, options) {
     this.$el = $el;
 
     let data = this.$el.data("follow");
-    this.userId = data['user-id'];
-    this.followed = data['initial-follow-state'];
+    this.userId = data['user-id'] || options.userId;
+    this.followed = data['initial-follow-state'] || options.followed;
 
     this.render();
     this.addClickHandler();
