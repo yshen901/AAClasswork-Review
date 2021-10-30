@@ -98,3 +98,4 @@ TBD
 	W8D5:	tic-tac-toe					(make an unbeatable AI bot...use a BST)
 	W9D1:	flappyBird					(bonus: art, moving background, difficulty, sound)
 	W9D2:	asteroids					(p6 - drawing a background, p7 - use request animation frame and deltaT to move instead of just ms)
+	W9D3:	jQuery snake/hanoi				(same as tic-tac-toe. Will come back later if I need jQuery practice.)
