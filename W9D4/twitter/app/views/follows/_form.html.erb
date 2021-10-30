@@ -16,3 +16,11 @@
     <input type="submit" value="Follow">
   </form>
 <% end %>
+
+
+<button 
+  class="follow-toggle" 
+  data-follow="{
+      user-id: <%= user.id %>, 
+      initial-follow-state: <%= current_user.follows?(user) %>}">
+</button>
