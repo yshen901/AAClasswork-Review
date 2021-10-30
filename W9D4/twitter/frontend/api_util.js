@@ -13,5 +13,14 @@ export const APIUtil = {
       url:`${id}/follow`,
       dataType:'json'
     });
+  },
+
+  searchUsers: (name) => {
+    return $.ajax({
+      type: 'GET',
+      url: 'search',
+      dataType: "json",
+      data: { query: name }
+    });
   }
 }

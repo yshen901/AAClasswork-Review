@@ -27,6 +27,15 @@ const APIUtil = {
       url:`${id}/follow`,
       dataType:'json'
     });
+  },
+
+  searchUsers: (name) => {
+    return $.ajax({
+      type: 'GET',
+      url: 'search',
+      dataType: "json",
+      data: { query: name }
+    });
   }
 }
 
@@ -86,6 +95,38 @@ class FollowToggle {
           this.followed = true;
           this.render();
         });
+    });
+  }
+}
+
+/***/ }),
+
+/***/ "./frontend/users_search.js":
+/*!**********************************!*\
+  !*** ./frontend/users_search.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ UsersSearch)
+/* harmony export */ });
+/* harmony import */ var _api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api_util */ "./frontend/api_util.js");
+
+
+class UsersSearch {
+  constructor($el) {
+    this.$el = $el;
+    this.$searchBar = $el.children("input");
+    this.$usersList = this.$searchBar.children("ul");
+
+    this.addSearchHandler();
+  }
+
+  addSearchHandler() {
+    this.$el.on("input", "input", () => {
+      _api_util__WEBPACK_IMPORTED_MODULE_0__.APIUtil.searchUsers(this.$searchBar.val())
+      .then((output) => { console.log(output )});
     });
   }
 }
@@ -156,6 +197,8 @@ var __webpack_exports__ = {};
   \*****************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _follow_toggle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./follow_toggle */ "./frontend/follow_toggle.js");
+/* harmony import */ var _users_search__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_search */ "./frontend/users_search.js");
+
 
 
 $(() => {
@@ -164,6 +207,9 @@ $(() => {
   $buttons.each((idx, ele) => {
     followToggles.push(new _follow_toggle__WEBPACK_IMPORTED_MODULE_0__["default"]($(ele)));
   });
+
+  let $usersSearch = $(".users-search");
+  let usersSearch = new _users_search__WEBPACK_IMPORTED_MODULE_1__["default"]($usersSearch);
 });
 })();
 
