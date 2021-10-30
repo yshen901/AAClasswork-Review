@@ -64,19 +64,25 @@ class FollowToggle {
       this.$el.text("Follow");
   }
 
+  disableButton() {
+    this.$el.prop("disabled", true);
+    setTimeout(() => {
+      this.$el.prop("disabled", false);
+    }, 1000);
+  }
+
   addClickHandler() {
     this.$el.on("click", event => {
       event.preventDefault();
 
+      this.disableButton(); // disable the button temporarily so we only click once
       if (this.followed)
         _api_util__WEBPACK_IMPORTED_MODULE_0__.APIUtil.unfollowUser(this.userId).then(() => {
-          console.log("Unfollowed!");
           this.followed = false;
           this.render();
         });
       else
         _api_util__WEBPACK_IMPORTED_MODULE_0__.APIUtil.followUser(this.userId).then(() => {
-          console.log("Followed!");
           this.followed = true;
           this.render();
         });
