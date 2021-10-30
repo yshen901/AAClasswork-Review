@@ -118,7 +118,7 @@ class UsersSearch {
   constructor($el) {
     this.$el = $el;
     this.$searchBar = $el.children("input");
-    this.$usersList = this.$searchBar.children("ul");
+    this.$usersList = $el.children("ul");
 
     this.addSearchHandler();
   }
@@ -126,7 +126,21 @@ class UsersSearch {
   addSearchHandler() {
     this.$el.on("input", "input", () => {
       _api_util__WEBPACK_IMPORTED_MODULE_0__.APIUtil.searchUsers(this.$searchBar.val())
-      .then((output) => { console.log(output )});
+      .then((output) => {
+        debugger;
+        this.$usersList.empty();
+
+        let $li, $a;
+        for (let i = 0; i < output.length; i++) {
+          $a = $("<a></a>");
+          $a.attr("href", `/users/${output[i].id}`);
+          $a.text(output[i].username);
+
+          $li = $("<li></li>");
+          $li.append($a);
+          this.$usersList.append($li);
+        }
+      });
     });
   }
 }
