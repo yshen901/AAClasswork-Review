@@ -36,6 +36,15 @@ const APIUtil = {
       dataType: "json",
       data: { query: name }
     });
+  },
+
+  makeTweet: (data) => {
+    return $.ajax({
+      type: "POST",
+      url: '/tweets',
+      dataType: 'json',
+      data: data
+    })
   }
 }
 
@@ -58,7 +67,6 @@ class FollowToggle {
   constructor($el, options) {
     this.$el = $el;
 
-    let data = this.$el.data("follow");
     this.userId = this.$el.data("user-id") || options.userId;
     this.followed = this.$el.data("initial-follow-state") || options.followed;
 
@@ -96,6 +104,64 @@ class FollowToggle {
           this.render();
         });
     });
+  }
+}
+
+/***/ }),
+
+/***/ "./frontend/tweet_compose.js":
+/*!***********************************!*\
+  !*** ./frontend/tweet_compose.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ TweetCompose)
+/* harmony export */ });
+/* harmony import */ var _api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./api_util */ "./frontend/api_util.js");
+   
+
+class TweetCompose {
+  constructor(el) {
+    this.$el = $(el);
+    this.$inputs = $(this.$el.children("input"));
+
+    this.$el.on("submit", (e) => {
+      this.submit(e);
+    });
+
+    this.handleSuccess = this.handleSuccess.bind(this);
+  }
+
+  disable() {
+    this.$inputs.each((idx, ele) => $(ele).prop("disabled", true));
+  }
+
+  enable() {
+    this.$inputs.each((idx, ele) => $(ele).prop("disabled", false));
+  }   
+
+  clearValues() {
+    $('textarea').val("");
+  }
+
+  handleSuccess(response) {
+    this.enable();
+    this.clearValues();
+
+    let $li = $("<li></li>");
+    $li.text(JSON.stringify(response));
+    $("#feed").append($li);
+  }
+
+  submit(e) {
+    e.preventDefault();
+
+    let formData = $(e.currentTarget).serializeJSON();
+    this.disable();
+    _api_util__WEBPACK_IMPORTED_MODULE_0__.APIUtil.makeTweet(formData)
+      .then((response) => this.handleSuccess(response));
   }
 }
 
@@ -222,6 +288,8 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _follow_toggle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./follow_toggle */ "./frontend/follow_toggle.js");
 /* harmony import */ var _users_search__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_search */ "./frontend/users_search.js");
+/* harmony import */ var _tweet_compose__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tweet_compose */ "./frontend/tweet_compose.js");
+
 
 
 
@@ -232,8 +300,10 @@ $(() => {
     followToggles.push(new _follow_toggle__WEBPACK_IMPORTED_MODULE_0__["default"]($(ele)));
   });
 
-  let $usersSearch = $(".users-search");
+  let $usersSearch = $(".users-search");   // one way to initialize
   let usersSearch = new _users_search__WEBPACK_IMPORTED_MODULE_1__["default"]($usersSearch);
+
+  $(".tweet-compose").each((i, tc) => new _tweet_compose__WEBPACK_IMPORTED_MODULE_2__["default"](tc)); // another more way to initialize (more DRY)
 });
 })();
 

@@ -4,7 +4,6 @@ export default class FollowToggle {
   constructor($el, options) {
     this.$el = $el;
 
-    let data = this.$el.data("follow");
     this.userId = this.$el.data("user-id") || options.userId;
     this.followed = this.$el.data("initial-follow-state") || options.followed;
 

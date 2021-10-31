@@ -22,5 +22,14 @@ export const APIUtil = {
       dataType: "json",
       data: { query: name }
     });
+  },
+
+  makeTweet: (data) => {
+    return $.ajax({
+      type: "POST",
+      url: '/tweets',
+      dataType: 'json',
+      data: data
+    })
   }
 }
