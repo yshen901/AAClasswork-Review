@@ -125,9 +125,14 @@ __webpack_require__.r(__webpack_exports__);
 class TweetCompose {
   constructor(el) {
     this.$el = $(el);
-
     this.$el.on("submit", (e) => {
       this.submit(e);
+    });
+
+    this.$charsLeft = this.$el.find(".chars-left");
+    this.$textArea = this.$el.find("textarea");
+    this.$textArea.on("input", (e) => {
+      this.handleInput(e);
     });
 
     this.handleSuccess = this.handleSuccess.bind(this);
@@ -161,6 +166,12 @@ class TweetCompose {
     this.disable();
     _api_util__WEBPACK_IMPORTED_MODULE_0__.APIUtil.makeTweet(formData)
       .then((response) => this.handleSuccess(response));
+  }
+
+  handleInput(e) {
+    debugger;
+    let charsLeft = 140 - this.$textArea.val().length;
+    this.$charsLeft.text(`${charsLeft}/140`);
   }
 }
 
