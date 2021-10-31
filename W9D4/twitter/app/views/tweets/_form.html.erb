@@ -5,22 +5,22 @@
       name="authenticity_token"
       value="<%= form_authenticity_token %>">
 
-  <label>
-    Content
-    <textarea name="tweet[content]"></textarea>
+  <div id="tweet-content">
+    <label>Content</label>
+    <textarea name="tweet[content]" placeholder="Please enter your tweet"></textarea>
     <strong class="chars-left">140/140</strong>
-  </label>
+  </div>
   <br>
 
-  <label>
-    Mention
+  <div id="tweet-mentions">
+    <label>Mention</label>
     <select name="tweet[mentioned_user_ids][]">
       <option></option>
       <% User.all.each do |user| %>
         <option value="<%= user.id %>"><%= user.username %></option>
       <% end %>
     </select>
-  </label>
+  </div>
   <br>
 
   <input type="Submit" value="Post Tweet!">
