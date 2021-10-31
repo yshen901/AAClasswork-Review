@@ -125,7 +125,6 @@ __webpack_require__.r(__webpack_exports__);
 class TweetCompose {
   constructor(el) {
     this.$el = $(el);
-    this.$inputs = $(this.$el.children("input"));
 
     this.$el.on("submit", (e) => {
       this.submit(e);
@@ -135,11 +134,11 @@ class TweetCompose {
   }
 
   disable() {
-    this.$inputs.each((idx, ele) => $(ele).prop("disabled", true));
+    $(":input").each((idx, ele) => $(ele).prop("disabled", true));
   }
 
   enable() {
-    this.$inputs.each((idx, ele) => $(ele).prop("disabled", false));
+    $(":input").each((idx, ele) => $(ele).prop("disabled", false));
   }   
 
   clearValues() {

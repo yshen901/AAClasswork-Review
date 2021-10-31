@@ -3,7 +3,6 @@ import { APIUtil } from "./api_util";
 export default class TweetCompose {
   constructor(el) {
     this.$el = $(el);
-    this.$inputs = $(this.$el.children("input"));
 
     this.$el.on("submit", (e) => {
       this.submit(e);
@@ -13,11 +12,11 @@ export default class TweetCompose {
   }
 
   disable() {
-    this.$inputs.each((idx, ele) => $(ele).prop("disabled", true));
+    $(":input").each((idx, ele) => $(ele).prop("disabled", true));
   }
 
   enable() {
-    this.$inputs.each((idx, ele) => $(ele).prop("disabled", false));
+    $(":input").each((idx, ele) => $(ele).prop("disabled", false));
   }   
 
   clearValues() {
