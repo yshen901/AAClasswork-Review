@@ -99,4 +99,4 @@ TBD
 	W9D1:	flappyBird					(bonus: art, moving background, difficulty, sound)
 	W9D2:	asteroids					(p6 - drawing a background, p7 - use request animation frame and deltaT to move instead of just ms)
 	W9D3:	jQuery snake/hanoi				(same as tic-tac-toe. Will come back later if I need jQuery practice.)
-	W9D4:	jQuery Twitter					(InfiniteTweets - loading more tweets with a button, Mentions - bootstrapping all users to window, then allowing for multiple select).
+	W9D4:	jQuery Twitter					(InfiniteTweets - loading more tweets with a button, Trigger - custom event triggers).
