@@ -159,14 +159,16 @@ class TweetCompose {
     $(":input").each((idx, ele) => $(ele).prop("disabled", false));
   }   
 
-  clearValues() {
-    $('textarea').val("");
+  clearInput() {
+    this.$textArea.val("");
+    this.$tweetMentions.empty(); 
+    this.$charsLeft.text("140/140");
   }
 
   // Success callback for the submit
   handleSuccess(response) {
     this.enable();
-    this.clearValues();
+    this.clearInput();
 
     let $li = $("<li></li>");
     $li.text(JSON.stringify(response));
@@ -176,7 +178,6 @@ class TweetCompose {
   // Fires an AJAX call to make the tweet
   submit(e) {
     e.preventDefault();
-    debugger;
 
     let formData = $(e.currentTarget).serializeJSON();
     this.disable();
