@@ -13,15 +13,9 @@
   <br>
 
   <div id="tweet-mentions">
-    <label>Mention</label>
-    <select name="tweet[mentioned_user_ids][]">
-      <option></option>
-      <% User.all.each do |user| %>
-        <option value="<%= user.id %>"><%= user.username %></option>
-      <% end %>
-    </select>
   </div>
-  <br>
+
+  <button id="add-mentions-button">Add Mentions</button>
 
   <input type="Submit" value="Post Tweet!">
 </form>
