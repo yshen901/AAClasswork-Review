@@ -129,18 +129,24 @@ class TweetCompose {
       this.submit(e);
     });
     
+    // to keep track of characters
     this.$charsLeft = this.$el.find(".chars-left");
     this.$textArea = this.$el.find("textarea");
     this.$textArea.on("input", (e) => {
       this.handleInput(e);
     });
     
+    // to add/remove mentions
     this.$tweetMentions = $("#tweet-mentions");
     this.$addMentions = $("#add-mentions-button");
     this.$addMentions.on("click", e => {
       this.addMention(e);
     });
+    this.$tweetMentions.on("click", ".remove-mentioned-user", (e) => {
+      this.removeMention(e);
+    });
 
+    // to handle successful post
     this.handleSuccess = this.handleSuccess.bind(this);
   }
 
@@ -193,14 +199,23 @@ class TweetCompose {
       `<option value="${user.id}">${user.username}</option>`
     ).join("");
 
-    debugger;
-
     let select = `
-      <select name="tweet[mentioned_user_ids][]"> 
+      <div>
+        <select name="tweet[mentioned_user_ids][]"> 
         ${options}
-      </select>
+        </select>
+        <a class="remove-mentioned-user">Remove</a>
+      </div>
     `
     this.$tweetMentions.append($(select));
+  }
+
+  // Removes the parent div
+  removeMention(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    e.currentTarget.parentElement.remove();
   }
 }
 
