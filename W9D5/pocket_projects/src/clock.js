@@ -1,5 +1,9 @@
+import { htmlGenerator } from "./warmup";
+
 export default class Clock {
-  constructor() {
+  constructor(clockElement) {
+    this.clockElement = clockElement;
+    
     // 1. Create a Date object.
     const currentTime = new Date();
 
@@ -13,14 +17,13 @@ export default class Clock {
 
     // 4. Schedule the tick at 1 second intervals.
     setInterval(this._tick.bind(this), 1000);
+
   }
 
   printTime() {
     // Format the time in HH:MM:SS
     const timeString = [this.hours, this.minutes, this.seconds].join(":");
-
-    // Use console.log to print it.
-    console.log(timeString);
+    htmlGenerator(timeString, this.clockElement);
   }
 
   _tick() {
@@ -52,3 +55,6 @@ export default class Clock {
     this.hours = (this.hours + 1) % 24;
   }
 }
+
+const clockElement = document.getElementById("clock");
+new Clock(clockElement);
