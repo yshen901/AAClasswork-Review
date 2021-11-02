@@ -37,7 +37,17 @@ eval("\nconst dogs = {\n  \"Corgi\": \"https://www.akc.org/dog-breeds/cardigan-w
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _warmup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./warmup */ \"./src/warmup.js\");\n/* harmony import */ var _clock__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./clock */ \"./src/clock.js\");\n/* harmony import */ var _drop_down__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./drop_down */ \"./src/drop_down.js\");\n/* harmony import */ var _drop_down__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_drop_down__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\n\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _warmup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./warmup */ \"./src/warmup.js\");\n/* harmony import */ var _clock__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./clock */ \"./src/clock.js\");\n/* harmony import */ var _drop_down__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./drop_down */ \"./src/drop_down.js\");\n/* harmony import */ var _drop_down__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_drop_down__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _todo_list__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./todo_list */ \"./src/todo_list.js\");\n/* harmony import */ var _todo_list__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_todo_list__WEBPACK_IMPORTED_MODULE_3__);\n\n\n\n\n\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/todo_list.js":
+/*!**************************!*\
+  !*** ./src/todo_list.js ***!
+  \**************************/
+/***/ (() => {
+
+eval("// Lazily initializes the todoList based on contents of localStorage\nconst todoList = JSON.parse(localStorage.getItem(\"todoList\")) || [];\nconst todoForm = document.getElementsByClassName(\"add-todo-form\")[0];\nconst todoUL = document.getElementsByClassName(\"todos\")[0];\n\n// Handles submission event\naddTodo = (e) => {\n  e.preventDefault();\n  \n  let newTodo = e.target.children[0].value; \n  e.target.children[0].value = \"\";\n\n  todoList.push({\n    value: newTodo,\n    done: false\n  });\n\n  populateList(todoList);\n  pushList(todoList);\n};\n\n// Populate the list, starting from the first element not on the UL\n// determined based on the idx of the last element in UL.\npopulateList = (list) => {\n  let li;\n  for (let i = todoUL.children.length - 1; i < list.length; i++) {\n    li = document.createElement(\"li\");\n    if (list[i].done)\n      li.innerHTML += `\n        <input type='checkbox' data-id=${i} checked></input>\n        <label>${list[i].value}</label>\n      `;\n    else \n      li.innerHTML += `\n        <input type='checkbox' data-id=${i}></input>\n        <label>${list[i].value}</label>\n      `;\n    todoUL.append(li);\n  }\n};\n\nupdateTodo = (e) => {\n  let listIdx = parseInt(e.target.dataset.id);\n  todoList[listIdx].done = !todoList[listIdx].done;\n  pushList(todoList);\n};\n\npushList = (list) => {\n  localStorage.setItem(\"todoList\", JSON.stringify(todoList));\n};\n\n// Set up listeners and initialize the page\ntodoForm.addEventListener(\"submit\", e => addTodo(e));\ntodoUL.addEventListener(\"change\", e => updateTodo(e));\npopulateList(todoList);\n\n//# sourceURL=webpack:///./src/todo_list.js?");
 
 /***/ }),
 
