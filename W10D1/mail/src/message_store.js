@@ -1,9 +1,30 @@
+let messagesSeed = {
+  sent: [
+    {
+      to: "friend@mail.com",
+      subject: "Check this out",
+      body: "It's so cool"
+    },
+    { to: "person@mail.com", subject: "zzz", body: "so booring" }
+  ],
+  inbox: [
+    {
+      from: "grandma@mail.com",
+      subject: "Fwd: Fwd: Fwd: Check this out",
+      body:
+        "Stay at home mom discovers cure for leg cramps. Doctors hate her"
+    },
+    {
+      from: "person@mail.com",
+      subject: "Questionnaire",
+      body: "Take this free quiz win $1000 dollars"
+    }
+  ]
+};
+
 export default class MessageStore {
-  constructor({sent, inbox}) {
-    this.messages = {   // each property holds an array of messages
-      sent: sent,       // each message is an object, with properties to/from, subject, and body
-      inbox: inbox
-    };
+  constructor() {
+    this.messages = messagesSeed;
   }
 
   getInboxMessages() {
@@ -14,11 +35,11 @@ export default class MessageStore {
     return this.messages.sent;
   }
 
-  renderMessage(message) {
+  renderMessage(message, source) {
     let li = document.createElement("li");
     li.className = "message";
     li.innerHTML = `
-      ${this.generateHTML("span", "from", message.from)}
+      ${this.generateHTML("span", source, message[source])}
       ${this.generateHTML("span", "subject", message.subject)}
       ${this.generateHTML("span", "body", message.body)}
     `

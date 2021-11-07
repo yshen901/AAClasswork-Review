@@ -1,8 +1,10 @@
 import Router from "./router";
 import Inbox from "./inbox";
+import Sent from "./sent";
 
 let routes = {
-  inbox: Inbox
+  inbox: Inbox,
+  sent: Sent,
 };
 
 document.addEventListener("DOMContentLoaded", () => {
