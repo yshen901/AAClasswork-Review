@@ -40,16 +40,34 @@ export default class DOMNodeCollection {
     }
   }
 
-  attr() {
-
+  // Gets the attribute value for the first element in the set
+  // Sets attribute for all elements in the set
+  attr(attributeName, newValue) {
+    if (this.htmlElements.length == 0)
+      return null;
+    
+    if (newValue === undefined) {
+      let attributes = this.htmlElements[0].attributes;
+      return attributes.getNamedItem(attributeName).textContent;
+    }
+    else {
+      let attr = document.createAttribute(attributeName);
+      attr.value = newValue;
+      for (let i = 0; i < this.htmlElements.length; i++)
+        this.htmlElements[i].attributes.setNamedItem(attr);
+    }
   }
 
-  addClass() {
-
+  // adds the class to all elements
+  addClass(className) {
+    for (let i = 0; i < this.htmlElements.length; i++)
+      this.htmlElements[i].classList.add(className)
   }
 
-  removeCLass() {
-
+  // removes the class from all elements
+  removeClass(className) {
+    for (let i = 0; i < this.htmlElements.length; i++)
+      this.htmlElements[i].classList.remove(className)
   }
 
   // HELPER FUNCTIONS
