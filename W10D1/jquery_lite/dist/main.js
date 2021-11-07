@@ -15,7 +15,7 @@
   \**********************/
 /***/ (() => {
 
-eval("\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("/* \n  Core function.\n    1. String indicates a CSS selector to identify nodes in the page\n    2. Uses Document.querySelectorAll() to make a NodeList\n    3. Convert to array then pass it on\n*/\nwindow.$l = (arg) => {\n  elements = document.querySelectorAll(arg);\n  return elementArray = Array.from(elements);\n}\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ })
 
