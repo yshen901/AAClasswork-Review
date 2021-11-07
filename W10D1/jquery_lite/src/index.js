@@ -15,4 +15,10 @@ window.$l = (arg) => {
   else if (arg instanceof HTMLElement) {
     return new DOMNodeCollection([arg]);
   }
+  else if (arg instanceof Function) {
+    if (document.readyState === 'complete')
+      arg();
+    else
+      document.addEventListener("DOMContentLoaded", arg); // Mozilla, Opera9
+  }
 }
