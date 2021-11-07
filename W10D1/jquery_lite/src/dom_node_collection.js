@@ -17,7 +17,7 @@ export default class DOMNodeCollection {
     }
   }
 
-  // Sets all nodes' html to nothing
+  // Sets all nodes' innerHTML to nothing
   empty() {
     for (let i = 0; i < this.htmlElements.length; i++) 
       this.htmlElements[i].innerHTML = "";
@@ -68,6 +68,53 @@ export default class DOMNodeCollection {
   removeClass(className) {
     for (let i = 0; i < this.htmlElements.length; i++)
       this.htmlElements[i].classList.remove(className)
+  }
+
+  children() {
+    let children = [];
+    for (let i = 0; i < this.htmlElements.length; i++) {
+      let newChildren = Array.from(this.htmlElements[i].children);
+      children = children.concat(newChildren);
+    }
+    return new DOMNodeCollection(children);
+  }
+
+  parent() {
+    let parents = [];
+    for (let i = 0; i < this.htmlElements.length; i++) {
+      let parent = this.htmlElements[i].parentElement;
+      if (!parents.includes(parent))
+        parents.push(parent);
+    }
+    return new DOMNodeCollection(parents);
+  } 
+
+  find(selectors) {
+    let matchingDescendents = [];
+    for (let i = 0; i < this.htmlElements.length; i++) {
+      let newMatches = this.htmlElements[i].querySelectorAll(selectors)
+      for (let j = 0; j < newMatches.length; j++) {
+        if (!matchingDescendents.includes(newMatches[j]))
+          matchingDescendents.push(newMatches[j]);
+      }
+    }
+    return new DOMNodeCollection(matchingDescendents);
+  }
+
+  // Sets all outerHTML to ""
+  remove() {
+    for (let i = 0; i < this.htmlElements.length; i++) 
+      this.htmlElements[i].outerHTML = "";
+  }
+
+  on(event, cb) {
+    for (let i = 0; i < this.htmlElements.length; i++)
+      this.htmlElements[i].addEventListener(event, cb);
+  }
+
+  off(event, cb) {
+    for (let i = 0; i < this.htmlElements.length; i++) 
+      this.htmlElements[i].removeEventListener(event, cb);
   }
 
   // HELPER FUNCTIONS
