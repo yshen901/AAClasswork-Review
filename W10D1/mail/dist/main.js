@@ -15,7 +15,7 @@
   \**********************/
 /***/ (() => {
 
-eval("console.log(\"It's working\");\n\n//# sourceURL=webpack://mail/./src/index.js?");
+eval("document.addEventListener(\"DOMContentLoaded\", () => {\n  let sidebarNavs = document.querySelectorAll(\".sidebar-nav\");\n\n  const sidebarCB = (e) => {\n    if (e.target.tagName === \"A\" || e.target.tagName === \"BUTTON\") {\n      e.stopPropagation();\n      e.preventDefault();\n\n      let innerText = e.target.innerText.toLowerCase();\n      window.location.hash = innerText;\n    }\n  }\n  for (let i = 0; i < sidebarNavs.length; i++) {\n    sidebarNavs[i].addEventListener(\"click\", sidebarCB);\n  }\n});\n\n//# sourceURL=webpack://mail/./src/index.js?");
 
 /***/ })
 
