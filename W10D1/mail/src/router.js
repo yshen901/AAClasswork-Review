@@ -1,6 +1,7 @@
 export default class Router {
-  constructor(node) {
+  constructor(node, routes) {
     this.node = node; //node is a DOMNode that we will edit
+    this.routes = routes;
 
     this.start();
   }
@@ -13,20 +14,20 @@ export default class Router {
   }
 
   activeRoute() {
-    //placeholder
-    return window.location.hash;
+    let currentRoute = window.location.hash.slice(1); //remove # from hash
+
+    // Return null if no valid component for hash, otherwise return component instance
+    if (!this.routes[currentRoute])
+      return null;
+    return new this.routes[currentRoute]()
   }
 
   render() {
     //clear node and get current route
+    let component = this.activeRoute();
     this.node.innerHTML = ""; 
-    let currentRoute = this.activeRoute();
 
-    //make a new element containing current route
-    let newContent = document.createElement("p");
-    newContent.innerHTML = currentRoute;
-
-    //add new element into the node as a child
-    this.node.appendChild(newContent);
+    if (component)
+      this.node.appendChild(component.render());
   }
 }

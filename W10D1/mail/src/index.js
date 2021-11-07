@@ -2,8 +2,8 @@ import Router from "./router";
 import Inbox from "./inbox";
 
 let routes = {
-  inbox = Inbox
-}
+  inbox: Inbox
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   // Add event listener to detect clicks in the NAV panel

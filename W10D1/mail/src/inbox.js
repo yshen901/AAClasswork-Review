@@ -1,6 +1,7 @@
 export default class Inbox {
   constructor() {
 
+  this.render();
   }
 
   render() {
@@ -8,5 +9,7 @@ export default class Inbox {
     messagesList.className = "messages";
 
     messagesList.innerHTML = "An Inbox Message";
+
+    return messagesList;
   }
 }
