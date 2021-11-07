@@ -1,4 +1,9 @@
 import Router from "./router";
+import Inbox from "./inbox";
+
+let routes = {
+  inbox = Inbox
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   // Add event listener to detect clicks in the NAV panel
@@ -18,5 +23,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Add router to the content page to tie it to the hash
   const content = document.querySelector('.content');
-  const router = new Router(content);
+  const router = new Router(content, routes);
 });
