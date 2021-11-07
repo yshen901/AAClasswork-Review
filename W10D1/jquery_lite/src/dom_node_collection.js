@@ -8,7 +8,7 @@ export default class DOMNodeCollection {
     if (this.htmlElements.length == 0)
       return null;
     
-    if (str === null) {
+    if (str === undefined) {
       return this.htmlElements[0].innerHTML;
     }
     else {
@@ -20,13 +20,13 @@ export default class DOMNodeCollection {
   // Sets all nodes' html to nothing
   empty() {
     for (let i = 0; i < this.htmlElements.length; i++) 
-      this.htmlElements[i].html = "";
+      this.htmlElements[i].innerHTML = "";
   }
 
   // Appends a string, HTMLELement.outerHTML, or array of HTMLElements'
   // outerHTMLs to each node. 
   append(arg) {
-    if (arg instanceof String) {
+    if (arg instanceof String || typeof arg === 'string') {
       for (let i = 0; i < this.htmlElements.length; i++)
         this.htmlElements[i].innerHTML += arg;
     }
@@ -40,10 +40,22 @@ export default class DOMNodeCollection {
     }
   }
 
+  attr() {
+
+  }
+
+  addClass() {
+
+  }
+
+  removeCLass() {
+
+  }
+
   // HELPER FUNCTIONS
   // Outputs a string of all of the outerHTML of all elements
   outerHTML() {
-    str = "";
+    let str = "";
     for (let i = 0; i < this.htmlElements.length; i++)
       str += this.htmlElements[i].outerHTML;
 
