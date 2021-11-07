@@ -28,7 +28,7 @@ function debounce(func, wait = 20, immediate = true) {
     // Restart the debounce waiting period - returns true
     timeout = setTimeout(later, wait);
 
-    // Call immediately if you're doing a leading end execution
+    // Call immediately if you're doSing a leading end execution
     if (callNow) func.apply(context, args);
   };
 }
