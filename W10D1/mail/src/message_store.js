@@ -1,3 +1,5 @@
+import { RenderUtil } from "./render_util"
+
 let messagesSeed = {
   sent: [
     {
@@ -25,6 +27,7 @@ let messagesSeed = {
 export default class MessageStore {
   constructor() {
     this.messages = messagesSeed;
+    this.messageDraft = new Message();
   }
 
   getInboxMessages() {
@@ -39,16 +42,37 @@ export default class MessageStore {
     let li = document.createElement("li");
     li.className = "message";
     li.innerHTML = `
-      ${this.generateHTML("span", source, message[source])}
-      ${this.generateHTML("span", "subject", message.subject)}
-      ${this.generateHTML("span", "body", message.body)}
+      ${RenderUtil.generateHTML("span", source, message[source])}
+      ${RenderUtil.generateHTML("span", "subject", message.subject)}
+      ${RenderUtil.generateHTML("span", "body", message.body)}
     `
 
     return li;
   }
 
-  //HELPER
-  generateHTML(tag, className, text) {
-    return `<${tag} class="${className}">${text}</${tag}>`
+  getMessageDraft() {
+    return this.messageDraft;
+  }
+
+  updateDraftField(field, value) {
+    this.messageDraft[field] = value;
+  }
+
+  sendDraft() {
+    this.messages.sent.push({
+      to: this.messageDraft.to,
+      subject: this.messageDraft.subject,
+      body: this.messageDraft.body
+    });
+    debugger;
+    this.messageDraft = new Message();
+  }
+}
+
+class Message {
+  constructor(to, subject, body) {
+    this.to = to || "";
+    this.subject = subject || "";
+    this.body = body || "";
   }
 }

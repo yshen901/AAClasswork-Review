@@ -1,7 +1,11 @@
+import MessageStore from "./message_store";
+
 export default class Router {
   constructor(node, routes) {
     this.node = node; //node is a DOMNode that we will edit
     this.routes = routes;
+
+    this.messageStore = new MessageStore();
 
     this.start();
   }
@@ -19,7 +23,7 @@ export default class Router {
     // Return null if no valid component for hash, otherwise return component instance
     if (!this.routes[currentRoute])
       return null;
-    return new this.routes[currentRoute]()
+    return new this.routes[currentRoute](this.messageStore)
   }
 
   render() {

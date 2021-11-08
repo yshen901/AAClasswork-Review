@@ -1,10 +1,12 @@
 import Router from "./router";
 import Inbox from "./inbox";
 import Sent from "./sent";
+import Compose from "./compose";
 
 let routes = {
   inbox: Inbox,
   sent: Sent,
+  compose: Compose,
 };
 
 document.addEventListener("DOMContentLoaded", () => {

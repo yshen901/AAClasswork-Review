@@ -1,8 +1,6 @@
-import MessageStore from "./message_store";
-
 export default class Sent {
-  constructor() {
-    this.messageStore = new MessageStore();
+  constructor(messageStore) {
+    this.messageStore = messageStore;
     this.messages = this.messageStore.getSentMessages();
     this.render();
   }

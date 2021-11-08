@@ -1,8 +1,6 @@
-import MessageStore from "./message_store";
-
 export default class Inbox {
-  constructor() {
-    this.messageStore = new MessageStore();
+  constructor(messageStore) {
+    this.messageStore = messageStore;
     this.messages = this.messageStore.getInboxMessages()
     this.render();
   }
