@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import Clock from "./clock";
 import Tab from "./tab";
+import Weather from "./weather";
 
 const tabSeeds = [
   {title: "Tab1", content: "This is tab1"},
@@ -18,4 +19,5 @@ document.addEventListener('DOMContentLoaded', () => {
 const Root = () => <div>
   <Clock></Clock>
   <Tab tabs={tabSeeds}></Tab>
+  <Weather></Weather>
 </div>

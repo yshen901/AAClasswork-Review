@@ -26,3 +26,8 @@
 
 # Ignore all node_modules
 node_modules
+bundle.js
+bundle.js.map
+
+# Ignore all API_Keys
+api_keys.js
