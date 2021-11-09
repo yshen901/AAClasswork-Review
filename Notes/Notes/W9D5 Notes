@@ -1,0 +1,149 @@
+TBD: Learn to use AJAX with Vanilla DOM as well as jQuery (check out AJAXTwitter's UserSearch using Vanilla JS)
+
+
+jQuery 7 - Triggering
+	use closest('selector') to retrieve the closest ancestor of the element that matches the selectors
+	use trigger("submit/action") to trigger the action on the jQuery element
+	
+	You can use trigger to manually trigger events, rather than using a click
+		  $("div.hover-submit-inner").on("mouseenter", event => { 
+		    console.log("mouseenter");
+		    const $div = $(event.currentTarget);
+
+		    const timerId = window.setTimeout( () => { 		//manually triggers after hovering 2s
+		      $div.closest("form").trigger("submit");
+		    }, 2000);
+		    $div.data("timer-id", timerId);				//does this by adding a timeout
+		  });
+		  
+		  $("div.hover-submit-inner").on("mouseleave", () => {
+		    console.log("mouseleave");
+		    const $div = $(event.currentTarget);
+
+		    window.clearTimeout($div.data("timer-id"));		//removes the timeout after leaving
+		    $div.data("timer-id", null);
+		  });
+
+
+
+Event Propagation
+	use Event.stopPropogation() to prevent an event from propagation to the element's parent
+	use Event.target to specify the source of the event (where it started bubbling from)
+	use Event.currentTarget to specity the current event's target
+		To prevent confusion, you can just add a single listener to the ancestor, then handle events
+		differently depending on the original target. This is called "Event Delegation"
+		
+		
+		
+History and Location
+	window.history contains the browser's session history stack
+		use window.history.forward() 	to push items onto the history stack
+		use window.history.back()	to pop items off of the history stack
+		use window.history.go(idx) 	to go to a specific point, -1 for back, 1 for next
+	
+	window.location contains the current URL
+		window.location.href 	returns the string with the entire URL
+					setting this to another URL makes a GET request and navigates to that
+		window.location.hash	returns a string containing '#' followed by the fragment identifier
+					setting this to any string will append a fragment identifier to the URL
+						this does not trigger a GET, but it fires a special hashchange event
+					
+
+
+Vanilla JavaScript
+	Oftentimes, you won't be able to use jQuery since it is a large library that may slow loading, has excessive
+	things that you often don't need, or is banned by your company. At those times, we need to use vanilla DOM.
+	
+	The DOM has a huge documentation, but here are some starting points:
+		Elements	: Node, Element, HTMLElement, and Document
+		Functionality	: document.getElementById(id), document.querySelector('selector')
+				  Element.getElementsByClassName('className'), ELement.querySelectorAll
+				  ElementTarget.addEventListener
+				  Node.appendChild, Node.removeChild
+				  
+	You should learn to use AJAX with Vanilla DOM as well, as jQuery has a lot of handicaps
+		Automatically handles CSRF when using jquery-ujs and rails-ujs together
+		Automatically transforms JSON into JS objects
+	
+	Without JS, we will need to use an XMLHttpRequest object, or XHR
+		// Step 1 - create xhr object
+		const xhr = new XMLHttpRequest();
+
+		// Step 2 - specify path and verb
+		xhr.open('POST', 'api/path/to/resource');
+
+		// Step 3 - register a callback
+		xhr.onload = function () {
+		  console.log(xhr.status) // for status info
+		  console.log(xhr.responseType) //the type of data that was returned
+		  console.log(xhr.response) //the actual response. For JSON api calls, this will be a JSON string
+		}
+
+		// Step 4 - send off the request with optional data
+		const optionalData = { name: "User1", password : "123456" };
+		xhr.send(optionalData);
+		
+
+
+Vanilla JavaScript Quiz
+	If you specify a selector in jQuery#on, it'll only fire for that element or its children
+		currentTarget will always be that element
+	If you don't have a selector, the event will just fire when reaching the anchored element
+	window.history is an Object
+	
+	
+	
+Vanilla DOM Practice
+	When looking for submit events, just place the event listener on a parent and listen for submit
+		Target of submit event is the form itself
+		Use const for HTMLElements
+	DOM Functions
+		document.getElementById
+		document.getElementByClassName
+		document.createElement("div")			// to create an element, then you can innerHTML to it (outer element can be a dummy)
+		
+		HTMLElement.value =				// to get/set/modify value
+		HTMLElement.hidden =				// to set hidden
+		HTMLElement.removeAttribute("hidden:)		// to remove hidden attribute, or others...use set/getAttribute(...) for other actions
+		HTMLElement.innerHTML += <> 			// to append elements
+		
+		HTMLElement.classList.remove(...)		// to remove class
+		HTMLElement.classList.contains(...)		// to check for class
+		HTMLElement.classList.add()
+		
+		HTMLElement.querySelector("...")		// search an element's children, or everything
+		document.querySelector("...")
+		
+		HTMLELement.dataset.id				// get data-id value
+		
+		
+Pocket Projects
+	Clock
+		remember to import the js files or they won't register	
+	Dropdown
+		iterate through POJO by using for (const [key, val] of Object.entries(obj))
+	Todo List
+		use localStorage to store items
+			must JSON.stringify before storing, and JSON.parse after storing
+			use localStorage.setItem() and localStorage.getItem() to store and retrieve items
+			EMPTY STRING IS FALSE
+		WHY DOES THE POPULATELIST FUNCTION NOT WORK IF I INVOKE BEFORE THE DECLARATION?
+		Store data inside data-id, data-name, etc kinds of data-* attributes that you can later use
+	Scroll Slide
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

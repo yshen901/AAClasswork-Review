@@ -1,0 +1,2 @@
+RBENV
+ 1) cd ~/.rbenv && git pull

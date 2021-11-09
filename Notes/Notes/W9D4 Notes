@@ -1,0 +1,239 @@
+TBD: advanced topics article (promises), jQuery AJAX, AJAX Example, AJAX Demo, AJAX Video Lecture
+
+
+AJAX
+	Used to make an HTTP request in the background, without redirecting or loading a new page.
+		After the request is done, it'll fire a JS callback.
+		
+	There are three methods:	$.ajax	(for everything, most low-level)
+					$.get	(for GET requests)	
+					$.post	(for POST requests)
+	Example
+		$.ajax({
+			url: '/widgets/1.json',
+			type: 'GET',
+			success: function(widgetData) {
+				console.log('Here are the fetched json parameters of the widget:');
+				console.log(widgetData);
+			},
+			error: function(errMsg) {
+				console.log(errMsg);
+			}
+		});
+				//Success is HTTP status 2xx, Failure is any other
+
+
+
+AJAX Remote Forms
+	use serialize() to turn a set of form elements into URL encoded string, then use this in post
+	use preventDefault() to prevent default actions
+		var formData = $(event.currentTarget).serialize();
+		// If you filled out name "Gizmo" and color "Black", then
+		//formData == "cat%5Bname%5D=Gizmo&cat%5Bcolor%5D=Black"
+
+		$.ajax({
+			url: '/cats',
+			type: 'POST',
+			data: formData, 
+			success() {
+				console.log('Your callback here!');
+			}
+		});
+		
+		
+	use  serializeJSON() to turn formData into an object. 
+		var formData = $(event.currentTarget).serializeJSON();
+		* Include the serialize_json-rails gem
+		* load the file after jQuery in application.js (//= require serialize_json)
+		
+	use $('meta[name="csrf-token"]').attr('content'); to manually get the CSRF token
+		this is normally done for you through the $.ajaxPrefilter, which is automatically
+		installed and ruun before every request
+
+
+
+
+Using Rails as an API
+	So far we've used rails for DB (ActiveRecord), request routing (router/controllers), and UI render (views)
+	Now it is time to move onto client-side rendering, using more JS to render and less HTML views.
+		Old Way (index.html.erb for cats)
+			<ul>
+			<% @cats.each do |cat| %>
+			  <li><%= cat.name %>: <%= cat.color %></li>
+			<% end %>
+			</ul>
+		New Way (index.json.jbuilder for cats)
+			json.array! @cats
+		
+	To tell the server we want a json response and not an HTML response, we must set the dataType in the request
+		$.get({
+		  url: '/cats',
+		  dataType: 'json'
+		})
+		
+	use respond_to to allow a controller to handle both JSON and HTML requests
+		  def index
+		    @cats = Cat.all
+		    
+		    respond_to do |format|
+		      format.html { render :index }
+		      format.json { render :index }
+		    end
+		  end
+		  
+		  
+		  
+Promises
+	First, let's discuss some terms:
+		action		: primary function of the promise, i.e. fetch data from API	
+		pending 	: promise isn't settled yet (fulfilled/rejected)
+		fulfilled	: action has succeeded
+		rejected	: action has failed
+		NOTES		: a promise can only succeed or fail once
+				  a promise cannot change its state from fulfilled to rejected or vice versa
+				  once a promise is settled, the callback that matches its state fires immediately
+	
+	Create a promise
+		const p = new Promise((resolve, reject) => {  // resolve/reject tell promise what args to pass on
+		  if (/* success condition */){		// both are optional parameters, and are callbacks
+		    resolve(/* any args */);
+		  } else {
+		    reject(/* any args */);
+		  }
+		});
+		
+	use p.then(onFulfilled, onRejected) 	to invoke functions based on state
+	use p.catch(onRejected) 		to invoke a function if rejected, this is the same as then(null, cb)
+		* both of the above return a promise, so you can chain them
+			p.then(onFulfilled, onRejected).catch(error) // catch fires if either callback throws error
+		* in a long chain, catch will fire if ANY promise fails, such as here
+			promise.then(firstFulfilled).then(secondFulfilled).catch(rejected)
+	
+	use Promise.all([array of promises]) 	to chain them together, and only fire if all promises succeed
+	
+	Notes:	promises can be implicitly rejected if the constructor function throws an error
+		a polyfill is required for older browsers
+		remember to bind any functions you plan on using in the .then function
+
+
+
+AJAX Quiz
+	AJAX default request is of type GET
+	AJAX requests are HTTP requests
+	
+
+
+
+
+
+Project/HW Notes
+
+Setup	
+	bundle install
+	rails db:setup
+	npm run webpack 
+		entry point is twitter.js
+		other JS files should be in the frontend folder as well
+		webpack will transpile them and create a bundle.js (in app/assets/javascripts)
+	
+	add to application.js (rails' manifest file for JavaScript)
+		require jquery.serializejson 	(for submitting forms)
+		require_tree . 		(include all files in app/assets/javascrips)
+				
+	rails s (to start rails server)
+
+
+FollowToggle
+	change the original form to a button element that we can edit later using JS
+	use <%%> and <%=%> to execute ruby code
+	
+	make a FollowToggle class, where the constructor pulls in the jQuery $el
+		pull out data from the data-* attribute: $el.data(*)['user-id']
+		use the data to render its text, depending on whether initial-follow-state === "followed"
+		*** Use data-user-id and data-initial-follow-state instead so you can directly pull with el.data(user-id).
+	in the entry file: search for each button element using jQuery, then make a FollowToggle instance for each element
+	
+	for ajax requests, remember that the callback's parameter is the response
+		When writing URL, you must type the full form or it'll just get appended to the current domain
+			url: `/users/${this.userId}/follow`				will be appended to the current domain	
+			url: `http://localhost:3000/users/${this.userId}/follow`	is good
+			url: `${this.userId}/follow`					is good because it's correct after appending
+			*** How to automatically generate this?		
+	
+	When making something like APIUtil, just do export const APIUtil = { ... };
+		Don't try to keep code short and concise by stuffing follow/unfollow into one complicated function. Separate them.
+		Also instead of using a success callback in ajax, use then instead!
+		To disable an element, do $el.prop("disabled", true);
+
+
+UsersSearch
+	You can either put data in the data: { query: val } or in url: 'url?query=val'	 
+	Use respond_to to determine which file to load, then make a *.json.jbuilder to use with json
+		json.array!(@users) do |user|
+		  json.(user, *User.column_names) // gets all columns of a user
+		  json.followed(current_user.follows?(user)) // adds a followed value to json object
+		end
+	IN CONTROLLER: use User.where('username ~ ?', params[:query]) to search for all usernames containing text
+	
+	use $el.empty() to only clear the children
+	when setting URL in JS, just put a url without the domain, and it'll automatically append to the domain
+		this is unlike in AJAX, where it appends to current full domain
+		
+	when adding a FollowButton, add an "options" argument to it that allows you to initialize with options instead of an element
+		i.e. constructor($el, options) { ... this.userId = this.$el.data("user-id") || options.userId; ... }
+
+
+TweetCompose
+	Make a partial using json with: json.partial!("tweets/tweet", tweet: @tweet)
+	In the partial, collect the tweet/user/mentions information
+		json.(tweet, *Tweet.column_names)
+
+		json.user(tweet.user, *User.column_names)
+
+		json.mentions(tweet.mentions) do |mention|
+		  json.(mention, *Mention.column_names)
+		  json.user(mention.user, *User.column_names)
+		end
+	
+	Another way to initialize an item is through
+		$(".tweet-compose").each((i, tc) => new TweetCompose(tc)); // another more way to initialize (more DRY)
+		If doing this installs a custom event handler, it'll override the original one (remember preventDefault)
+
+	For a form using serializeJSON
+		doing event.currentTarget.serializeData() will create an object based on the names of each form section.
+		
+	BUG: if there's a webpack bug with a class, say if you didn't import properly, it'll keep running without it and use whatever they had originally
+		in this case, the webpack just used the default form instead of the JS one
+		
+	JQuery:	To search by name with jQuery, do $( "[name^='news']" )
+			To select all inputs, do jQuery(":input");
+			To find a child inside of something, 
+			Another trick is when trying to insert a li into a ul, you can put data-tweets-ul='#feed' into the form instead of hardcoding #feed into the JavaScript
+			
+Mentions
+	Bootstrap all users to window by placing  a <script type='text/javascript'> tag in the head of the application
+		    window.users = <%= render("users/users.json.jbuilder", users: User.all).html_safe %>;  ... erb tag is a must!
+		    You render a partial with render in an html.erb, and json.partial! in a json.jbuilder
+	In jbuilder, use extract! or array! to get values out
+	When building complex HTML element, just type it out and convert at the end instead of building it slowly.
+	    const userOptions = window.users
+	      .map(user =>
+		`<option value='${user.id}'>${user.username}</option>`) //builds options  ... name for what to fill out, value for what to put in form
+	      .join('');
+	      
+	    <select name='tweet[mentioned_user_ids][]'> //where the options go...what does the double brackets mean?
+	   
+	<button> default event is "submit" on whatever form they're in
+
+			
+			
+Styling
+	Place stylesheets into assets/stylesheets
+	Then import the stylesheets into application.css as such: @import 'reset.scss';
+
+
+
+
+
+
+

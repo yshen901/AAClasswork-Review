@@ -101,6 +101,7 @@ TBD
 	W9D3:	jQuery snake/hanoi				(same as tic-tac-toe. Will come back later if I need jQuery practice.)
 	W9D4:	jQuery Twitter					(InfiniteTweets - loading more tweets with a button, Trigger - custom event triggers).
 	W9D5:	Pocket Projects				(Scroll - window.scroll and img location
+	W10D2:	Widgets					(ReactTransitionGroup - how to do fancy css like make things slide out of view on re-render instead of vanishing)
 								 Filtered Search - fetch to get data, and String.match(regex) to see if regex matches string
 								 Weather - weather API, API key, XMLHttpRequest, navigator.geolocation.currentLocation, including http:// in URI.)
 	W10D1:	jQuery Lite					(AJAX and Promises, and jQuery Lite Snake)

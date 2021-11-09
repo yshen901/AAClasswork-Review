@@ -1,0 +1,74 @@
+HW NOTES
+--------
+- Can delcare multiple with ... let first, second
+- Can run JS code directly in chrome console, and declare stuff
+- Apply's arguments are passed in through an array, as in (thisObj, [args...]) ... call is spread out (thisObj, arg1, arg2, ...)
+
+Reader
+	- Readline boilerplate
+		const readline = require('readline');
+
+		const reader = readline.createInterface({
+		  input: process.stdin,
+		  output: process.stdout
+		});
+	- Readline asynchronous ... must nest consecutive questions to make sure both are asked. JS is asynchronous, so we must force it to wait
+		for the 1st question to finish before asking the second!
+	- Remember to close the reader!
+	- Do terminal: false in createInterface options to prevent double printing
+
+
+QUESTION
+Why does terminal double print with createInterface
+Why does readline.question take last terminal command as the first one
+
+
+PROJECT NOTES (clock)
+---------------------
+setInterval(function, milliseconds);
+	remember to do this._tick.bind(this) to give access to this scope
+	
+integer division will result in floats, use Math.floor to get result
+
+let date = new Date();
+	getHours();
+	getMinutes();
+	getSeconds();
+	
+	
+PROJECT NOTES (other exercises)
+-------------------------------
++++ addNumbers 
+remember JS is asynchronous...if you want to wait for input, place subsequent code into the callback!
+use [a, b] = [b, a] to swap values
+if you mispell output in createInterface, there will be no error, just no output!
+
++++ myBind
+Extends Function.prototype, where "this" is the function that uses it. Returns a callback that takes (...args) and calls this.apply(context, args).
+Implicit returns exist in javascript! 
+Also when using prototype, use Function.prototype.myBind = function (...) { ... }
+debugger can be used with node inspect myBind.js
+Use "splat" to identify multiple args in an arr (...args) => {...args...}
+
++++ myThrottle (only fire once every x seconds)
+Use setTimeOut to make a timer for things (check myThrottle for more), then close over the timer variable to make it encapsulated.
+	For example, use tooSoon = true/false, that we can activate and ban any future calls until it is deactivated (use setTimer to wait to reactivate).
+Use "splat" to both pack and unpack arguments into arrays
+Use apply whenever arguments give you "undefined"
+
++++ myDebounce (only fire if it hasn't been fired in last x seconds)
+You can make a timer = setTimeout to keep track of a timeOut. Maybe make a null one as default.
+	Call clearTimeout then reset it to setTimeout to get reset it.
+	In returned function, reset timer each time it is called, and after x seconds after the last call, fire it.
+	
++++ ttt
+Deconstruct an array with let x,y; [x,y] = arr;
+To export, put export class ObjectName
+parseInt("1") to convert into int
+split(",") to split into array, join(",") to concatenate
+FOR IMPLICIT RETURN WITH SINGLE LINE ARROW FUNCTION, DO NOT PUT CURLIES
+process.stdout.write(msg + "\n") is same as console.log
+Array.length isn't a function, it's a property
+readline.close() is also asynchronous, so it won't close the reader before the next loop happens
+	
+

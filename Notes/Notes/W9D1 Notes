@@ -1,0 +1,88 @@
+Inheritance (ES15)
+	class Bicycle {...}
+	class RaceBike extends Bicycle { 
+		constructor(color, model, gears) {
+			super(color, model);
+			this.gears = gears;
+		}
+	}
+
+Inheritance (older, avoids directly changing _proto_ which is slow)
+	function Dog() {};					// initializes class
+	Dog.prototype = Object.create(Animal.prototype);	// sets _proto_ for inheritence
+	Dog.prototype.constructor = Dog;			// sets constructor
+	
+Modules in Browser
+	HTML must load dependencies (<script src="zoo/animal.js"></script>) in the correct order
+	To make this easier, we use a bundler
+		1) Add module.exports = ClassName to each class
+		2) Use const ClassName = require('...'); to import
+		3) Use webpack to run the file
+			- INSTALL npm install -g webpack webpack-cli
+			- USE webpack app.js -o bundle.js --mode=development	//makes a bundle.js file
+			- ADD <script src="bundle.js"></script> 		//to html file to load all
+
+Asynchronous Client Side Code
+	window.setInterval( () => { ...code called every interval... }, 1000);
+	requestAnimationFrame
+		function animate() {
+			...code
+			requestAnimationFrame(animate);
+		}
+		requestAnimationFrame(animate);
+	
+	constant userInput = window.prompt(); // don't use this, use a button or something instead
+	
+	const buttom = document.getElementById('submit-button');	// finds html element
+	botton.onclick = showValue;					// sets the button handler
+
+
+Client Side Javascript
+	script tags tell Browser to load and execute javascript code
+		src tells browser to fetch code
+		inline body tells browser to execute the code (not encouraged)
+	Environment
+		Most browsers have used ES6, but for the ones that don't we can either use
+			polyfill, where we test for a function and write our own if it doesn't exist
+			transpile, where we use babel to transpile our ES6 code into ES5
+			
+3rd Party Tutorials
+	Basic Canvas	https://joshondesign.com/p/books/canvasdeepdive/chapter01.html
+	Webpack	https://webpack.js.org/guides/getting-started/
+	
+	
+
+Project: Intro to canvas
+	ctx = getContext('2d');			//draw a rectangle, getContext gives us the "drawing context"
+	ctx.fillStyle = 'red';
+	ctx.fillRect(0, 0, 500, 500); 
+	
+	ctx.beginPath();				//draw a circle
+	ctx.arc(250, 250, 100, 0, 2*Math.PI);
+	ctx.stroke();
+	ctx.fill();
+	
+	ctx.font = "30px Arial";			//draw text
+	ctx.textAlign = "center";
+	ctx.fillText("Score", 10, 10);
+	
+Project: Webpack
+	Use npm install -g webpack webpack-cli	to install (check demo for more data)
+	Use npx webpack...				to use
+	
+Project: Arguments
+	arguments object is available for all non-arrow functions, is an object not an array
+	rest operator is used like: ...args, and is an array
+	Unlike arrow functions, callbacks have their own context, so you have to save "this" to a variable if you want to use it (see myBind).
+	Currying basically uses callbacks and recursion to take in variables one call at a time until it has enough (see curriedSum);
+		Passing in "null" to apply for some reason makes the args array only one value?
+	
+Project: FlappyBird
+	export default class Bird {...} // exports and declares
+	Pass around a single ctx to methods, rather than giving each level/bird their own ctx variable.
+	Use a CONSTANTS object to keep constants like gravity
+	Things like requestAnimationFrame will keep compounding each time it is called. Only call once! (this is the purpose of the running variable)
+	Bind functions that you use for event handlers, like canvas.addEventListener("mousedown", () => {...});
+	
+	
+	

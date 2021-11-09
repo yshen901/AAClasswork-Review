@@ -1,0 +1,191 @@
+Javascript Non-Technical Overview
+	Vanilla - Means standard JS without use of additional frameworks or libraries
+	Hoisting - Variables and function declarations are put into memory at compile time, and can be called during execution before it is defined.
+	'use strict' - prohibits certain things like global variables, and throws errors if these rules are broken
+	IIFE - Immediately Invoked Function Expression is called immediately after it is defined, 
+		(function() { .... })();
+	jQuery - A library that allows for DOM manipulation
+	MEAN stack - MongoDB, Express, Angular, and Node ... all based on JS
+		MongoDB is NoSQL database, Express is "Sinatra-inspired server", Angular is a frontend MVC framework, and Node is a server-side JS environment
+	Functional programming - Functions are all first-class objects
+	POJO - Plain Old JS Object is an object with attributes and getter/setter methods
+		all JS objects are POJOs, as they allow access with dot/bracket
+
+
+Browsers Technical Overview
+	Browser rendering engines have the pattern
+		1. Parse HTML document to construct DOM tree
+			a. HTML elements get converted to DOM nodes in the "content" tree
+		2. Construct the render tree using CSS information
+			a. tree contains a rectangle for each node, with dimensions and color
+			b. rectangles are ordered the same way as they will be in display
+		3. Add layout information to the render tree
+			a. each node receives its exact coordinates on the screen
+		4. Render tree is transversed and each node is painted
+			a. background color
+			b. background image
+			c. border
+			d. children
+			e. outline
+
+
+localStorage
+	Located in window.localStorage, and is a Storage object
+		Some functions:
+			setItem('key', value)
+			removeItem('key')
+			getItem('key')
+			clear()
+			key(idx) //useful when needing to loop through keys
+	Check Support
+		if (typeof(Storage) !== 'undefined') // supported
+	Limitations
+		no sensitive information, as it has no data protection
+		limited to 5mb
+		synchronous, so operations will only execute one after another
+
+
+Throttling and Debouncing
+	Debounce groups multiple sequential calls into one call, for example many key presses
+	No need to build your own, just use lodash throttle and debounce
+		npm -g lodash-cli
+		lodash include = debounce, throttle
+		
+		var debouncedFunc = _.debounce(doSomething, 300) // creates a debounced function
+		debouncedFunc.cancel() //cancels the debounce
+		
+	Throttle limits a function to being called only once every X milliseconds
+		For something like scrolling, debounce is useless as it would only activate when the user stops scrolling. 
+		
+		_throttle(doSomething, 300);
+		
+	rAF, or requestAnimationFrame can also be used to regularly do something
+		pros: 	aims for 60fps, but will interally decide best scheduling
+			simple API
+		cons:	need to manually start/cancel rAFs
+			does not execute if browser tab isn't active (ok for scroll/mouse/keyboard events)
+			not supported in IE9, Opera Mini, and old Android
+			not supported in node.js, so you can't use it on the server to throttle filesystem events
+			
+	Generally
+		rAF is good for JS painting, directly animating properties, or re-calculating element positions.
+		throttle/debounce is for AJAX requests or adding/removing classes (which trigger a CSS animation)
+			these can have a lower activation rate, i.e. 200ms instead of 16ms
+		
+		
+		
+		
+		
+			
+
+
+jQuery Lite
+	To import jQuery using a script tag use
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		
+	To start the project
+		1. Make dist folder holding css and index.html
+		2. Make src folder holding index.js
+		3. index.html should have
+			!DOCTYPE html, header, and body. 
+			header and body enclosed within html tag.
+			script tags for javascript by bringing in main.js, as well as jquery
+			meta tags
+			css tags
+			
+	Coding Notes
+		Add functions onto window, like window.$l, to make them available in console
+		Anything available to window, like document, can be referred to directly
+		Remember to check if an arg is undefined rather than null.
+		Use instanceof to differentiate between items	
+			For string, use typeof "asdf" === "string" for literals, and instanceof String for objects.
+			For function, use typeof cb === "function" or cb instanceof Function
+		Use Array.from(elements) to make an array from an array-like object	
+			.push to push elements onto array
+			.includes(...) to check for uniqueness
+			
+	CONVENTION (imo)
+		use const for things that you don't plan on reassigning, like cb because you need to use it later to remove listener.
+	
+	Document functions
+		document.querySelectorAll(str) ... returns a NodeList of elements
+		document.querySelector(str)	... returns only the first matching element
+		document.createElement('div')	... creates HTMLElements
+		document.readyState		... 'complete' when it is ready and loaded
+		"DOMContentedLoaded" event	... attach cbs to this event to simulate jQuery's ready
+
+	HTMLElement properties
+		el.innerHTML		...	inner content, like li inside of ul (doesn't work for HTMLElement, see appendChild)
+		el.outerHTML		...	item itself include descendants
+		el.parentElement	...	parent element
+		el.children		...	all direct children elements
+		el.tagName		...	gets string of tagName in caps, such as LI
+		el.className		...	gets/sets class attribute, but replaces old rather than appending
+		el.add/removeClass	...	adds or removes classes from existing list, doesn't replace
+		e.appendChild		...	appends HTMLElement object, rather than string
+		el.name		...	gets name property
+		el.value		...	gets the value of the box, like for input fields
+							*use innerHTML for textarea
+		
+	HTMLElement Functions
+		el.querySelectorAll(*)		...	runs selector only on element's children
+		el.addEventListner(event, cb)	...	adds event listener, inverse is remove
+			
+		
+	Element properties
+		el.attributes	...	NamedNodeMap of attributes
+						getNamedItem(attrName) for node, node.textContent for value.
+						setNamedItem(attr) to set/add the attribute value
+							attr = document.createAttribute(attributeName);
+							attr.value = newValue;
+		el.classList	...	DOMTokenList of classes, manipulate this to manipulate class
+						contains, add, remove (add doesn't add twice);
+		
+Mail
+	Webpack Stuff
+		1. npm init -y
+		2. Add "start": "webpack --mode=development --watch" to the package.json file	
+		3. Start with npm start	
+	
+	Coding Notes
+		Use "...".toLowerCase() to set it to lower case
+		Use Array#splice and String#slice
+		let name = "sarah", food = "sushi"; works!
+		For multi line strings, use ` instead of ' or ". 
+			Nested `` cause weird problems
+	
+	DOM Notes
+		No way to use event delegation simply with vanilla dom, so jQuery is ideal if you can use it
+		If you want to use vanilla dom, you'll have to add specific conditions for who to trigger!
+			Can't use events that have been bubbled up either!
+		
+	Routing
+		Use window.location.hash = "..." to set the hash of the url
+			Can test whether a new request has been made by seeing if console variables are reset!
+			(changing hash doesn't make a new request)
+		Detect hash change events with event listeners for 'hashchange'
+			*** ADD THIS TO WINDOW, THIS IS NOT A DOCUMENT EVENT
+		Rough Logic
+			1. Routes maps hash codes to component classes
+			2. Router adds listener for hash changes, and re-renders on each hashchange event
+			3. Router takes the component indicated by the hash, clears the node it's connected on, and 
+			   appends the component's render output to the node. 
+		
+	MessageStore
+		Split up renders into encapsulated pieces, i.e. MessageStore generates DOMNode for each message, not Inbox.
+		The store gets the data, and organizes it for the component. It's the "API" that we use to access data.
+		Make a single store shared by all components! (duh) Otherwise how would data be the same around all of them?
+		Manually change the window.location.hash to trigger a hashchange event
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

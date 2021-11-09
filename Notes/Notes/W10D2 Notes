@@ -1,0 +1,259 @@
+TODO - React Notes
+	Non-Technical React Overview
+	NPM
+	Webpack
+	Object Destructuring
+	ES6 Export/Import
+	React Developer Tools
+	Props and State
+	Transpilation
+	React Components
+	Lifecycle Methods
+
+
+React Non-technical Overview
+	XHP 
+		Began as a project in Facebook to develop a version of PHP that could defend
+		against Cross Site Scripting attacks. This resulted in XHP, which integrated
+		XML-like language to escape code, and could condense PHP elements into 
+		single HTML-like tags that could be reused.
+	React
+		Pure XHP is terrible at DOM manipulation, so React was made using XML-like syntax in a 
+		Javascript library. React used lifecycle methods and a differential algorithm
+		to identify what needed to be updated.
+	Single Page App 
+		react is a single page app, that swaps out and updates components.
+		this makes it so you don't need to reload the entire page with every click.
+	Virtual DOM
+		A simpler and faster abstraction of the HTML DOM that can save React from
+		having to interact with the real one.
+	Diffing Algorithm
+		Runs in O(n) time to determine which nodes need to be updated.
+	JSX
+		Provides syntactic sugar for React.createElement(component, props, ...children)
+		Not necessary but makes life easier.
+	
+	
+Node Package Manager (NPM)
+	npm init --yes
+		creates package.json
+	npm install <...packages>
+		installs all packages
+		can also just write npm install to install dependencies listed in package.json
+	script: { webpack: "webpack --watch --mode=development" } 
+		enables npm run webpack
+		
+
+Webpack Config
+	.gitignore
+		node_modules
+		bundle.js
+		bundle.js.map
+		*** Check gitignore github for more ***
+	See "NPM Getting Started" for more
+	
+
+Object Destructuring
+	const { a: x, b: y } = { a: 1, b: 2 };	// x == 1, y == 2 (ordering unimportant)
+	const { a, c } = { a: 1, b: 2, c: 3 };	// a == 1, c == 3
+	
+	Use these for props, parameters, and nested OBJs too
+		this.props = {
+		  userId: 1,
+		  user: {
+		    fname: 'Ned',
+		    lname: 'Ruggeri'
+		  }
+		};
+
+		const { userId, user: { fname, lname } } = this.props;
+
+
+ES6 Import/Export
+	export { receiveTodo, fetchTodos, createTodo }	// to export multiple items
+	export const receiveTodo = ...			// can also export individually
+	export default ...					// for single exports
+	
+	import * as TodoActions from '...'			// import all things, use with TodoActions.*
+	import { createTodo, receiveTodo }			// import specific things, this is destructuring!
+	
+
+React Developer Tools
+	Gives me a react tab on the Chrome Console that'll give me access to state.
+	Excellent for debugging React
+	
+
+Props and State
+	this.props are passed in during initialization, and should never be changed.
+		const App = () => <Dog name="Fido" breed="Greyhound"></Dog>
+		constructor(props) { super(props); }
+	this.state represents properties that can be changed by the component.
+		this.setState will update the state, and call render()
+			You can add a cb to the arguments, this.setState({...}, cb) to only execute after
+			the state is updated. This solves the asynchronous nature of this.state;
+
+	
+React Components, a simple example
+	import React from 'react';
+	import ReactDOM from 'react-dom';
+
+	// Creates a re-usable `SimpleComponent` class.
+	class SimpleComponent extends React.Component {
+		render() {
+			return (
+				<h2>I am a SimpleComponent!</h2>
+			);
+		}
+	}
+
+	// Renders a SimpleComponent into #root.
+	document.addEventListener('DOMContentLoaded', function() {
+		const root = document.querySelector('#root');
+		ReactDOM.render(<SimpleComponent />, root);
+	});
+		
+
+
+Lifecycle Methods
+	componentDidMount()		// also WillMount
+	componentWillUnmount()
+	componentDidUpdate()		// also WillUpdate
+	componentWillReceiveProps
+	
+
+Quiz
+	React components need to return HTML
+	Semi-colons shouldn't be in curly braces for JSX
+	Must bind instance methods for listeners
+	Use className instead of class
+	
+
+
+
+
+
+
+
+NPM Getting Started
+	1. npm init --y
+	2. npm install webpack webpack-cli @babel/core @babel/preset-env babel-loader react react-dom
+	3. Setup webpack.config.js
+		var path = require('path');
+		
+		module.exports = {
+		  context: __dirname,	// helps resolve issues with file not found
+		  entry: "./entry.jsx",
+		  output: {
+		    path: path.resolve(__dirname),
+		    filename: "bundle.js"
+		  },	
+		  module: {
+		    rules: [		// configures babel transpilation of react
+		      {
+			test: [/\.jsx?$/],
+			exclude: /(node_modules)/,
+			use: {
+			  loader: 'babel-loader',
+			  options: {
+			    presets: ['@babel/env', '@babel/react']
+			  }
+			},
+		      }
+		    ]
+		  },
+		  devtool: 'source-map',	// this devtool allows me to see line numbers in errors
+		  resolve: {
+		    extensions: ['.js', '.jsx', '*']	// resolves jsx files during require/imports
+		  }
+		};
+		
+		
+Calculator
+	State Notes
+		Use this.setState({ [id]: newValue }) for dynamic key names
+		You need to initialize this.state = {} to begin with in order to use it!
+		Changing the state from undefined to defined will throw a warning
+			this.setState({newKey: 5}); throws warning if this.state.newKey === null/undefined
+	Render Notes
+		Enclose values in {} to plug things into react render HTML
+		Use "" for fields that you want to be blank to begin with
+		Use value={this.state.num1} to tie an input field's value to the state
+		
+		
+Widgets
+	Setup
+		1. npm init -y
+		2. npm install <packages>
+		3. Make webpack.config.js with relevant values (see above)
+		4. Make dist and src structure, and place entry file in src
+		5. Make index.html, with DOCTYPE, head+scripts, and body+root
+		
+	React Notes
+		To make a react class
+			... Clock extends React.Component
+		To render something in an element
+			ReactDOM.render(<Clock/>, root);
+		ERROR: Objects are not a valid React child
+			means the render HTML is incorrect. this one was triggered by passing OBJ as text instead of String.
+		When passing a function into setInterval, you should bind it to keep the scope
+		When you use RenderDOM to render multiple things, you can render a root that renders multiple in its render
+			for one line: const Root = () => <div> {components go here} </div>
+		"Controlled Component"
+			A component like input, textarea, and select where its value is tied to the state...value={this.state.someValue}
+			
+	HTML/JSX Notes
+		To bring in CSS sheets and custom fonts, place the following in your head.
+			  <link rel="stylesheet" href="index.css" />
+			  <link
+			    href="https://fonts.googleapis.com/css?family=Open+Sans"
+			    rel="stylesheet"
+			    type="text/css"
+			  />
+		This is different than in the Rails app, where you place the import into the application.scss
+		To put a loop inside the JSX, you can use map since for loops aren't allowed
+			{ this.props.tags.map( (object, i) => { return <div></div>;  } )
+		If you tie the value of an input field to the state, it won't change without changing the state.
+	
+	XMLHttpRequest
+	    let request = new XMLHttpRequest();
+	    
+	    request.open("GET", `http://...URI`, true); 		// (action, uri with http://, asynchronous?)
+
+
+	    request.onload = () =>  {								// Use an arrow function so you save external scope
+	      if (request.readyState != 4) return;					// Use "request".status/response/readyState determine logic
+	      if (request.status >= 200 && request.status < 400) 			
+    		this.updateLocation(request.response)           	// NOT THIS! Use request name!
+	      else 
+			console.log(`Error ${request.status}`);
+	    };
+
+	    request.onerror = () => {
+	      console.log("Something went wrong, never reached server!");
+	    };
+
+	    request.send();
+
+	Code Notes
+		Math.round(num * 100) / 100 	
+			gets you rounded to nearest 2 decimal spaces
+		String.indexOf("") is always 0!
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

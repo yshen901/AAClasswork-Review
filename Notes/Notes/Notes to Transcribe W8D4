@@ -1,0 +1,49 @@
+- Array methods: map, forEach, join
+- Math methods	: Math.random() returns a random number < 1
+- Method types	: Class.method is a class method, Class.prototype.method is an instance method
+- Closures	: You can use closures to make variables private, for example like the ++counter example ...  basically return a closure that works on the function
+
+
+- Jasmine	: the spec system javascript uses
+		  run the SpecRunner.html file to use it, and click Spec List to see all failed specs.
+- Array init	: grid = new Array(8).fill(null).map(() => new Array(8)); ...	creates an 8x8 grid. The first fill null is so you can actually map
+	   	  									because otherwise the array index would be undefined...which is unmappable.
+	   	  									second array however cna be filled with undefined.
+	   	  									
+- Underscore	: _method indicates a private method, although in Javascript everything is technically public
+- Error	: To throw an error, do "throw new Error("...");
+		  If I do for (let i; i < 9; i++) ... the errors can be very weird
+
+
+
+Movies
+---------------------------
+Brightburn
+Braveheart
+Gladiator
+Us
+Alpha
+Valerian and the City of a Thousand Planets
+Ready Player One
+Alita Battle Angel
+Warcraft
+Edge of Tomorrow
+John Carter
+John Wick
+A Dog's Purpose
+Hachi
+Fences
+Popstar
+The Seven Samurai / Magnificent Seven
+
+
+Shows
+---------------------------
+Spartacus
+Raised by Wolves
+
+
+Books
+-----
+Armor
+Gor

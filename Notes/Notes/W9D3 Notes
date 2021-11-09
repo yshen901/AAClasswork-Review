@@ -1,0 +1,177 @@
+Document Object Model (DOM)
+	Document	- any web page loaded in by the browser; the entry point into the web page's content.
+	DOM		- the API provided by the browser that allows JS to access the HTML content
+			  	takes the HTML, and turns it into a node tree of elements
+	Window		- a global variable that represents the browers window
+			  	PROPERTIES include: global variables/functions, console, and the document
+			  	all CONSOLE COMMANDS are implicitly called on the window
+			  	SCOPE is limited to tab, except for cases like resizing window
+			  	to access DOCUMENT, can do window.document or just document
+			
+			  	
+jQuery 1 - Selection/Manipulation
+	jQuery is a JS library that builds on top of the DOM, but does not have ALL of the DOM's functions.
+	
+	jQuery and $ are both global variables that are assigned the same function
+		use this to select: 	$("li") returns a jQuery object
+					document.querySelectorAll("li") returns a NodeList
+					document.getElementById("cat") returns an HTMLElement
+		use this to create:	$("HTML code") will call document.createElement, then return a jQuery object
+		use this to wrap  :	$(HTMLElement)	will return a jQuery object wrapping that element
+					$(nodeList)	will return a jQuery object wrapping all elements in list
+		use this for ready: 	$(() => {...}) will run the function only after the DOM is fully loaded (including dependencies)
+					same as $(document).ready(() => {...});	
+					returns nothing
+	
+	Selection and implicit iteration
+		$listItems.each(() => {...});		// iterates, if you use a variable, it is idx not the element!
+		$listItems.addClass("green");		// implicitly iterates, also removeClass and toggleClass
+		
+	Traversal and insert/remove
+		$listItem.parent()/children()/siblings() 	// to traverse the tree.
+		$ul.children().remove()			// removes all children AND itself
+		$ul.empty()					// only removes the children
+		$ul.append(HTMLElement)		// adds to the set
+	
+	Building an element
+		  const $li = $("<li></li>");
+		  // sets the textContent property
+		  $li.text(coolThings[i]);
+		  $li.attr("style", "background-color: green");
+		  $ul.append($li)
+		  $ul.empty()
+		  
+	Getter and setter
+		$li.attr(name, val), $li.text(val), $li.val(value), $li.prop(name, true/false), $li.data(name, val);	// setters
+		$li.attr(name), $li.text(), $li.val(), $li.prop(name), $li.data(name)					//getters
+	
+	
+jQuery 2 - Events
+	Similar to EventTarget#addEventListener
+	
+	To start listening
+		$("#cool-thing-form").on("submit", callBack)	// can call multiple times to tie multiple callbacks
+  		
+  	To stop listening
+  		$("p").on("mouseover", annoy);		// just do ("mouseover) to remove all callbacks
+  		$("p").off("mouseover", annoy);
+  		
+  	Event object values
+  		$listItems.on("mouseover", event => {
+  			event.preventDefault()				// prevents original handler
+			const currentTarget = event.currentTarget;	// only the event knows the target
+			const $currentTarget = $(currentTarget);	// wrap target in jQuery so we can use jQuery
+			alert($currentTarget.text());			// do jQuery stuff
+		});
+		
+
+jQuery 3 - Ready
+	Browsers evaluate HTML documents from top to bottom, so to make sure we only execute after the document
+	is fully loaded, we should use jQuery#ready.
+		$(() => {...});	// same as $(document).ready(() => {...});	
+		
+
+jQuery 4 - All the Ways
+	Selector-style	: $("ul.cool-things")		takes CSS selector
+								returns jQuery object with matches
+								
+	HTML-style	: $("<li>Racecars</li>")	takes HTML code, builds HTMLElement
+								returns jQuery object with top-level elements
+	Wrapper-style	: $(nativeDomElement)		takes unwrapped HTMLElement or array of elements
+			  $(arrayOfDomElements)		returns jQuery wrapping the above
+	Ready-style	: $(someFunction)		takes a function that'll rull when the DOM is fully loaded
+								returns nothing
+
+
+jQuery 5 - Data Attributes
+	When adding the same handler to many elements, such as a list of dogs, we need to figure out a way to
+	differentiate between objects. 
+		1. We can store a record id to differentiate between dogs.
+		2. We can store a data-* object that we can access with $li.data(*)
+			<li data-dog='{"id": 234, "name": Tricky}'> ... </li> 	// HTML way
+			$dogLi.data("id", dog.id);					// jQuery way, can store anything
+				
+			dog = $dogLi.data("dog");					// pull the object out
+			alert(dog.name + " loves you!");
+			
+			
+jQuery 6 - Event Delegation
+	The issue with simply adding an eventListener is that it is not added to future elements.
+	You can constantly add eventListeners upon creating new elements, but this isn't dry and will slow the page.
+	
+	Events bubble up
+		Events fired on li will bubble up and fire on its parent and so on
+		So, install a single event handler on the ul
+			currentTarget will be the ul, the thing the eventHandler is installed on
+			target will be the li, the thing that triggered the event
+		In the handler, if the target is an li, then fire the callback
+			if ($ul.find("li").is(event.target)) {
+				alert($(event.target).text());
+			};
+			
+	Use jQuery to accomplish this for more robust code
+		Events triggered by a deeply nested element could usurp the li's event.target position
+		So, use jQuery#on(event, selector, callback);
+			$("ul.cool-things").on("mouseover", "li", event => {
+				alert($(event.currentTarget).text());
+			});
+		Under this code
+			currentTarget is the li	, specified by the selector, so only li triggers
+			delegateTarget is the ul	, the element the listener is anchored on
+			target is either the li or an element in li that triggered the event
+				*specifying a selector prevents bubbling above the intended element, so that
+				 the currentTarget becomes the anchored element
+			
+Quiz Notes
+	$('ul.abc') selects all ul elements of class 'abc'
+	$('ul#abc') selects all ul elements of id 'abc'
+
+
+
+Wacky jQuery
+	devtools option bug - change source-maps to source-map
+	also with aA projects, they are set up so you can just run them with webpack
+	use parseInt() to turn string to int
+	
+	$listItems.each((idx, ele) => {...}); //remember, idx first, not ele first
+		Also after indexing in, remember to wrap elements in jQuery if you want to use jQuery functions
+		Same applies to event.currentTarget/target/etc
+
+
+Tic-Tac-Toe
+	Build logic, then make a view class that handles all jQuery stuff
+	Entry file is a $(() => {...}); in index.js
+	You can define class directly with an escape key. Use ' instead of " to avoid needing an escape.
+	REMEMBER: Javascript you need to floor/ceiling numbers
+
+	
+	Manipulate classes instead of adding inline css!
+	Be careful about the order in which you change objects/update DOM. The value may change before you use it (currentPlayer in ttt).
+		JS operates a lot faster than DOM. This makes it so the event listener that should fire on the 2nd click AFTER gameOver will
+		fire on the first click along with the last move since the gameOver variable was changed before the listner checks.
+	alert pauses the DOM instantly. It is asynchronous!
+
+	CSS: 	display: flex;
+		flex-wrap: none;
+		border: 3px solid black;
+		.selector:hover
+						* use 0px instead of just 0?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		

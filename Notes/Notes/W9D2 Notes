@@ -1,0 +1,42 @@
+NO NOTES, JUST PROJECT
+
+Project Setup (this is default webpack w/o config)
+	1. Make project directory
+	2. Make index.html file 
+	3. Make an index.js file (entry point)
+	
+Making Class
+	1. Use objects to pass variables. If you just do key: val, you can use obj.key.
+	2. To make it available in console, must export, import to entry, then 
+	   make a window variable (window.ClassName = ClassName);
+	   
+Context and Drawing
+	1. Add event listener for DOMContentedLoaded first (this allows you to move script tag to head)
+	2. Then within callback, get context w/ document.getElementById("canvas-id") -> getContext("2d")
+	
+Util
+	Make a util object that contains functions and variables that can be easily shared and imported,
+		where each item of the object can be a function like randomVec or scale
+	When exporting an object, just do export default { ... }
+	When importing, just do import Util from './util'
+	
+Useful Syntax
+	Destructure objects like {pos, vec} = args. Can also do this in argument parameters!
+	
+Game
+	ctx.clearRect(); 	wipes down a space
+	When exporting a constant, just do export const CONSTANTS, then import { CONSTANTS } from "..."
+	This should handle only the logic, and does not contain canvas...let the GameView do that!
+	
+	use splice(index, numToRemove) to get rid of specific elements
+	
+Ship
+	use Object1 instanceof Object2
+	Uncaught Reference Error w/ imported class sometimes means a circular import chain. Check for double imports!
+	use <script src="keymaster.js"></script> to import keymaster for key bindings...put this above main.js, and add a file
+		this gives you a "key" method you can use, can also use listeners
+		can bind actions to key presses. this should be put in GameView.	
+	use switch (exp) { case "up": ... } // ADD BREAKS
+	
+	REMEMBER make a clone of an array before passing it! 
+		use slice(0) for fastest shallow copy!

@@ -1,0 +1,92 @@
+- HOW TO USE CLOSURES TO PASS FUNCTIONS THAT EDIT CURRENT VALUES
+	Array.prototype.myMap = function(callback) {
+	  let mapped = [];
+	  this.myEach( element => mapped.push(callback(element)) )
+	  return mapped;
+	};
+
+
+- Don't declare variables inside of for loops...declare them outside first then change if necessary;
+
+- function(var, [optional]) ... the brackets are documentation for optional parameters
+
+- Destructuring in javascript
+	let a, b, rest;
+	[a, b] = [10, 20];
+
+	console.log(a);
+	// expected output: 10
+
+	console.log(b);
+	// expected output: 20
+
+	[a, b, ...rest] = [10, 20, 30, 40, 50];
+
+	console.log(rest);
+	// expected output: Array [30,40,50]
+	
+	[a, b] = [b, a] 
+	// SWAPS VALUES
+	
+- Cloning arrays ... fastest is arr.slice(0)
+
+- Substrings/Subarrays ... use slice(start, end), where end is non-inclusive ... can also use negative indices to go from the back
+
+- CHANGE NOTES ... isArray is used like Array.isArray(arr), not arr.isArray()
+
+- Two ways to declare class
+	- Constructor: function Cat(name, owner) {...}
+	- Class: class Cat {...}
+	
+- Lazy initialization is variable = variable || 0
+
+- Try ... Catch (does NOT rollback!)
+	try {
+	  nonExistentFunction();
+	} catch (error) {
+	  console.error(error);
+	  // expected output: ReferenceError: nonExistentFunction is not defined
+	  // Note - error messages will vary depending on browser
+	}
+	
+- Raise an exception with: throw
+
+- ONE LINER if statement
+	if (...) {...;}
+
+- array.some is similar to array.any in ruby
+- indexOf(...) > -1 has more browser support than includes(...)
+- console.log without newline ... process.stdout.write(...);
+
+- JSON.stringify turns data structs into JSON strings.
+
+- Importing/Exporting custom methods
+	module.exports = Game;			//exporting
+	const Game = require('./game.js');	//importing
+	
+- I/O Interface
+	const readline = require('readline');		// Instantiating it
+	const reader = readline.createInterface({
+	  input: process.stdin,
+	  output: process.stdout
+	});
+	
+	reader.question("Enter a starting tower: ", start => {		//using it
+        	const startTowerIdx = parseInt(start);
+		reader.question("Enter an ending tower: ", end => {
+			const endTowerIdx = parseInt(end);
+			callback(startTowerIdx, endTowerIdx);
+		});
+      	});
+
+
+- DO NOT USE WHILE LOOPS WITH READLINE...LOOPS DON'T WAIT FOR RESPONSE
+	    // while (!this.isWon()) {
+	    //   this.promptMove(reader, (startIdx, endIdx) => {
+	    //     if (!this.move(startIdx, endIdx))
+	    //       console.log("Invalid Move!")
+	    //   });
+	    // }
+
+	    // console.log("Congratulations you won!")
+	    // completionCallback();
