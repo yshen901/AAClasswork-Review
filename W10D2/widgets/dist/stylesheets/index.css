@@ -48,3 +48,8 @@
   align-items: center;
   justify-content: center;
 }
+
+.users-search-item:hover {
+  cursor: pointer;
+  background-color: lightgray;
+}
