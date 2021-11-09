@@ -1,6 +1,7 @@
 .widget {
   border: 5px black solid;
   padding: 20px;
+  margin: 10px;
   border-radius: 20px;
 
   display: flex;
@@ -18,4 +19,32 @@
 
 #clock {
   font-size: 16px;
+}
+
+#tab-titles {
+  display: flex;
+}
+
+.tab-title {
+  text-align: center;
+  border: 1px solid black;
+  
+  padding: 3px;
+  margin: 0px 2px 0px 2px;
+}
+
+.tab-title:hover {
+  background-color: lightgray;
+  cursor: pointer;
+}
+
+#tab-content {
+  width: 300px;
+  height: 300px;
+  border: 1px solid black;
+  margin-top: 5px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
