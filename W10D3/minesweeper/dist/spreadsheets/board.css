@@ -1,0 +1,33 @@
+.board-row {
+  display: flex;
+  flex-direction: row;
+
+  width: fit-content;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+
+  width: fit-content;
+}
+
+.tile {
+  height: 40px;
+  width: 40px;
+  border: 1px solid black;
+
+  text-align: center;
+
+  background: white;
+}
+
+.tile:hover {
+  box-shadow: none;
+  cursor: pointer;
+
+  background-color: rgb(194, 193, 193);
+  transition-duration: 0.3s;
+}
+

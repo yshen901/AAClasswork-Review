@@ -1,0 +1,111 @@
+NPM Getting Started
+	1. npm init --y
+	2. npm install webpack webpack-cli @babel/core @babel/preset-env babel-loader react react-dom
+	3. Setup webpack.config.js
+		var path = require('path');
+		
+		module.exports = {
+		  context: __dirname,	// helps resolve issues with file not found
+		  entry: "./entry.jsx",
+		  output: {
+		    path: path.resolve(__dirname),
+		    filename: "bundle.js"
+		  },	
+		  module: {
+		    rules: [		// configures babel transpilation of react
+		      {
+			test: [/\.jsx?$/],
+			exclude: /(node_modules)/,
+			use: {
+			  loader: 'babel-loader',
+			  options: {
+			    presets: ['@babel/env', '@babel/react']
+			  }
+			},
+		      }
+		    ]
+		  },
+		  devtool: 'source-map',	// this devtool allows me to see line numbers in errors
+		  resolve: {
+		    extensions: ['.js', '.jsx', '*']	// resolves jsx files during require/imports
+		  }
+		};
+		
+In entry file
+	import ReactDom from "react-dom";	// allows rendering using react
+	import React from "react";		// allows react functions
+	
+	const root = document.addEventListener("DOMContentLoaded", () => { ... })	// finds the thing to load onto
+	ReactDOM.render(<Root></Root>, root);						// loads root onto thing
+	
+	const Root = () => <div>
+		<Component></Component>
+		<Component2></Component2>
+	</div>
+	
+
+	
+In HTML file
+	<!DOCTYPE html>
+	<html>
+	  <head>
+	    <title></title>
+	    <script src="./bundle.js"></script>
+	    <link rel="stylesheet" href="./stylesheets/index.css" />
+	    <link rel="stylesheet" href="./stylesheets/reset.css" />
+	    <link
+	      href="https://fonts.googleapis.com/css?family=Open+Sans"
+	      rel="stylesheet"
+	      type="text/css"
+	    />
+	  </head>
+	  <body>
+	    <div id='root'/>
+	  </body>
+	</html>
+	
+	
+	
+Basic Component Structure
+	<Root>
+		<Board board={this.state.board} updateGame={this.updateGame}>
+			...
+			<Tile updateGame={this.updateGame}></Tile>  // allows Tiles to trigger re-render for whole thing
+			...
+		</Board>
+	</Root>
+	
+		*** updateGame will use setState to trigger a re-render after a tile is clicked.
+	
+HTML Code
+	fit-content to make a parent element only big enough to fit its children
+	box-shadow to add sunken in/popping out feel
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
