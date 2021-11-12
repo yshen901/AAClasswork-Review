@@ -105,3 +105,4 @@ TBD
 								 Filtered Search - fetch to get data, and String.match(regex) to see if regex matches string
 								 Weather - weather API, API key, XMLHttpRequest, navigator.geolocation.currentLocation, including http:// in URI.)
 	W10D1:	jQuery Lite					(AJAX and Promises, and jQuery Lite Snake)
+	W10D3:	Redux Lite					(everything - store, reducers, dispatch, subscribing to store, and middleware bonus)

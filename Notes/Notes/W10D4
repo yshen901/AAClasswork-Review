@@ -90,6 +90,9 @@ React Notes
 		this.setState() instead of this.setState({board: this.state.board}) disables all the buttons
 	Must bind all things in event handlers, even functions of objects
 		onClick={this.state.board.reset} still caused a scope issue...had to bind reset in Board class
+	Another way to easily do end-game is to make a "modal"
+		an element that covers the whole screen and is opaque thus "disabling" further interaction
+	Instead of resetting the Board element, you can just make a new one!
 	
 	
 	
