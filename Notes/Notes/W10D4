@@ -86,6 +86,10 @@ React Notes
 		let {explored, bombed, flagged} = this.props.tile;
 	You can deconstruct props
 		let {board} = this.props;
+	Only saying this.setState() with no arguments will cause problems
+		this.setState() instead of this.setState({board: this.state.board}) disables all the buttons
+	Must bind all things in event handlers, even functions of objects
+		onClick={this.state.board.reset} still caused a scope issue...had to bind reset in Board class
 	
 	
 	

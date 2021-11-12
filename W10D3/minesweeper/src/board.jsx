@@ -7,11 +7,6 @@ export default class Board extends React.Component {
     super(props);
   }
 
-  // Checks for win/loss and prints appropriate message
-  // Also reveals all bombs if lost
-  checkStatus() {
-  }
-
   printRow(arr, idx) {
     return (
       <div className="board-row" key={idx}>

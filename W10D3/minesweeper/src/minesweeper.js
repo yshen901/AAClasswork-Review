@@ -67,6 +67,8 @@ export class Board {
     this.numBombs = numBombs;
     this.generateBoard();
     this.plantBombs();
+
+    this.reset = this.reset.bind(this);
   }
 
   generateBoard() {
@@ -122,5 +124,21 @@ export class Board {
       });
     });
     return won;
+  }
+
+  // HELPER FUNCTIONS FOR AFTER WIN/LOSS
+  exploreBombs() {
+    for (let i = 0; i < this.gridSize; i++) {
+      for (let j = 0; j < this.gridSize; j++) {
+        if (this.grid[i][j].bombed)
+          this.grid[i][j].explored = true;
+      }
+    }
+  }
+  
+  reset() {
+    this.grid = [];
+    this.generateBoard();
+    this.plantBombs();
   }
 }

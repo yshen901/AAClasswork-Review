@@ -1,3 +1,8 @@
+.game-interface {
+  width: fit-content;
+  height: fit-content;
+}
+
 .board-row {
   display: flex;
   flex-direction: row;
@@ -41,4 +46,17 @@
 
 .flagged {
   background-color: orange;
+}
+
+.game-status {
+  border: 1px solid black;
+  margin-top: 5px;
+  padding: 5px;
+
+  text-align: center;
+}
+
+.game-status:hover {
+  cursor: pointer;
+  background-color: lightblue;
 }
