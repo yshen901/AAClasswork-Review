@@ -23,7 +23,7 @@
   background: white;
 }
 
-.tile:hover {
+.unexplored:hover {
   box-shadow: none;
   cursor: pointer;
 
@@ -31,3 +31,14 @@
   transition-duration: 0.3s;
 }
 
+.explored {
+  background-color: rgb(151, 151, 151);
+}
+
+.bombed {
+  background-color: red;
+}
+
+.flagged {
+  background-color: orange;
+}

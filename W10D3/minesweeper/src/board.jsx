@@ -1,4 +1,5 @@
 import React from "react";
+import Tile from "./tile";
 
 // Props contain this.board and this.updateGame from game.jsx
 export default class Board extends React.Component {
@@ -6,10 +7,17 @@ export default class Board extends React.Component {
     super(props);
   }
 
+  // Checks for win/loss and prints appropriate message
+  // Also reveals all bombs if lost
+  checkStatus() {
+  }
+
   printRow(arr, idx) {
     return (
       <div className="board-row" key={idx}>
-        { arr.map( (tile, idx) => <div className="tile" key={idx}>T</div> )}
+        { arr.map( (tile, idx) => 
+          <Tile updateGame={this.props.updateGame} tile={tile} key={idx}></Tile> 
+        )}
       </div>
     )
   }

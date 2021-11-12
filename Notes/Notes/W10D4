@@ -77,10 +77,15 @@ Basic Component Structure
 	
 		*** updateGame will use setState to trigger a re-render after a tile is clicked.
 	
-HTML Code
+HTML Notes
 	fit-content to make a parent element only big enough to fit its children
 	box-shadow to add sunken in/popping out feel
-	
+React Notes
+	don't use "key" as a props, use another name
+	You can deconstruct instance variables
+		let {explored, bombed, flagged} = this.props.tile;
+	You can deconstruct props
+		let {board} = this.props;
 	
 	
 	
