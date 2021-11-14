@@ -99,8 +99,19 @@ Job Listing Project
 		export default store;
 
 
+Todos Project
+	File Structure
+		index.html
+		bundle.js (automatic)
+		/frontend
+			* actions
+			* components
+			* reducers
+			* store
+			* util
+		todo_redux.jsx (entry)
 
-
+		
 
 
 
