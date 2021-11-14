@@ -5,6 +5,7 @@ Store
 		3. Listening for actions that tell it how and when to change the global state
 		   of an application.
 	Create the store with #createStore(reducer, [preloadedState], [enhancer]);
+		0. Import { createStore } from "redux";
 		1. Reducer - a reducing function that receives the app's current state
 		   and incoming actions, determines how to update the store's stae, and
 		   returns the next state.
@@ -16,7 +17,7 @@ Store
 		3. subscribe(callback) - registers callbacks to be triggered when the store updates
 		   * returns a function that when invokes unsubscribes the callback from the store
 		   * one example is subscribing a store to a forceUpdate function, which will
-		     force a re-render every time the app state changes.
+		     force a re-render every time the app state changes. Remember to bind forceUpdate!
 
 
 Reducer
@@ -93,8 +94,9 @@ Actions
 
 
 Job Listing Project
-
-
+	To export default a const, you must put the export default objName on a different line!
+		const store = createStore(reducer);
+		export default store;
 
 
 

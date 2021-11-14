@@ -15,6 +15,7 @@ class Widget extends React.Component {
   }
 
   fetchJobListings(city) {
+    this.props.store.dispatch(this.selectLocation(city, []));
     $.ajax({
       url: `https://79vzv34gc4.execute-api.us-west-1.amazonaws.com/default/jobListings?location=${city}`,
       type: "GET",
