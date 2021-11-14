@@ -1,123 +1,124 @@
-NPM Getting Started
-	1. npm init --y
-	2. npm install webpack webpack-cli @babel/core @babel/preset-env babel-loader react react-dom
-	3. Setup webpack.config.js
-		var path = require('path');
-		
-		module.exports = {
-		  context: __dirname,	// helps resolve issues with file not found
-		  entry: "./entry.jsx",
-		  output: {
-		    path: path.resolve(__dirname),
-		    filename: "bundle.js"
-		  },	
-		  module: {
-		    rules: [		// configures babel transpilation of react
-		      {
-			test: [/\.jsx?$/],
-			exclude: /(node_modules)/,
-			use: {
-			  loader: 'babel-loader',
-			  options: {
-			    presets: ['@babel/env', '@babel/react']
-			  }
-			},
+Store
+	Holds the global state of the application, and is responsible for:
+		1. Updating the app's state using its reducer
+		2. Broadcasting the state to an application's view layer via subscription
+		3. Listening for actions that tell it how and when to change the global state
+		   of an application.
+	Create the store with #createStore(reducer, [preloadedState], [enhancer]);
+		1. Reducer - a reducing function that receives the app's current state
+		   and incoming actions, determines how to update the store's stae, and
+		   returns the next state.
+		2. preLoadedState - an object representing state that existed before the store was created.
+		3. enhancer - a function that adds extra functionality to the store
+	Other Methods
+		1. getState() - returns the store's current state
+		2. dispatch(action) - passes action to the store's reducer telling it what to update
+		3. subscribe(callback) - registers callbacks to be triggered when the store updates
+		   * returns a function that when invokes unsubscribes the callback from the store
+		   * one example is subscribing a store to a forceUpdate function, which will
+		     force a re-render every time the app state changes.
+
+
+Reducer
+	Example of a reducer for fruit
+		const fruitReducer = (state = [], action) => {
+		  switch (action.type) {
+		    case "ADD_FRUIT":
+		      return [...state, action.fruit];
+		    case "ADD_FRUITS":
+		      return [...state, ...action.fruits];
+		    case "SELL_FRUIT":
+		      const idx = state.indexOf(action.fruit);
+		      if (idx !== -1) {
+			// remove first instance of action.fruit
+			return [...state.slice(0, idx), ...state.slice(idx + 1)];
 		      }
-		    ]
-		  },
-		  devtool: 'source-map',	// this devtool allows me to see line numbers in errors
-		  resolve: {
-		    extensions: ['.js', '.jsx', '*']	// resolves jsx files during require/imports
+		      return state; // if action.fruit is not in state, return previous state
+		    case "SELL_OUT":
+		      return [];
+		    default:
+		      return state;
 		  }
 		};
-		
-In entry file
-	import ReactDom from "react-dom";	// allows rendering using react
-	import React from "react";		// allows react functions
-	
-	const root = document.addEventListener("DOMContentLoaded", () => { ... })	// finds the thing to load onto
-	ReactDOM.render(<Root></Root>, root);						// loads root onto thing
-	
-	const Root = () => <div>
-		<Component></Component>
-		<Component2></Component2>
-	</div>
-	
+	Breakdown
+		When a store is initialized, it will call its reducer with an undefined state, and the reducer will set it to the default value
+		The rest of the reducer will implement updates based on the action.type switch table
+	Immutable State
+		Do NOT ever mutate a reducer's arguments, state and action, since React must use pure-functions.
+		Use Object.freeze() to ensure the state never accidentally gets changed, and Object.assign() to make a new state.
+			const goodReducer = (state = { count: 0 }, action) => {
+			  Object.freeze(state);
+			  switch (action.type) {
+				case "INCREMENT_COUNTER":
+				  let nextState = Object.assign({}, state); // state should never be deeply nested, so this shallow dup is good enough
+				  nextState.count++;
+				  return nextState;
+				default:
+				  return state;
+			  }
+			};
+	Splitting Reducers (also called reducer composition)
+		1. Split reducers into multiple files, such as farmers_reducer.js and fruits_reducer.js
+		2. Create a rootReducer, and combine the reducers into it using combineReducers
+			const rootReducer = combineReducers({
+			  fruits: fruitsReducer,
+			  farmers: farmersReducer
+			});
+		3. Tie the reducer to the store. This is necessary because store only takes a single reducer.
+	Delegating to Reducers
+		You can delegate a reducer to helper reducers, such as farmersReducer delegating to farmerReducer.
+			    case "PAY_FARMER":
+				  nextState[action.id] = farmerReducer(nextState[action.id], action); //update a farmer
+				  return nextState;
+				case "HIRE_FARMER":
+				  nextState[action.id] = farmerReducer(undefined, action); // create a new farmer
+				  return nextState;
+				  
+				  
+Actions
+	Actions consist of POJOs that contain the action and the payload needed to execute the action.
+	Use action creators to more simply dispatch actions
+		const addFruit = fruit => ({
+		  type: "ADD_FRUIT",
+		  fruit
+		});
+		store.dispatch(addFruit("Apple"));
+				  
+				  
+				  
+				  
+				  
+				  
 
-	
-In HTML file
-	<!DOCTYPE html>
-	<html>
-	  <head>
-	    <title></title>
-	    <script src="./bundle.js"></script>
-	    <link rel="stylesheet" href="./stylesheets/index.css" />
-	    <link rel="stylesheet" href="./stylesheets/reset.css" />
-	    <link
-	      href="https://fonts.googleapis.com/css?family=Open+Sans"
-	      rel="stylesheet"
-	      type="text/css"
-	    />
-	  </head>
-	  <body>
-	    <div id='root'/>
-	  </body>
-	</html>
-	
-	
-	
-Basic Component Structure
-	<Root>
-		<Board board={this.state.board} updateGame={this.updateGame}>
-			...
-			<Tile updateGame={this.updateGame}></Tile>  // allows Tiles to trigger re-render for whole thing
-			...
-		</Board>
-	</Root>
-	
-		*** updateGame will use setState to trigger a re-render after a tile is clicked.
-	
-HTML Notes
-	fit-content to make a parent element only big enough to fit its children
-	box-shadow to add sunken in/popping out feel
-React Notes
-	don't use "key" as a props, use another name
-	You can deconstruct instance variables
-		let {explored, bombed, flagged} = this.props.tile;
-	You can deconstruct props
-		let {board} = this.props;
-	Only saying this.setState() with no arguments will cause problems
-		this.setState() instead of this.setState({board: this.state.board}) disables all the buttons
-	Must bind all things in event handlers, even functions of objects
-		onClick={this.state.board.reset} still caused a scope issue...had to bind reset in Board class
-	Another way to easily do end-game is to make a "modal"
-		an element that covers the whole screen and is opaque thus "disabling" further interaction
-	Instead of resetting the Board element, you can just make a new one!
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+Job Listing Project
+
+
+
+
+
+
+
+
+
+
+
+
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  

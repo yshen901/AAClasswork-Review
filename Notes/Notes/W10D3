@@ -1,0 +1,210 @@
+Babel
+	Babel is a transpiler used to convert our JSX and ES6 code into universally accepted ES5. 
+		1. Install the appropriate NPM packages
+		2. Configure module key of webpack.config.js
+
+
+React
+	React is a JS library for making UI components. When data that the UI represents changes, React "reacts"
+		by changing the data.
+	React is NOT a front-end MVC framework, and has no models, collections, controllers, templates, router, etc.
+	React will use a virtual DOM and a "diff" function to identify which pieces of data changed, what UI components
+		the change affected, and then surgically update the DOM to reflect the new state. This is called 
+		reconciliation, and ensures minimal change on the DOM.
+	React Synthetic Events allow you to pass event listeners to props with things like onClick={...} and onChange={...}
+		List of Events	: https://reactjs.org/docs/events.html
+		React DOC	: https://reactjs.org/docs/getting-started.html
+	
+Declaration
+	1. Inherit from React.Component
+		has a constructor(props optional, must have super) and a render()
+		Before ES6, these components were made using React.createclass()
+	2. Purely Functional Components
+		simply a function that accepts props and outputs JSX, i.e. the root in our programs.
+
+
+JSX
+	JSX allows us to use HTML in our JavaScript programs. Browsers can't process it directly, so it must be 
+		transpiled into vanilla JS by a preprocessor like Babel first. 
+	You can plug values into the HTML using interpolation w/ "{...}"
+
+
+Redux
+	Simpler version of Flux that is lightweight (only 2kbs), fast (low insert/retrieve time complexity), and predictable.
+		1. A single source of trute: the state for an entire Redux object stored in a POJO
+		2. State is read only: the state is only modified by dispatching actions
+		3. Changes are made with pure functions: reducers that receive actions and return updated state are pure functions
+			of the old state and the action.  
+		META PHILOSOPHY: software library restrictions are just as important as features; by placing significant restrictions 
+				  		 on how state can be stored and updated, React allows easy implementation of powerful features
+				  		 that would've been difficult on a less restrictive framework.
+				  		 
+	In comparison, Flux has a lot of boilerplate, and has multiple stores that violate the single source principle of Redux.
+		Flux is a coding pattern rather than a library that features unidirectional flow of data (action => reducer => store => view)
+		as well as a central data store modified by dispatching actions...this is similar to React.
+		
+		Unlike React, it has multiple stores, so it needs a dispatcher to route each action to the right store and sync the stores.
+		Functions in the stores don't need to be pure functions, making it difficult to predict the result of action dispatches, and
+		even harder to reverse. React solves this problem by making reducers pure functions.
+		
+	Vocab:
+		State: 	all information stored by the program at a particular point in time. Redux's job is to store this and share it
+				with the rest of the app.
+		
+		Store:	a redux store is a single JS object with a few methods like getState, dispatch(action), and subscribe(listener)
+		
+		Action:	an action is a POJO witha  type property that contains info on updating the store. 
+				They can be dispatched in response to use actions or AJAX requests
+				Redux apps use functions called action creaters to create actions; these take arguments to custom make an action.
+		
+		Pure Function:	A pure function's behavior depends only on its arguments and has no side effects; this means it can't
+						alter the state of the program or any external variable. It simply takes in args, and returns a value.
+		
+		Reducer:	Called everytime an action is dispatched. It receives an action and the current state as arguments, and returns
+					an updated state. React reducers are pure functions, making them predictable and more easily reversable. 
+					
+		Middleware:	An optional component of Redux that allows custom responses to dispatched actions. Actions first pass through each
+					middleware attached to the state. The middleware can take action in response, and replaces it with either
+					an identical method or a customized version before passing it down. An example is a logger that records each
+					action before passing it on to the reducer.
+					
+		Time traveling dev tools:	Lets you look past in the history of the state, toggle past actions on/off, and see a live
+									recalculation of the state. i.e. "time traveling"
+									
+		Thunks:	An alternative to middleware, thunks are a general CS concept referring to a function whose role is solely to cally
+				another function. A thunk action creater creates functions rather than objects, and middleware will
+					1. pass it down the chain if it is an object action
+					2. call the action with state/dispatch as arguments.
+				Thunks are often used for asynchronous API requests.
+	
+
+Detailed Flux Intro
+	Action
+		An action begins the flow of data in Flux. An action is a simple object that at a minimum contains a type. An action’s type indicates the type of change to be performed on the 
+		application’s state. An action may contain additional data (the "payload") that’s necessary for changing the application’s former state to its next one.
+
+	Dispatcher
+		The dispatcher is a mechanism for distributing (or "dispatching") actions to a Flux application’s store. The dispatcher is little more than a registry of callback functions 
+		into the store. Redux (the implementation of Flux we’ll use at App Academy) consolidates the dispatcher into a single dispatch() function.
+
+	Store
+		The store represents the entire state of the application. It’s also responsible for updating the state of the application appropriately whenever it receives an action. 
+		It does so by registering with the dispatcher a callback function that receives an action. This callback function uses the action’s type to invoke the proper function to 
+		change the application’s state. After the store has changed state, it “emits a change,” i.e. the store passes the new state to any views (explanation incoming) that have 
+		registered listeners (callbacks) to it.
+
+	View (see flux-loop for details)
+		A view is a unit of code that’s responsible for rendering the user interface. To complete the Flux pattern, a view listens to change events emitted by the store. 
+		When a change to the application’s data layer occurs, a view can respond appropriately, such as by updating its internal state and triggering a re-render.
+		A view can create actions itself, e.g. in user-triggered events. If a user marks a todo as complete, a view might call a function that would dispatch an action to 
+		toggle the todo’s state. Creating an action from the view turns our Flux pattern into a unidirectional loop.
+
+	Redux (see redux.gif for details)
+		Redux is a node package that facilitates a particular implementation of Flux. A Redux loop behaves slightly differently than a vanilla Flux loop, 
+		but the general concepts remain the same. Redux abides by three principles:
+			Single Source of Truth: The entire state of the application is stored in a single JavaScript object in a single store. This object is commonly referred to as a 
+				“state tree” because its values often contain or are objects themselves.
+			State is Read-Only: The only way to change the state is to dispatch an action. This principle ensures that our Redux loop is never short-circuited and 
+				change of state remains single-threaded.
+			Only Pure Functions Change State: Pure functions known as “reducers” receive the previous state and an action and return the next state. They return 
+				new state objects instead of mutating previous state. Read more about what makes a function pure.
+
+
+
+
+Minesweeper Notes
+	NPM Getting Started
+		1. npm init --y
+		2. npm install webpack webpack-cli @babel/core @babel/preset-env babel-loader react react-dom
+		3. Setup webpack.config.js
+			var path = require('path');
+			
+			module.exports = {
+			  context: __dirname,	// helps resolve issues with file not found
+			  entry: "./entry.jsx",
+			  output: {
+			    path: path.resolve(__dirname),
+			    filename: "bundle.js"
+			  },	
+			  module: {
+			    rules: [		// configures babel transpilation of react
+			      {
+				test: [/\.jsx?$/],
+				exclude: /(node_modules)/,
+				use: {
+				  loader: 'babel-loader',
+				  options: {
+				    presets: ['@babel/env', '@babel/react']
+				  }
+				},
+			      }
+			    ]
+			  },
+			  devtool: 'source-map',	// this devtool allows me to see line numbers in errors
+			  resolve: {
+			    extensions: ['.js', '.jsx', '*']	// resolves jsx files during require/imports
+			  }
+			};
+			
+	In entry file
+		import ReactDom from "react-dom";	// allows rendering using react
+		import React from "react";		// allows react functions
+		
+		const root = document.addEventListener("DOMContentLoaded", () => { ... })	// finds the thing to load onto
+		ReactDOM.render(<Root></Root>, root);						// loads root onto thing
+		
+		const Root = () => <div>
+			<Component></Component>
+			<Component2></Component2>
+		</div>
+		
+
+		
+	In HTML file
+		<!DOCTYPE html>
+		<html>
+		  <head>
+		    <title></title>
+		    <script src="./bundle.js"></script>
+		    <link rel="stylesheet" href="./stylesheets/index.css" />
+		    <link rel="stylesheet" href="./stylesheets/reset.css" />
+		    <link
+		      href="https://fonts.googleapis.com/css?family=Open+Sans"
+		      rel="stylesheet"
+		      type="text/css"
+		    />
+		  </head>
+		  <body>
+		    <div id='root'/>
+		  </body>
+		</html>
+		
+		
+		
+	Basic Component Structure
+		<Root>
+			<Board board={this.state.board} updateGame={this.updateGame}>
+				...
+				<Tile updateGame={this.updateGame}></Tile>  // allows Tiles to trigger re-render for whole thing
+				...
+			</Board>
+		</Root>
+		
+			*** updateGame will use setState to trigger a re-render after a tile is clicked.
+		
+	HTML Notes
+		fit-content to make a parent element only big enough to fit its children
+		box-shadow to add sunken in/popping out feel
+	React Notes
+		don't use "key" as a props, use another name
+		You can deconstruct instance variables
+			let {explored, bombed, flagged} = this.props.tile;
+		You can deconstruct props
+			let {board} = this.props;
+		Only saying this.setState() with no arguments will cause problems
+			this.setState() instead of this.setState({board: this.state.board}) disables all the buttons
+		Must bind all things in event handlers, even functions of objects
+			onClick={this.state.board.reset} still caused a scope issue...had to bind reset in Board class
+		Another way to easily do end-game is to make a "modal"
+			an element that covers the whole screen and is opaque thus "disabling" further interaction
+		Instead of resetting the Board element, you can just make a new one!
