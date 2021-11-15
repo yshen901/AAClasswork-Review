@@ -118,10 +118,12 @@ Todos Project
 				Use configureStore = () => createStore(rootReducer); 	// a pattern that will come up later
 		Reducer: 	Remember to set a default state
 					Each reducer has its own initialState, nested under its own key
+					Each reducer is its own object, so state just refers to what's nested under say "todos" in the global store
 		
 	Coding Notes
 		If you just put {todos} into an object, it has the same effect as { todos: todos }	
 		Try to use a return statement instead of shorthands, since it's easier to put in debuggers
+		use "delete objName[key]" to remove a key/value pair
 
 
 

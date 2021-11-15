@@ -4,21 +4,21 @@ export const REMOVE_TODO = "REMOVE_TODO";
 
 export const receiveTodos = (todos) => {
   return {
-    action: RECEIVE_TODOS,
+    type: RECEIVE_TODOS,
     todos,
   }
 };
 
 export const receiveTodo = (todo) => {
   return {
-    action: RECEIVE_TODO,
+    type: RECEIVE_TODO,
     todo
   }
 };
 
-export const removeTodo = (todoId) => {
+export const removeTodo = (todo) => {
   return {
-    action: REMOVE_TODO,
-    todoId
+    type: REMOVE_TODO,
+    todo
   }
 };
