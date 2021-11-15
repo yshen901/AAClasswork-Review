@@ -99,6 +99,7 @@ Job Listing Project
 		export default store;
 
 
+
 Todos Project
 	File Structure
 		index.html
@@ -110,8 +111,17 @@ Todos Project
 			* store
 			* util
 		todo_redux.jsx (entry)
-
 		
+	React-Redux Structure
+		Action -> Reducer (switch case) -> Root Reducer (combineReducers - redux) -> Store (createStore - redux)
+		Store: 	Use each object's id as the key to ensure easy look-up
+				Use configureStore = () => createStore(rootReducer); 	// a pattern that will come up later
+		Reducer: 	Remember to set a default state
+					Each reducer has its own initialState, nested under its own key
+		
+	Coding Notes
+		If you just put {todos} into an object, it has the same effect as { todos: todos }	
+		Try to use a return statement instead of shorthands, since it's easier to put in debuggers
 
 
 
