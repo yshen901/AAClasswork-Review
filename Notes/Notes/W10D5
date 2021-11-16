@@ -1,0 +1,121 @@
+<Provider />
+	Setup:	npm install react-redux
+		import { Provider } from "react-redux"
+	Provider is used in combination with connect() to easily pass down the store to children
+		const Root = ({ store }) => (
+		  <Provider store={store}>	// All children of App will have store passed to them
+		    <App />					// implicitly. This is called setting the context.
+		  </Provider>
+		);
+
+
+connect()
+	Allows us to access the store context set by provide.
+	Using connect, we can pass specific slices of the store's state and specific action-dispatches
+		to a React component as props. These props then serve as the component's API to the store,
+		making the component more modular and less burdened by Redux boilerplate.
+	
+	Structure
+		const MyComponent = ({ firstName, initials, handleAdd, handleDelete }) => {
+		  return <div>...</div>;
+		};
+		
+		const mapStateToProps = (state, ownProps) => ({
+		  firstName: state.name,
+		  initials: `${state.name[0]}. ${ownProps.lastName[0]}.`
+		});
+
+		const mapDispatchToProps = dispatch => ({
+		  handleDelete: id => dispatch(deleteTodo(id)),
+		  handleAdd: msg => dispatch(addTodo(msg))
+		});
+
+		export default connect(
+		  mapStateToProps,
+		  mapDispatchToProps
+		)(MyComponent); 	//component with  props determined by mapStateToProps and mapDispatchToProps
+		
+
+Containers
+	You place the above connect code into a ComponentContainer, generally only for more complicated components
+	File Structure
+		components
+			+ list
+				+ list_container.jsx
+				+ list.jsx
+				+ list_item.jsx
+				
+Selectors
+	Selectors are used to pull and format different slices of state when needed to reduce the amount we need to store
+		- Define all selectors in frontend/reducers/selectors.js
+		- Selectors can be called in mapStateToProps to format the data
+	
+	Examples:
+		export const getAllTodos = ({ todos }) => ( 	// in selectors.js
+			Object.keys(todos).map(id => todos[id])
+		);
+		export const getFilteredTodos = ({ todos, filter }) => { 	// in selectors.js
+			let result = [];
+			for (let id in todos) {
+				if (todos[id].done === filter) {
+					result.push(todos[id]);
+				}
+			}
+			return result;
+		};
+		
+		const mapStateToProps = state => ({		// In the container
+			todos: getAllTodos(state),
+			filteredTodos: getFilteredTodos(state),
+		});
+		
+
+Quiz
+	Components are re-rendered when the store changes, prop changes, or the parent re-renders
+		
+		
+		
+		
+		
+		
+Todos Part 2
+	Structure
+		const Root = ({store}) => (	// destructure params like this for functional components
+		  <Provider store={store}>	// pass down the store
+		    <App></App>		// all other stuff
+		  </Provider>
+		)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
