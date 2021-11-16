@@ -23,6 +23,7 @@ connect()
 		const mapStateToProps = (state, ownProps) => ({
 		  firstName: state.name,
 		  initials: `${state.name[0]}. ${ownProps.lastName[0]}.`
+		  allNames: allNames(state)					// can also be passed a selector!
 		});
 
 		const mapDispatchToProps = dispatch => ({
@@ -85,9 +86,9 @@ Todos Part 2
 		    <App></App>		// all other stuff
 		  </Provider>
 		)
-
-
-
+		
+	Coding Notes
+		Object.values(obj) will extract the values from an object in the form of an array
 
 
 
