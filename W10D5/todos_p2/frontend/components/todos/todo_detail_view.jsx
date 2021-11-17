@@ -5,14 +5,25 @@ export default class TodoDetailView extends React.Component {
     super(props);
   }
 
-  render() {
-    let content = "";
-    if (this.props.show)
-      content = "Put content here";
+  renderSteps() {
+    if (!this.props.show)
+      return "";
 
+      return (
+      <ul className='todo-item-steps-list'>
+        {this.props.steps.map((step, idx) => (
+          <li className='todo-item-step' key={idx}>
+            {step.title}
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
+  render() {
     return (
       <div className="todo-detailed-view">
-        {content}
+        {this.renderSteps()}
       </div>
     );
   }

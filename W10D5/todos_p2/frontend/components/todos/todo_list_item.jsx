@@ -1,5 +1,5 @@
 import React from "react";
-import TodoDetailView from "./todo_detail_view";
+import TodoDetailViewContainer from "./todo_detail_view_container";
 
 export default class TodoListItem extends React.Component {
   constructor(props) {
@@ -43,7 +43,7 @@ export default class TodoListItem extends React.Component {
             className="todo-list-details-toggle"
             onClick={this.toggleDetails}>Details</button>
         </div>
-        <TodoDetailView show={this.state.showDetails}></TodoDetailView>
+        <TodoDetailViewContainer show={this.state.showDetails} todoId={this.props.todo.id}></TodoDetailViewContainer>
       </li>
     ) 
   }
