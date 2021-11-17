@@ -89,7 +89,7 @@ Todos Part 2
 		
 	Coding Notes
 		Object.values(obj) will extract the values from an object in the form of an array
-
+		Use things like current datetime to get unique id
 
 
 
