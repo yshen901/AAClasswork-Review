@@ -29,6 +29,8 @@ export default class TodoForm extends React.Component {
       done: false,
       id: randomId()
     });
+
+    this.setState({title: "", body: ""});
   }
 
   render() {
