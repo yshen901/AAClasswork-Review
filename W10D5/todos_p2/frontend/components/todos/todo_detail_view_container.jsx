@@ -9,7 +9,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  receiveStep: (step) => dispatch(receiveStep(step))
+  receiveStep: (step) => dispatch(receiveStep(step)) // for step form
 });
 
 export default connect(

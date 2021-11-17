@@ -1,5 +1,6 @@
 import React from 'react';
 import StepListItemContainer from "../steps_list/step_list_item_container";
+import StepForm from "../steps_list/step_form";
 
 export default class TodoDetailView extends React.Component {
   constructor(props) {
@@ -10,20 +11,19 @@ export default class TodoDetailView extends React.Component {
     if (!this.props.show)
       return "";
 
-      return (
-      <ul className='todo-item-steps-list'>
-        {this.props.steps.map((step, idx) => (
-          <StepListItemContainer key={idx} step={step}></StepListItemContainer>
-        ))}
-      </ul>
+    return (
+      <div className="todo-detail-view">
+        <ul className='todo-item-steps-list'>
+          {this.props.steps.map((step, idx) => (
+            <StepListItemContainer key={idx} step={step}></StepListItemContainer>
+          ))}
+          <StepForm receiveStep={this.props.receiveStep} todoId={this.props.todoId}></StepForm>
+        </ul>
+      </div>
     );
   }
 
   render() {
-    return (
-      <div className="todo-detailed-view">
-        {this.renderSteps()}
-      </div>
-    );
+    return this.renderSteps();
   }
 }

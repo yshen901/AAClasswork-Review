@@ -27,9 +27,9 @@ export default class StepListItem extends React.Component {
       toggleStatus = "Undo";
     return (
       <li className='step-list-item'>
-          {this.props.step.title}: {this.props.step.body}
-          <button onClick={this.handleToggle}>{toggleStatus}</button>
-          <button onClick={this.handleDelete}>Delete</button>
+        {this.props.step.title}: {this.props.step.body}
+        <button onClick={this.handleToggle}>{toggleStatus}</button>
+        <button onClick={this.handleDelete}>Delete</button>
       </li>
     )
   }
