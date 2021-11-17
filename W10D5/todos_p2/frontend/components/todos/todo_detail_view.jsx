@@ -1,4 +1,5 @@
 import React from 'react';
+import StepListItemContainer from "../steps_list/step_list_item_container";
 
 export default class TodoDetailView extends React.Component {
   constructor(props) {
@@ -12,9 +13,7 @@ export default class TodoDetailView extends React.Component {
       return (
       <ul className='todo-item-steps-list'>
         {this.props.steps.map((step, idx) => (
-          <li className='todo-item-step' key={idx}>
-            {step.title}
-          </li>
+          <StepListItemContainer key={idx} step={step}></StepListItemContainer>
         ))}
       </ul>
     );
