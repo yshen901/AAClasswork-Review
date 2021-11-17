@@ -14,12 +14,12 @@ export default class TodoForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(e) {
+  handleChange(e) { // controlled input
     e.preventDefault();
     this.setState({[e.target.name]: e.target.value});
   }
 
-  handleSubmit(e) {
+  handleSubmit(e) { // sends to store api
     e.preventDefault();
 
     let { title, body } = this.state;
@@ -36,7 +36,7 @@ export default class TodoForm extends React.Component {
       <div id="todo-form">
         <input type="text" name="title" value={this.state.title} onChange={this.handleChange}/>
         <input type="text" name="body" value={this.state.body} onChange={this.handleChange}/>
-        <button onClick={this.handleSubmit}>Submit Task</button>
+        <button className="todo-form-submit" onClick={this.handleSubmit}>Submit Task</button>
       </div>
     )
   }
