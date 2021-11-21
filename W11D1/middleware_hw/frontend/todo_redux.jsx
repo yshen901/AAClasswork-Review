@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // store.dispatch = addLoggingToDispatch(store); 
 
   // better
-  store = applyMiddlewares(store, [addLoggingToDispatch]);
+  // store = applyMiddlewares(store, [addLoggingToDispatch]);
 
   const root = document.getElementById('content');
   ReactDOM.render(<Root store={store} />, root);
@@ -32,22 +32,22 @@ document.addEventListener('DOMContentLoaded', () => {
 // };
 
 // BETTER: Use currying to create the middleware signature
-function addLoggingToDispatch(store) {
-  return function (next) {
-    return function (action) {
-      console.log(`Original State: ${JSON.stringify(store.getState())}`);
-      console.log(`Action: ${JSON.stringify(action)}`);
-      next(action);
-      console.log(`New State: ${JSON.stringify(store.getState())}`);
-    };
-  };
-}
+// function addLoggingToDispatch(store) {
+//   return function (next) {
+//     return function (action) {
+//       console.log(`Original State: ${JSON.stringify(store.getState())}`);
+//       console.log(`Action: ${JSON.stringify(action)}`);
+//       next(action);
+//       console.log(`New State: ${JSON.stringify(store.getState())}`);
+//     };
+//   };
+// }
 
-function applyMiddlewares(store, middlewares) {
-  let dispatch = store.dispatch;
-  for (let i = 0; i < middlewares.length; i++) {
-    dispatch = middlewares[i](store)(dispatch);
-  }
+// function applyMiddlewares(store, middlewares) {
+//   let dispatch = store.dispatch;
+//   for (let i = 0; i < middlewares.length; i++) {
+//     dispatch = middlewares[i](store)(dispatch);
+//   }
 
-  return Object.assign({}, store, {dispatch});
-}
+//   return Object.assign({}, store, {dispatch});
+// }
