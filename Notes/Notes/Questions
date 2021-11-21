@@ -106,3 +106,5 @@ TBD
 								 Weather - weather API, API key, XMLHttpRequest, navigator.geolocation.currentLocation, including http:// in URI.)
 	W10D1:	jQuery Lite					(AJAX and Promises, and jQuery Lite Snake)
 	W10D3:	Redux Lite					(everything - store, reducers, dispatch, subscribing to store, and middleware bonus)
+	W10D4:	Todos Part 1					(CSS)
+	W10D5:	Todos Part 2					(Save to local storage, and CSS to make the app pretty)

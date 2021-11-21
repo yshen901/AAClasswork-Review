@@ -13,14 +13,14 @@ export default class TodoList extends React.Component {
         <ul>
           { this.props.todos.map((todo, idx) => (
             <TodoListItem 
-              key={idx} 
-              todo={todo} 
+              key={idx}
+              todo={todo}
               removeTodo={this.props.removeTodo}
               receiveTodo={this.props.receiveTodo}></TodoListItem>
           ))}
         </ul>
         <TodoForm receiveTodo={this.props.receiveTodo}></TodoForm>
       </div>
-    )
+    );
   }
 }

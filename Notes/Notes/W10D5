@@ -91,9 +91,17 @@ Todos Part 2
 		Object.values(obj) will extract the values from an object in the form of an array
 		Use things like current datetime to get unique id
 		You import the container not the class!
+		subscribe after creating store to add callbacks, such as loading state to localStorage
 
-
-
+		"Lexical declaration cannot appear in a single-statement context"
+			Basically you can't do stuff like "const varName = ..." unless it's in a block. The below is illegal
+				if (true)
+					const store = configureStore();
+		
+		use localStorage to store items
+			must JSON.stringify before storing, and JSON.parse after storing
+			use localStorage.setItem() and localStorage.getItem() to store and retrieve items
+			EMPTY STRING IS FALSE
 
 
 

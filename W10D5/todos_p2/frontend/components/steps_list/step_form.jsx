@@ -31,7 +31,7 @@ export default class StepForm extends React.Component {
       todo_id: this.props.todoId
     });
 
-    this.setState({title: "", body:""});
+    this.setState({title: "", body: ""});
   }
 
   render() {
