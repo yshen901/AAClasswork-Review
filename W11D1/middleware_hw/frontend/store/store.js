@@ -9,7 +9,7 @@ const configureStore = (preloadedState = {}) => {
     localStorage.state = JSON.stringify(store.getState());
   });
   return store;
-}
+};
 
 // Best: Use applyMiddleware from react library and ES6 notation
 const addLoggingToDispatch = store => next => action => {
@@ -17,6 +17,6 @@ const addLoggingToDispatch = store => next => action => {
   console.log(`Action: ${JSON.stringify(action)}`);
   next(action);
   console.log(`New State: ${JSON.stringify(store.getState())}`);
-}
+};
 
 export default configureStore;
