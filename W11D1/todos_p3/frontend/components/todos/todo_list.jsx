@@ -20,10 +20,17 @@ export default class TodoList extends React.Component {
               key={idx}
               todo={todo}
               removeTodo={this.props.removeTodo}
-              receiveTodo={this.props.receiveTodo}></TodoListItem>
+              receiveTodo={this.props.receiveTodo}
+            ></TodoListItem>
           ))}
         </ul>
-        <TodoForm receiveTodo={this.props.receiveTodo} createTodo={this.props.createTodo}></TodoForm>
+        <TodoForm 
+          receiveTodo={this.props.receiveTodo} 
+          createTodo={this.props.createTodo} 
+          clearErrors={this.props.clearErrors}
+          receiveError = {this.props.receiveError}
+          errors = {this.props.errors}
+        ></TodoForm>
       </div>
     );
   }

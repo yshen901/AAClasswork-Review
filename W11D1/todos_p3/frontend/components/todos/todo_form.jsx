@@ -12,6 +12,8 @@ export default class TodoForm extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.submitSuccess = this.submitSuccess.bind(this);
+    this.submitFailure = this.submitFailure.bind(this);
   }
 
   handleChange(e) { // controlled input
@@ -27,7 +29,17 @@ export default class TodoForm extends React.Component {
       title,
       body,
       done: false,
-    }).then(() => this.setState({title: "", body: ""}));
+    })
+    .then(this.submitSuccess, this.submitFailure);
+  }
+
+  submitSuccess() {
+    this.setState({title: "", body: ""});
+    this.props.clearErrors();
+  }
+
+  submitFailure(err) {
+    this.props.receiveError(err);
   }
 
   render() {
@@ -36,6 +48,9 @@ export default class TodoForm extends React.Component {
         <input type="text" name="title" value={this.state.title} onChange={this.handleChange}/>
         <input type="text" name="body" value={this.state.body} onChange={this.handleChange}/>
         <button className="todo-form-submit" onClick={this.handleSubmit}>Submit Task</button>
+        { this.props.errors.map((error) => (
+          <div className="form-error">{error.body} ({error.status})</div>
+        )) }
       </div>
     )
   }

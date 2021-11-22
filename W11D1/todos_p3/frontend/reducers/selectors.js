@@ -3,6 +3,10 @@ export const allTodos = (state) => {
   return Object.values(state.todos);
 };
 
+export const allErrors = state => {
+  return Object.values(state.errors);
+};
+
 // Retrieves steps for a specific todo
 export const todoSteps = (state, todoId) => {
   let steps = Object.values(state.steps);
