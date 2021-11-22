@@ -25,7 +25,7 @@ class Api::TodosController < ApplicationController
         render json: @todo.errors.full_messages, status:422
       end
     else
-      render json: "Todo not found!"
+      render json: ["Todo not found!"]
     end
   end
 
@@ -33,12 +33,12 @@ class Api::TodosController < ApplicationController
     @todo = Todo.find(params[:id])
     if @todo
       if @todo.destroy
-        render json: {}
+        render json: @todo
       else
         render json: @todo.errors.full_messages, status:422
       end
     else
-      render json: "Todo not found!"
+      render json: ["Todo not found!"]
     end
   end
 
