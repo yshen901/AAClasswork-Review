@@ -29,3 +29,31 @@ Todo.create({
   body: "Body 4",
   done: false
 });
+
+Step.create({
+  title: "Step 1",
+  body: "Step Body 1",
+  done: false,
+  todo_id: 1
+});
+
+Step.create({
+  title: "Step 2",
+  body: "Step Body 2",
+  done: false,
+  todo_id: 1
+});
+
+Step.create({
+  title: "Step 2.1",
+  body: "Step Body 2.1",
+  done: false,
+  todo_id: 2
+});
+
+Step.create({
+  title: "Step 3.1",
+  body: "Step Body 3.1",
+  done: false,
+  todo_id: 3
+});
