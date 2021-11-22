@@ -10,7 +10,8 @@ export default class StepListItem extends React.Component {
 
   handleDelete(e) {
     e.preventDefault();
-    this.props.removeStep(this.props.step);
+    // this.props.removeStep(this.props.step);
+    this.props.deleteStep(this.props.step);
   }
 
   handleToggle(e) {
@@ -18,7 +19,8 @@ export default class StepListItem extends React.Component {
     
     let newStep = Object.assign({}, this.props.step);
     newStep.done = !newStep.done;
-    this.props.receiveStep(newStep);
+    // this.props.receiveStep(newStep);
+    this.props.updateStep(newStep);
   }
 
   render() {

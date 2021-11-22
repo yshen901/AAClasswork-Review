@@ -23,11 +23,10 @@ export default class StepForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     let {title, body} = this.state;
-    this.props.receiveStep({
+    this.props.createStep({
       title,
       body,
       done: false,
-      id: randomId(),
       todo_id: this.props.todoId
     });
 

@@ -2,7 +2,17 @@ import { connect } from 'react-redux';
 import TodoList from "./todo_list";
 
 import { allTodos, allErrors } from "../../reducers/selectors";
-import { receiveTodo, removeTodo, fetchTodos, createTodo, updateTodo, deleteTodo } from "../../actions/todo_actions";
+import { 
+  receiveTodo, 
+  removeTodo, 
+  fetchTodos, 
+  createTodo, 
+  updateTodo, 
+  deleteTodo 
+} from "../../actions/todo_actions";
+
+import { fetchSteps } from "../../actions/steps_actions";
+
 import { receiveError, clearErrors } from "../../actions/errors_actions"
 
 const mapStateToProps = (state, ownProps) => ({
@@ -18,6 +28,8 @@ const mapDispatchToProps = (dispatch) => ({
   createTodo: (todo) => dispatch(createTodo(todo)),
   updateTodo: (todo) => dispatch(updateTodo(todo)),
   deleteTodo: (todo) => dispatch(deleteTodo(todo)),
+
+  fetchSteps: () => dispatch(fetchSteps()),
 
   clearErrors: () => dispatch(clearErrors()),
   receiveError: (error) => dispatch(receiveError(error))

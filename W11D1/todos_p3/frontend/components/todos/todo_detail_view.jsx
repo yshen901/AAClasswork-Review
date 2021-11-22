@@ -17,7 +17,7 @@ export default class TodoDetailView extends React.Component {
           {this.props.steps.map((step, idx) => (
             <StepListItemContainer key={idx} step={step}></StepListItemContainer>
           ))}
-          <StepForm receiveStep={this.props.receiveStep} todoId={this.props.todoId}></StepForm>
+          <StepForm createStep={this.props.createStep} todoId={this.props.todoId}></StepForm>
         </ul>
       </div>
     );

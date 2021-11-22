@@ -1,4 +1,4 @@
-export const fetchTodos = () => {
+export const fetchSteps = () => {
   return $.ajax({
     method: "GET", 
     url: "/api/steps"
