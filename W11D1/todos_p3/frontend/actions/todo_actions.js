@@ -40,3 +40,19 @@ export const createTodo = (todo) => (dispatch) => {
       dispatch(receiveTodo(todo));
     });
 };
+
+export const updateTodo = (todo) => (dispatch) => {
+  return APIUtil
+    .updateTodo(todo)
+    .then(todo => {
+      dispatch(receiveTodo(todo));
+    });
+};
+
+export const deleteTodo = (todo) => (dispatch) => {
+  APIUtil
+    .deleteTodo(todo)
+    .then(() => {
+      dispatch(removeTodo(todo));
+    });
+};

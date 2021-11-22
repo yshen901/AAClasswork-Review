@@ -11,4 +11,19 @@ export const  createTodo = (todo) => {
     url: "/api/todos",
     data: {todo}
   });
-}
+};
+
+export const updateTodo = (todo) => {
+  return $.ajax({
+    method: "PATCH",
+    url: `/api/todos/${todo.id}`,
+    data: {todo}
+  });
+};
+
+export const deleteTodo = (todo) => {
+  return $.ajax({
+    method: "DELETE",
+    url: `/api/todos/${todo.id}`
+  });
+};

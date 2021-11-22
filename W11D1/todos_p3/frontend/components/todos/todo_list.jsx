@@ -21,6 +21,8 @@ export default class TodoList extends React.Component {
               todo={todo}
               removeTodo={this.props.removeTodo}
               receiveTodo={this.props.receiveTodo}
+              updateTodo={this.props.updateTodo}
+              deleteTodo={this.props.deleteTodo}
             ></TodoListItem>
           ))}
         </ul>

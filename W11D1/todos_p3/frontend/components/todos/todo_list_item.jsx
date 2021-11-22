@@ -11,6 +11,7 @@ export default class TodoListItem extends React.Component {
 
     this.toggleTodo = this.toggleTodo.bind(this);
     this.toggleDetails = this.toggleDetails.bind(this);
+    this.deleteTodo = this.deleteTodo.bind(this);
   }
 
   toggleTodo(e) {
@@ -18,12 +19,17 @@ export default class TodoListItem extends React.Component {
 
     let todo = Object.assign({}, this.props.todo); //toggles done status
     todo.done = !todo.done;
-    this.props.receiveTodo(todo);
+    this.props.updateTodo(todo);
   }
 
   toggleDetails(e) {
     e.preventDefault();
     this.setState({showDetails: !this.state.showDetails});
+  }
+
+  deleteTodo(e) {
+    e.preventDefault();
+    this.props.deleteTodo(this.props.todo);
   }
 
   render() {
@@ -38,7 +44,7 @@ export default class TodoListItem extends React.Component {
           <button onClick={this.toggleTodo}>{toggleText}</button>
           <button 
             className="todo-list-item-remove" 
-            onClick={() => this.props.removeTodo(this.props.todo)}>Delete</button>
+            onClick={this.deleteTodo}>Delete</button>
           <button 
             className="todo-list-details-toggle"
             onClick={this.toggleDetails}>Details</button>
