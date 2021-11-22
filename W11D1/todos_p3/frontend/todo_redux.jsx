@@ -1,10 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import configureStore from "./store/store";
-import { receiveTodos, receiveTodo, removeTodo } from "./actions/todo_actions";
-import { receiveSteps, receiveStep, removeStep } from "./actions/steps_actions";
 
+import configureStore from "./store/store";
 import Root from "./components/root";
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.querySelector("#root");
@@ -12,8 +11,13 @@ document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(<Root store={store}></Root>, root);
 });
 
+// TESTING CODE (P3)
+import {fetchTodos} from "./util/todo_api_util";
+window.fetchTodos = fetchTodos;
 
-// TESTING CODE
+// TESTING CODE (P2)
+// import { receiveTodos, receiveTodo, removeTodo } from "./actions/todo_actions";
+// import { receiveSteps, receiveStep, removeStep } from "./actions/steps_actions";
 // import { allTodos } from "./frontend/reducers/selectors";
 // let storeTest = configureStore();
 // window.storeTest = storeTest;
