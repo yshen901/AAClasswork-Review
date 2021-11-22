@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_22_084032) do
+ActiveRecord::Schema.define(version: 2021_11_22_101418) do
 
   create_table "steps", force: :cascade do |t|
     t.string "title", null: false
@@ -20,6 +20,23 @@ ActiveRecord::Schema.define(version: 2021_11_22_084032) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["todo_id"], name: "index_steps_on_todo_id"
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer "todo_id"
+    t.integer "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["todo_id", "tag_id"], name: "index_taggings_on_todo_id_and_tag_id", unique: true
+    t.index ["todo_id"], name: "index_taggings_on_todo_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   create_table "todos", force: :cascade do |t|

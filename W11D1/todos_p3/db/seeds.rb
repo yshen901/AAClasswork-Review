@@ -57,3 +57,11 @@ Step.create({
   done: false,
   todo_id: 3
 });
+
+Tag.create({
+  name: "Tag 1"
+});
+
+Tag.create({
+  name: "Tag 2"
+});
