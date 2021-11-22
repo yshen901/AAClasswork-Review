@@ -23,14 +23,11 @@ export default class TodoForm extends React.Component {
     e.preventDefault();
 
     let { title, body } = this.state;
-    this.props.receiveTodo({
+    this.props.createTodo({
       title,
       body,
       done: false,
-      id: randomId()
-    });
-
-    this.setState({title: "", body: ""});
+    }).then(() => this.setState({title: "", body: ""}));
   }
 
   render() {

@@ -23,7 +23,7 @@ export default class TodoList extends React.Component {
               receiveTodo={this.props.receiveTodo}></TodoListItem>
           ))}
         </ul>
-        <TodoForm receiveTodo={this.props.receiveTodo}></TodoForm>
+        <TodoForm receiveTodo={this.props.receiveTodo} createTodo={this.props.createTodo}></TodoForm>
       </div>
     );
   }

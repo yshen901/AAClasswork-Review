@@ -32,3 +32,11 @@ export const fetchTodos = () => (dispatch) => {
       dispatch(receiveTodos(todos));
     });
 };
+
+export const createTodo = (todo) => (dispatch) => {
+  return APIUtil
+    .createTodo(todo)
+    .then(todo => {
+      dispatch(receiveTodo(todo));
+    });
+};
