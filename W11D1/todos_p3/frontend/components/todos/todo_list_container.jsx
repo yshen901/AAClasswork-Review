@@ -18,7 +18,6 @@ import {
 const mapStateToProps = (state, ownProps) => ({
   todos: allTodos(state),
   errors: allErrors(state),
-  tags: state.tags
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -31,7 +30,6 @@ const mapDispatchToProps = (dispatch) => ({
   deleteTodo: (todo) => dispatch(deleteTodo(todo)),
 
   fetchSteps: () => dispatch(fetchSteps()),
-  fetchTags: () => dispatch(fetchTags()),
 
   clearErrors: () => dispatch(clearErrors()),
   receiveError: (error) => dispatch(receiveError(error))

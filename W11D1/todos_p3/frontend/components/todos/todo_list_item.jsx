@@ -49,7 +49,10 @@ export default class TodoListItem extends React.Component {
             className="todo-list-details-toggle"
             onClick={this.toggleDetails}>Details</button>
         </div>
-        <TodoDetailViewContainer show={this.state.showDetails} todoId={this.props.todo.id}></TodoDetailViewContainer>
+        <TodoDetailViewContainer 
+          show={this.state.showDetails} 
+          todoId={this.props.todo.id} 
+          tags={this.props.todo.tags}></TodoDetailViewContainer>
       </li>
     ) 
   }

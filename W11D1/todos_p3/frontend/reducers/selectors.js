@@ -7,6 +7,10 @@ export const allErrors = state => {
   return Object.values(state.errors);
 };
 
+export const allTags = state => {
+  return Object.values(state.tags);
+};
+
 // Retrieves steps for a specific todo
 export const todoSteps = (state, todoId) => {
   let steps = Object.values(state.steps);

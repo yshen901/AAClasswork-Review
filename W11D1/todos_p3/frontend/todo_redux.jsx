@@ -9,6 +9,6 @@ import { fetchTodos } from "./actions/todo_actions";
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.querySelector("#root");
   const store = configureStore();
-  // window.store = store; //FOR TESTING
+  window.store = store; //FOR TESTING
   ReactDOM.render(<Root store={store}></Root>, root);
 });

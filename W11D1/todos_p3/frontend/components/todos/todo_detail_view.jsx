@@ -19,6 +19,11 @@ export default class TodoDetailView extends React.Component {
           ))}
           <StepForm createStep={this.props.createStep} todoId={this.props.todoId}></StepForm>
         </ul>
+        <ul className='todo-item-tags'>
+          {this.props.tags.map((tag, idx) => (
+            <li className="todo-item-tag" key={idx}>{tag.name}</li>
+          ))}
+        </ul>
       </div>
     );
   }
