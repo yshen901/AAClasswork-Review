@@ -2,6 +2,10 @@ import { connect } from 'react-redux';
 import TodoList from "./todo_list";
 
 import { allTodos, allErrors } from "../../reducers/selectors";
+
+import { receiveError, clearErrors } from "../../actions/errors_actions"
+import { fetchSteps } from "../../actions/steps_actions";
+import { fetchTags } from "../../actions/tag_actions";
 import { 
   receiveTodo, 
   removeTodo, 
@@ -11,13 +15,10 @@ import {
   deleteTodo 
 } from "../../actions/todo_actions";
 
-import { fetchSteps } from "../../actions/steps_actions";
-
-import { receiveError, clearErrors } from "../../actions/errors_actions"
-
 const mapStateToProps = (state, ownProps) => ({
   todos: allTodos(state),
   errors: allErrors(state),
+  tags: state.tags
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -30,6 +31,7 @@ const mapDispatchToProps = (dispatch) => ({
   deleteTodo: (todo) => dispatch(deleteTodo(todo)),
 
   fetchSteps: () => dispatch(fetchSteps()),
+  fetchTags: () => dispatch(fetchTags()),
 
   clearErrors: () => dispatch(clearErrors()),
   receiveError: (error) => dispatch(receiveError(error))

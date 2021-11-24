@@ -10,6 +10,7 @@ export default class TodoList extends React.Component {
   componentDidMount() {
     this.props.fetchTodos();
     this.props.fetchSteps();
+    this.props.fetchTags();
   }
 
   render() {
@@ -33,6 +34,7 @@ export default class TodoList extends React.Component {
           clearErrors={this.props.clearErrors}
           receiveError = {this.props.receiveError}
           errors = {this.props.errors}
+          tags = {this.props.tags}
         ></TodoForm>
       </div>
     );
