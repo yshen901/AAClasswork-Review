@@ -1,10 +1,12 @@
 class Api::TodosController < ApplicationController
   def show
-    render json: Todo.find(params[:id])
+    @todo = Todo.find(params[:id])
+    render json: @todo, include: :tags
   end
 
   def index
-    render json: Todo.all
+    @todos = Todo.all
+    render json: @todos, include: :tags
   end
 
   def create

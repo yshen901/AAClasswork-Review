@@ -65,3 +65,13 @@ Tag.create({
 Tag.create({
   name: "Tag 2"
 });
+
+Tagging.create({
+  tag_id: 1,
+  todo_id: 1
+});
+
+Tagging.create({
+  tag_id: 2,
+  todo_id: 1,
+});
