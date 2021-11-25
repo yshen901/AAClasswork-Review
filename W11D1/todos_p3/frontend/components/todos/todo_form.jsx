@@ -45,7 +45,7 @@ export default class TodoForm extends React.Component {
   }
 
   submitSuccess() {
-    this.setState({title: "", body: ""});
+    this.setState({title: "", body: "", tagNames: [], newTag: ""});
     this.props.clearErrors();
   }
 

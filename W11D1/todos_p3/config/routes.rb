@@ -7,6 +7,6 @@ Rails.application.routes.draw do
 
     resources :steps, only: [:show, :index, :create, :destroy, :update]
 
-    resources :tags, only: [:index]
+    resources :tags, only: [:index, :create]
   end
 end

@@ -10,8 +10,13 @@ class Api::TodosController < ApplicationController
   end
 
   def create
-    @todo = Todo.new(todo_params)
+    @todo = Todo.new({
+      title: todo_params[:title],
+      body: todo_params[:body],
+      done: todo_params[:done]
+    })  
     if @todo.save
+      @todo.tag_names = todo_params[:tag_names]
       render json: @todo, include: :tags
     else
       render json: @todo.errors.full_messages, status:422
