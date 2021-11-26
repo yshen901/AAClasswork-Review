@@ -1,3 +1,5 @@
+require 'bcrypt'
+
 class User < ApplicationRecord
   attr_reader :password
   before_validation :ensure_session_token

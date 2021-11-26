@@ -2,7 +2,11 @@ class SessionsController < ApplicationController
     # before_action :require_no_login # can't use this since it would invalidate destroy
 
     def new
-      render :new
+      if current_user
+        redirect_to root_url
+      else
+        render :new
+      end
     end
   
     def create
