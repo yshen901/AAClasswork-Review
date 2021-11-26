@@ -1,4 +1,6 @@
 class Api::StepsController < ApplicationController
+  before_action :require_login 
+  
   def index
     @steps = Step.all;
     render json: @steps

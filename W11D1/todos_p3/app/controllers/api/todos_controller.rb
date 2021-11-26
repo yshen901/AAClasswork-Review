@@ -1,16 +1,18 @@
 class Api::TodosController < ApplicationController
+  before_action :require_login 
+
   def show
     @todo = Todo.find(params[:id])
     render json: @todo, include: :tags
   end
 
   def index
-    @todos = Todo.all
+    @todos = current_user.todos
     render json: @todos, include: :tags
   end
 
   def create
-    @todo = Todo.new({
+    @todo = current_user.todos.new({
       title: todo_params[:title],
       body: todo_params[:body],
       done: todo_params[:done]
@@ -24,7 +26,7 @@ class Api::TodosController < ApplicationController
   end
 
   def update
-    @todo = Todo.find(params[:id])
+    @todo = current_user.todos.find(params[:id])
     if @todo
       if @todo.update(todo_params)
         render json: @todo, include: :tags
@@ -37,7 +39,7 @@ class Api::TodosController < ApplicationController
   end
 
   def destroy
-    @todo = Todo.find(params[:id])
+    @todo = current_user.todos.find(params[:id])
     if @todo
       if @todo.destroy
         render json: @todo
