@@ -1,7 +1,6 @@
 class Todo < ApplicationRecord
   validates :done, inclusion: { in: [true, false] }
-  validates :title, presence: true
-  validates :body, presence: true
+  validates :title, :body, :user_id, presence: true
 
   has_many :taggings,
     primary_key: :id,
@@ -11,6 +10,8 @@ class Todo < ApplicationRecord
   has_many :tags,
     through: :taggings,
     source: :tag
+
+  belongs_to :user #also works if class_name and keys are standard
 
   def tag_names=(tag_names) 
     self.tags = tag_names.map do |tag_name|
