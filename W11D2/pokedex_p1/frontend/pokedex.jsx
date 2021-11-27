@@ -8,6 +8,5 @@ import * as PokemonAPIUtil from "./util/pokemon_util";
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.querySelector("#root");
   const store = configureStore();
-
   ReactDOM.render(<Root store={store}></Root>, root);
 });

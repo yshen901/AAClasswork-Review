@@ -13,7 +13,7 @@ const pokemonReducer = (state={}, action) => {
       newState[action.pokemon.id] = action.pokemon;
       return newState;
     default:
-      state;
+      return state;
   }
 };
 export default pokemonReducer;
