@@ -108,3 +108,6 @@ TBD
 	W10D3:	Redux Lite					(everything - store, reducers, dispatch, subscribing to store, and middleware bonus)
 	W10D4:	Todos Part 1					(CSS)
 	W10D5:	Todos Part 2					(Save to local storage, and CSS to make the app pretty)
+	W11D1:	Todos Part 3					(Bonus	disable update/delete when pending dispatch, expand tags, 
+									substeps w/ polymorphic associations and concerns, quill.js, sorting)
+	W11D2: Giphy HW, Jbuilder exercise			(ALL...save time and focus on pokedex)
