@@ -91,7 +91,11 @@ Advanced Containers
 				this means you need an EditPostForm that renders a PostForm, since we need to fetchPost in componentDidMount
 				
 
-
+Pokedex P2
+	<Provider>
+		<HashRouter>
+			<App>
+				<Route>		// GENERAL STRUCTURE
 
 
 
