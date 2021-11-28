@@ -60,6 +60,7 @@ React Router
 		activeClassName		className when the link is "active", or when the patch matches
 		activeStyle			in-line styling when the link is active
 		exact				defaults to false...if true then the active props will only apply for exact matches
+	Also all NavLinks have an active class that's automatically activated, so you can use .active in css to modify
 
 <Switch>
 	use this instead of HashRouter to only render the first route that matches even if multiple routes match

@@ -9,8 +9,10 @@ class Blue extends React.Component {
       <div>
         <h2 className="blue"></h2>
         {/* Links here */}
-
+        <NavLink to='/blue' exact>Blue Only</NavLink>
+        <NavLink to='/blue/indigo'>Indigo</NavLink>
         {/* Routes here */}
+        <Route component={Indigo} path="/blue/indigo"></Route>
       </div>
     );
   }
