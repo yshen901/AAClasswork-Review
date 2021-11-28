@@ -97,6 +97,7 @@ Pokedex P2
 			<App>
 				<Route>		// GENERAL STRUCTURE
 
+	Object.assign({}, action.pokemon, state) // merges multiple things (state gets merged last and takes precedence)
 
 
 
