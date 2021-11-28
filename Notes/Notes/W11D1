@@ -1,0 +1,350 @@
+Higher Order Functions
+	Closures	: Functions that use free variables, or variables outside of its scope
+	Composing	: Functions that take in multiple callbacks to return a new function
+	Currying	: Functions that can be called multiple times and take in arguments
+			  until it reaches a limit, after which it calls the original function.
+	Higher-Order	: Functions that define and return functions and/or accept cbs as arguments
+	Callbacks	: Functions that are passed to higher order functions as parameters
+	
+	
+Middleware
+	- Any software that intercepts a process to redirect or generate a side effect
+	- In react, when a dispatch is made, middleware will intercept the action before it reaches the reducer. 
+		Attach enhancers to the store through #createStore(reducer, preloadedState, enhancer) and #applyMiddleware (...funcs)
+			import { createStore, applyMiddleware } from 'redux';
+			import rootReducer from 'reducers';
+			import logger from 'redux-logger';
+			let configureStore = (preloadedState = {}) => (
+			  createStore(
+			    rootReducer,
+			    preloadedState,
+			    applyMiddleware(logger) // import { applyMiddleware
+			  )
+			);
+
+
+Middleware Signature
+	All Redux middleware must have the following signature
+		const middleware = store => next => action => {
+		  // side effects, if any
+		  return next(action); 	// passes the action to the next middleware (built in)
+		};
+	All middleware receives store as an argument and returns
+		a function takes next link in the middleware chain as an argument and returns
+			a function that receives action, triggers side effects, and returns result of next(action)
+			
+			
+Thunks
+	PURPOSE	: AJAX calls return asynchronously, so we need something that will send a request, wait for it to get back,
+			  then when it does send the result to the store. Since the thunk will produce a function action, we'll need a custom
+			  middleware to deal with these actions. 
+			  
+	action creaters that return either POJO actions or Function actions
+	Intercept these with a custom middleware, which differentiates between action/function actions
+		const thunk = ({ dispatch, getState }) => next => action => { // dispatch and getState are functions in store. this pulls them like values from a POJO
+		  if (typeof action === 'function') {
+		    return action(dispatch, getState);
+		  }
+		  return next(action); 
+		};
+
+		export default thunk;
+	
+	
+ETC
+	Use Object.freeze(state) in reducers to make sure state is never mutated
+	Use namespacing to organize our routes, for example
+		namespace :api do 
+			resources :cats, only: [:index] //this corresponds to Api::CatsController rather than just CatsController...nest it all
+		end
+	Namespacing is different than nesting, which is just
+		resources :cats do 
+			resources :kittens, only: [:index]
+		end
+	Write arrow functions with explicit return statements so it is easier to debug
+	
+	
+	
+	
+	
+	
+Todos Part 3 - Rails Setup
+	Create rails project
+		rails new todos --database=postgresql --skip-turbolinks -G 	// turbolinks prevents full page reloads
+										// -G prevents new repo from being made
+										// ./ instead of todos to create inside of a directory	
+	Update Gemfile
+		gem pry-rails
+		gem binding_of_caller
+		gem better_errors
+		gem annotate
+		gem 'jquery-rails'		... //= require jquery and //= require jquery_ujs in application.js above //=require_tree .
+	
+	Create Migration
+		bundle exec rails db:create
+		bundle exec rails generate migration migrationName	//only migration
+		bundle exec rails generate model modelName	 	//does both migration and model
+		    create_table :polls do |t|
+		      t.string :title, null: false
+		      t.integer :user_id, null: false
+		      t.integer :answer_choice_id, {unique: true}
+		      t.timestamps
+		    end
+
+		    add_index :polls, :user_id
+		    add_index :polls, :title
+		    add_index :responses, [:user_id, :answer_choice_id], { unique: true }
+		bundle exec rails db:migrate
+		
+	Resetting Database
+		rails db:reset db:migrate db:seed
+		rails db:drop db:create db:migrate db:seed (NOTE: this just reloads based on schema, you may need to delete schema too!)
+	
+	Create Model
+		bundle exec rails generate model Todos
+			validates :boolean_field_name, inclusion: { in: [true, faslse] }
+			validates :title, presence: true
+			
+	Create Controllers
+		bundle exec rails generate controller Api::Todos
+		Api::TodosController
+		def create
+		  @todo = Todo.new(todo_params)
+		  if @todo.save
+		    render json: @todo //remember json output
+		  else
+		    render json: @todo.errors.full_messages, status:422
+		  end
+		end
+		def todo_params
+		  params.require(:todo).permit(:title, :body, :done, :arrayKey=>[]) //limits params access
+		  IMPORTANT!!!!!!!!! FOR ARRAY VALUES DO THE ABOVE OR IT WILL NOT PERMIT
+		end
+		
+	Create routes
+		namespace :api, defaults: {format: :json}
+			resources :todos, only: [:index, :show, :update, :create, :destroy]
+		end
+	
+	StaticPagesCotroller
+		serves a root view with <div id="root">React not working</div>
+			def show
+				render :root
+			end
+		create a root.html in views/static_pages
+			<div id="root">React is not working!</div>
+		root the app to this view using routes.rb
+			root to:'static_pages#root'
+	
+	Finalize
+		Seed database with todos for testing
+		Start server with bundle exec rails s
+		Visit localhost:3000
+		Test ajax is working
+		
+
+
+Todos Part 3 - React
+	Frontend folder contains
+		mkdir actions components middleware reducers store util
+	Move all of react stuff into frontend, except for the webpack.config.json and the package.json (latter is generated by npm init -y)
+		config	: create bundle in app/assets/javascripts instead
+						    path: path.resolve(__dirname, 'app', 'assets', 'javascripts'),
+    						filename: 'bundle.js'
+				  since bundle is in the above, and "//= require_tree ." is in application.js, 
+				  	  		this will be bundled for us.
+		package	: add  "postinstall": "webpack" script, which will be run everytime you do "npm install"
+						... purely for convenience, in case you forget
+
+	API: Put ajax calls into api_util files, like todo_api_utils.js...these ONLY do api calls, no actions here!
+		export const fetchTodos = () => {
+		  return $.ajax({
+			method: "GET",
+			url: "/api/todos"
+		  });
+		};
+		**** FOR POST REQUESTS, NEST THE DATA UNDER "data" KEY...LIKE "data: {todo}"
+		**** USE PATCH FOR UPDATING, PUT FOR REPLACING
+		**** PUT ID INTO URL FOR POST/PATCH
+		**** render json: "todo successfully destroyed" will trigger an error in .then(success, failure)...render json: OBJECT instead!
+		
+	THUNK: Make a thunk action creater to handle asynchronous api call
+		Place a fetchTodos action creator in the todo_actions.js file
+		Pull in all api
+			import * as APIUtil from "../util/todos_api_util"
+		Make a fetchTodos action creator
+			export const fetchTodos = () => (dispatch) => {  // this function can take in dispatch (look at middleware below)
+			  return APIUtil
+				.fetchTodos()
+				.then(
+					todos => { dispatch(receiveTodos(todos)); }, 	// then fires off the dispatch with the built action
+					err => { dispatch(receiveErrors(err)); }	// only fires if there is an error!
+				);
+			};
+	
+	MIDDLEWARE: Make a middleware to handle the function action above
+		const thunk = ({dispatch, getState}) => next => action => {
+		  if (typeof action === 'function') {
+			return action(dispatch, getState); // fire the action if it's a function (aka thunk)
+		  }
+		  return next(action); // otherwise move to next middleware
+		};
+		
+		
+		
+Todos Part 3 - Workflow
+	Database	generate model (which makes migration too)
+				migration schema and db validations (indexes on foreign keys)	-> rails db:migrate
+					validates :username, :session_token, presence: true 	// You can chain them!
+				create seeds 	
+												-> rails db:seed
+	Associations	write out model level associations
+				  belongs_to :artwork,
+				    primary_key: :id,			// usually id, unless you are joining w/ something else
+				    foreign_key: :artwork_id,		// foreign_key usually refers to the parent table
+				    class_name: :Artwork		// class_name is the opposing class (changes)
+				  has_many :artwork_shares
+				    primary_key: :id, 
+				    foreign_key: :artwork_id,
+				    class_name: :ArtworkShare
+				  has_many :shared_viewers
+				    through: :artwork_shares
+				    source: :viewers
+			use collection= method to create mappings (similar to password=) 
+				def tag_names=(tag_names)			// add tag_names variable to todo_params
+				  self.tags = tag_names.map do |tag_name|	// uses association to setup relations
+				    Tag.find_or_create_by(name: tag_name)	// either finds a tag or creates it
+				  end
+				end
+				*** IMPORTANT: DON'T CALL THIS WHEN SELF ISN'T EVEN INITIALIZED YET...OTHERWISE ID === NULL AND ASSOCIATIONS ARE IMPOSSIBLE
+				
+	Routing	write out routes
+				rails routes to check all
+				rails routes | grep <routeName> to check specific
+				
+	Controller	generate controller
+				actions like show, index, etc
+					- nest when necessary (remember how ids work with nested), but not for things like show
+					- remember distinctions between find(params[:id]) and find_by(id: params[:id]) in terms of how they fail
+						also update (fails silently) and update! (fails loudly)
+					- always return either an object or an array, don't just return a string! i.e. do render json: ["failed to delete"]
+					- render json: @todo, include: :tags // to render associated items
+			create views
+				one for each action ideally, which return json (check older projects)
+
+	APIUtil	Makes ajax calls and returns a promise (fetch, create, delete, update)
+	Action		Either a thunk action creater or a regular action creater (export action names, LEAVE ERROR HANDLING FOR LATER)
+			Use fetch, create, delete, and update for api actions
+			Use receive and remove for regular actions
+			REMEMBER TO INCLUDE ASSOCIATED VALUES IN THE RENDER!
+	Reducer	Handle each type of action (import action names from actions)
+	Middleware	For thunks, you need a custom middleware to handle function type actions
+	
+	Components	Add action dispatches to the mapDispatchToProps function
+			Add relevant state slices to mapStateToProps
+			
+			
+Todos 3 - Rails Auth
+	UsersMigration
+		username, password_digest, session_token (all required)
+		create_index :users, :username, unique: true
+		add_column :todos, :user_id, :integer, null: false		// adds a column, but you should learn to update pre-existing data with SQL
+			An alternative is to put default: 'default value', which will popualate the old columns
+			However, you should learn to use up/down and sql to do this more intelligently
+		
+	UsersModel (remember to require bcrypt)
+		before_validation :ensure_session_token	// similar to after_initialization
+		attr_reader :password				// since password isn't a column, there is no reader to validate with 
+								   or writer to set with, so we need to make our own reader and writer (password=)
+		
+		validates :username, :session_token, presence: true
+		validates :username, unique: true
+		validates :password, length: { minimum: 6, allow_nil: true }
+		validates :password_digest, presence: { message: "Password cannot be blank" }
+		
+		self.generate_session_token		{ SecureRandom::urlsafe_base64 }
+		self.find_by_credentials(name, pwd) 	// find w/ username, and if found use is_password to validate
+		
+		#password=(pwd)			// given a password, will set @password and self.password_digest (BCrypt)
+							      self.password_digest = BCrypt::Password.create(pwd)
+		#is_password?(pwd)			// given password, use BCrypt to check for match with password_digest
+							      BCrypt::Password.new(self.password_digest).is_password?(pwd)
+		#reset_session_token!			// generate new session token, set self to that, save, then return the new token
+		
+		private
+		#ensure_session_token			// use ||= to set session token using generate_session_token
+		
+	UsersController
+		#new 		// just renders new user form
+		#create 	// login! user, then redirect to home page if save succeeds
+			**Use flash[:errors] = ["..."]
+			**Add before_action :require_no_user! to limit access if someone is already logged in
+			
+	SessionsController (PLURAL)
+		#new		// renders new session form
+		#create	// finds user with find_by_credentials, and if found login! and redirect
+		#destroy	// if there's a current user, logout! then redirect to new_session_url
+			**USE flash[:errors] = ["..."]
+			**Add before_action :require_no_user! to limit access if someone is already logged in
+			
+	ApplicationController
+		helper_method :login!, :logout!, :current_user, :require_login	// makes it accessible to rest of app
+		protect_from_forgery with: :exception							// adds a check for the authenticity token, and throws exception for failures
+		
+		#login!(user)	// sets session[:session_token] equal to users
+		#logout!(user)	// sets session[:session_token] to nil, resets user session token (this makes it so current_user will always return nil)
+		#current_user	// returns nil if no session[:session_token], otherwise find user by session[:session_token]
+				   remember to use @current_user ||= User.find_by(session_token: session[:session_token] to avoid N+1 queries
+		#require_login	// add "login first to flash errors, then redirect (protects pages)
+		
+	Views (new session/user)
+		<form action=<%= session_url %> method="post">
+			  <input type="hidden" name="authenticity_token" value=<%= form_authenticity_token %>>	// sends up the authenticity token
+
+			  <label for="username">Username: </label>												// remember to nest the name (no :!)...id to add label
+			  <input type="text" name="session[username]" id="username">
+			  <label for="password">Password: </label>
+			  <input type="text" name="session[password]" id="password">
+
+			  <input type="submit" value="Login">
+		</form>
+	
+	Routes
+		resources :users, only: [:create, :new]
+		resource  :session, only: [:create, :destroy, :new]
+					
+			
+Bug Notes
+	Use permit(:arrayKey=>[]) to permit array params, otherwise it blocks
+	Use sudo kill -9 $(lsof -i :3000 -t) to kill all running rails servers, replace 3000 with whatever server it's on
+	Include associated values when rendering after creating as well, since you need it to update the state
+	collection= methods (see above)
+		*** IMPORTANT: DON'T CALL THIS WHEN SELF ISN'T EVEN INITIALIZED YET...OTHERWISE ID === NULL AND ASSOCIATIONS ARE IMPOSSIBLE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

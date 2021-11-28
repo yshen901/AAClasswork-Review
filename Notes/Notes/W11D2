@@ -1,0 +1,142 @@
+JBuilder Intro
+	def show
+		@user = User.find(params[:id])
+		render :show
+	end
+	
+	json.extract! @user, :id, :username  // same as json.id @user.id and json.username @user.username
+	json.comments do
+		@user.comments.each do |comment|
+			json.set! comment.id do
+				json.extract! comment, :id, :author_id, :body, :created_at
+			end
+		end
+	end
+	
+	
+JBuilder Methods
+	json.<some_key> <some_value>				// keys with fixed names
+	json.extract! <@some_variable>, :values		// faster way to do the above
+	json.<some_key> <@some_variable>, :values	// do the above, but nest it under a key
+	json.set! 									// keys we need to first evaluate, like comment.id
+	json.array! <@variables> do |variable|		// returns an array of objects
+
+Configure Rails
+	routes.rb - set default to format: :json
+		namespace :api, defaults: { format: :json } do
+			resources :pokemon, only: [:index, :show, :create, :destroy]
+		end
+		
+	views - make json.jbuilder files
+		*** You can still use partials!
+		
+	
+Normalized State
+	1. Each type of data (comments, users, posts) must get its own "table" in the state
+	2. Each table should store individual items in an object, with IDs of the items as keys, and items themselves as values
+	3. All references to the individual items should be done by storing the item's ID
+	4. Arrays of IDs should be used to indicate ordering
+	
+	Example of a state slice for user:
+		users : {
+		    byId : {								// stores the information
+		        "user1" : {
+		            username : "user1",
+		            name : "User 1",
+		        },
+		        "user2" : {
+		            username : "user2",
+		            name : "User 2",
+		        },
+		        "user3" : {
+		            username : "user3",
+		            name : "User 3",
+		        }
+		    },
+		    allIds : ["user1", "user2", "user3"]	// indicates order
+		}
+		
+	To update: https://redux.js.org/usage/structuring-reducers/updating-normalized-data
+	
+	
+	
+	
+Giphy HW
+	1. Make an API_Key
+	2. Create API_Util for giphy
+	3. Create actions/reducers/middleware for the state
+		a. remember for thunk actions, use (parameters) => (dispatch)!
+		b. you can import thunk middleware  with import thunk from 'redux-thunk'
+	4. Create mapStateToProps and mapDispatchToProps
+	5. Create components
+		a. Entry file	: root = document.querySelector(...), store = configureStore(...), ReactDOM.render(<Root store={store}></Root>, root)
+		b. root comp	: use provider to envelop all elements, and pass store to it
+
+
+
+Pokedex Part 1
+	rails db:setup	short for rails db:create, db:schema:load, db:seed
+	partials
+		json.partial! 'partials/partial_path', locals: {local_var: my_local_var}
+
+	Frontend Setup
+		npm init -y
+			modify package.json and webpack.config.js
+			create folders
+				mkdir frontend
+					mkdir actions components middleware reducers store util
+					code pokedex.jsx (entry file)
+			
+			entry file
+				import React and ReactDOM
+				add event listener with a callback that adds Root component passes it the store
+			rootReducer
+				import {combineReducers} (redux)
+				export the rootReducer = combineReducer({...})  ... NOT A FUNCTIOn
+			store
+				import {applyMiddleware, createStore} (redux), thunk (redux-thunk), logger (redux-logger) and rootReducer
+				write and export a configureStore function that creates and returns a store
+					createStore(rootReducer, preloadedState (usually {}), and applyMiddleware(thunk, logger))
+					logger is important! it logs all actions dispatched as well as before/after states
+			Root
+				import Provider from "react-redux"
+				const Root = ({store}) => (<Provider store={store}></Provider>)
+				
+			Redux Cycle
+				APIUtil		util/pokemon_util.jsx
+				Action		actions/pokemon_actions.jsx
+				Reducer		reducers/pokemon_reducer.jsx
+								can place this inside reducers/entities_reducer.jsx 
+								this way we can have other slices with non-data info like ui: {errors: ..., loading: ...}
+				Container	use connect to connect(mapStateToProps, mapDispatchToProps)(Component)
+
+			FOR IMAGES
+				in app/assets/images ... use json.image_url asset_path("pokemon_snaps/#{poke.image_url}") and <img src={pokemon.image_url}
+				in public/assets/images ... and do <img src{`/assets/images/${pokemon.image_url}`>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

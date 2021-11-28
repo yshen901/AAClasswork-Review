@@ -1,0 +1,111 @@
+React Router
+	Purpose is to allow the app to selectively render components based on the URL the browser is pointed at
+		otherwise you'd have to start from Root and navigate from there each time.
+	
+	<HashRouter>	wraps the entire route heirarchy
+	<Route>			wraps another component and only renders if the url matches
+						props: 	component (component to be rendered)
+							path (path to match, normally /users and /users/123 matches /users)
+						   	exact (flag, so /users and /users/123 don't match anymore)
+						   	render (optional. preferred over component for simple functional components.)
+								<Route path="/one" component={() => <span>One</span>} /> 	// will create a react component, slower
+								<Route path="/one" render={() => <span>One</span>} />		// simply releases jsx, so faster
+	Example
+		import { Route, HashRouter } from 'react-router-dom';
+
+		const Root = () => (
+		  <HashRouter>
+			// HashRouter can only have a single child component, so we wrap our routes in this div
+			<div>
+			  <Header />									// always renders
+			  <Route exact path="/" component={Feed} />		// only if we're in root
+			  <Route path="/users" component={Users} />		// renders if path matches /users
+			</div>
+		  </HashRouter>
+		);
+	
+	URL Params
+		Router will match segments starting at : to the next / ? or # ... these are called wildcards and are passed via props
+			const Users = () => (
+			  // render the index of no id is included
+			  <Route exact path="/users" component={UsersIndex} />
+			  // otherwise render the profile page for that user
+			  <Route path="/users/:userId" component={Profile} />
+			);
+		The above doens't need HashRouter, as it already wraps everything.
+		
+	Location Props
+		React router makes a number of props available
+			location	current url
+							.pathname 	(returns the currentURL)
+			match		how current url matches the route path
+							.isExact 	(true/false depending on exact match)
+							.url		(current URL)
+							.path		(route path it matched against, without wildcards)
+							.params 	(matches for individual wildcard segments, nested under their names)
+										this.props.match.params.userId;
+			history		updates URL with code
+							.push 		(adds new URL to the end of the history stack, so pressing back will go back to previous)
+							.replace 	(replaces current URL, so back won't do anything)
+
+
+<Link>
+	import { Link } from 'react-router-dom'
+	<Link to="/about" onClick={e => this.handleClick(e)}>Link</Link>
+		preferred over using history.push in another element since Link will also generate an anchor tag with a correct href attribute
+		
+<NavLink>
+	similar to Link, but it can also add extra styling when the path it links to matches the current path
+	3 extra props:
+		activeClassName		className when the link is "active", or when the patch matches
+		activeStyle			in-line styling when the link is active
+		exact				defaults to false...if true then the active props will only apply for exact matches
+
+<Switch>
+	use this instead of HashRouter to only render the first route that matches even if multiple routes match
+
+withRouter
+	use this to get routing information for components without wrapping inside of a <Route>
+		const Header = ({ match }) => (
+		  // ...
+		  User id: { match.params.userId }
+		)
+		export default withRouter(Header)	// we get access to match inside of Header because of withRouter
+
+<Redirect>
+	Only takes a single prop to: "some_url"
+	When it renders it will replace the current url with the value of its to prop
+	Used to protect certain routes and redirect away from pages we don't want users to visit
+		<Route
+		  exact
+		  path="/"
+		  render={() => (this.props.currentUser ? <Home /> : <Redirect to="/login" />)}
+		/>
+
+Advanced Containers
+	Two containers for one component
+		PostForm has the simple form that takes a post and submitAction prop
+			CreatePostFormContainer	: no changes since it just takes an empty post obj and a simple submit prop
+			EditPostFormContainer	: needs to fetchPost(id) and update instead of create for submit
+				this means you need an EditPostForm that renders a PostForm, since we need to fetchPost in componentDidMount
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
