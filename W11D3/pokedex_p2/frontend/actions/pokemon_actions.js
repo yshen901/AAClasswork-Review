@@ -13,12 +13,13 @@ export const requestAllPokemon = () => (dispatch) => (
     .then(pokemon => dispatch(receiveAllPokemon(pokemon)))
 );
 
-export const receivePokemon = (pokemon) => ({
+export const receivePokemon = (pokemonData) => ({
   type: RECEIVE_POKEMON,
-  pokemon
+  pokemonData
 });
 
-export const requestPokemon = (id) => (dispatch) => (
-  APIUtil.fetchPokemon()
-    .then(pokemon => dispatch(receivePokemon(pokemon)))
-);
+export const requestPokemon = (id) => (dispatch) => {
+  debugger;
+  return APIUtil.fetchPokemon(id)
+    .then(pokemonData => dispatch(receivePokemon(pokemonData)));
+};
