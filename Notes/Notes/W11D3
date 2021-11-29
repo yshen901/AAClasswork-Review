@@ -112,7 +112,7 @@ Pokedex P2
 
 	Questions
 		- image_url from json turns into imageUrl in the frontend...is this normal behavior?
-
+		- check out a/A's version to see if there are redundant re-renders in your PokemonDetail when switching pokemon.
 
 
 

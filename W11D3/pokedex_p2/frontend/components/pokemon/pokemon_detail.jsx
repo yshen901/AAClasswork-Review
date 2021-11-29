@@ -9,13 +9,19 @@ export default class PokemonDetail extends React.Component {
     this.props.requestPokemon(this.props.match.params.pokemonId);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.pokemonId != prevProps.match.params.pokemonId) {
+      this.props.requestPokemon(this.props.match.params.pokemonId);
+    }
+  }
+
   render() {
     let details = (
       <div className="pokemon-detail"></div>
     );
 
     let { pokemon, moves, items } = this.props;
-    if (pokemon) { // if the pokemon has been loaded
+    if (pokemon && pokemon.moveIds) { // if the pokemon has been loaded
       let { imageUrl, moveIds, itemIds } = pokemon; // deconstruct items to simplity
       details = (
         <div className="pokemon-detail">
