@@ -92,18 +92,26 @@ Advanced Containers
 				
 
 Pokedex P2
-	<Provider>
-		<HashRouter>
-			<App>
-				<Route>		// GENERAL STRUCTURE
+	React-Redux Notes
+		- <Provider>
+			<HashRouter>
+				<App>
+					<Route>		// GENERAL STRUCTURE
+		- When you have info from different slices coming in at once
+			1) write different reducers for the same action
+			2) save references to other slices in the relevant places...for example pokemon will have moveIds and itemIds
+		- To import all stylesheets inside app/assets/stylesheets add the following to the head of the application.html.erb:
+				<%= stylesheet_link_tag    'application', media: 'all' %>
+    				<%= javascript_include_tag 'application' %>
+    	- When writing reducers and using Object.assign, make sure to order it so more detailed data is put first, and less is last
+    		i.e. Object.assign({}, action.pokemon, state) // do current state last as it has the most complete data
+	
+	Coding Notes
+		- Object.assign({}, action.pokemon, state) // merges multiple things (state gets merged last and takes precedence)
+		- Use single quotes! It's apparently more popular for JS.
 
-	Object.assign({}, action.pokemon, state) // merges multiple things (state gets merged last and takes precedence)
-	
-	When you have info from different slices coming in at once
-		1) write different reducers for the same action
-		2) save references to other slices in the relevant places...for example pokemon will have moveIds and itemIds
-	
-	Use single quotes! It's apparently more popular for JS.
+	Questions
+		- image_url from json turns into imageUrl in the frontend...is this normal behavior?
 
 
 

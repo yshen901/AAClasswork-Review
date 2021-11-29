@@ -19,7 +19,6 @@ export const receivePokemon = (pokemonData) => ({
 });
 
 export const requestPokemon = (id) => (dispatch) => {
-  debugger;
   return APIUtil.fetchPokemon(id)
     .then(pokemonData => dispatch(receivePokemon(pokemonData)));
 };
