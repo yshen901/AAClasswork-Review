@@ -98,8 +98,12 @@ Pokedex P2
 				<Route>		// GENERAL STRUCTURE
 
 	Object.assign({}, action.pokemon, state) // merges multiple things (state gets merged last and takes precedence)
-
-
+	
+	When you have info from different slices coming in at once
+		1) write different reducers for the same action
+		2) save references to other slices in the relevant places...for example pokemon will have moveIds and itemIds
+	
+	Use single quotes! It's apparently more popular for JS.
 
 
 
