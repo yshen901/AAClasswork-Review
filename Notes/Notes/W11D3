@@ -4,7 +4,8 @@ React Router
 	
 	<HashRouter>	wraps the entire route heirarchy
 	<Route>			wraps another component and only renders if the url matches
-						props: 	component (component to be rendered)
+						props: 	
+							component (component to be rendered. if you need to pass props then use "render=((props) => <Component prop=props/>)")
 							path (path to match, normally /users and /users/123 matches /users)
 						   	exact (flag, so /users and /users/123 don't match anymore)
 						   	render (optional. preferred over component for simple functional components.)
@@ -37,16 +38,16 @@ React Router
 	Location Props
 		React router makes a number of props available
 			location	current url
-							.pathname 	(returns the currentURL)
+						.pathname 	(returns the currentURL)
 			match		how current url matches the route path
-							.isExact 	(true/false depending on exact match)
-							.url		(current URL)
-							.path		(route path it matched against, without wildcards)
-							.params 	(matches for individual wildcard segments, nested under their names)
+						.isExact 	(true/false depending on exact match)
+						.url		(current URL)
+						.path		(route path it matched against, without wildcards)
+						.params 	(matches for individual wildcard segments, nested under their names)
 										this.props.match.params.userId;
-			history		updates URL with code
-							.push 		(adds new URL to the end of the history stack, so pressing back will go back to previous)
-							.replace 	(replaces current URL, so back won't do anything)
+			history	updates URL with code
+						.push 		(adds new URL to the end of the history stack, so pressing back will go back to previous)
+						.replace 	(replaces current URL, so back won't do anything)
 
 
 <Link>

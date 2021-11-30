@@ -14,10 +14,10 @@ const Root = ({ store }) => (
 );
 
 const App = () => (
-  <div className="pokedex">
-    <Route path="/" component={PokemonIndexContainer}></Route>
+  <section className="pokedex">
     <Route path="/pokemon/:pokemonId" component={PokemonDetailContainer}></Route>
-  </div>
+    <Route path="/" component={PokemonIndexContainer}></Route>
+  </section>
 )
 
 export default Root;
