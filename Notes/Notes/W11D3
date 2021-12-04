@@ -110,6 +110,17 @@ Pokedex P2
 	Coding Notes
 		- Object.assign({}, action.pokemon, state) // merges multiple things (state gets merged last and takes precedence)
 		- Use single quotes! It's apparently more popular for JS.
+		- Deconstruct array in ruby with x, y = [1, 2], and object with name, breed = dog.values_at(:name, :breed);
+		- If you only use mapDispatchToProps, remember to pass in null as 1st argument for mapStateToProps!
+		- Collection Methods (do save first without the moves, then do Pokemon.moves= etc)
+			def moves=(moves)				// add tag_names variable to todo_params
+			  self.moves = moves.map do |move|		// uses association to setup relations
+			    Move.find_or_create_by(name: move)	// either finds a tag or creates it
+			  end
+			end
+			*** SHORTCUT: pokemon_params.except("moves") will return the params without the moves!
+		- KILL SERVERS
+			sudo kill -9 $(lsof -i :3000 -t) to kill all running rails servers, replace 3000 with whatever server it's on
 
 	Questions
 		- image_url from json turns into imageUrl in the frontend...is this normal behavior?

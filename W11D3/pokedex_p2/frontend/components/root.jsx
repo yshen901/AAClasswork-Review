@@ -4,6 +4,7 @@ import { HashRouter, Route } from 'react-router-dom';
 
 import PokemonIndexContainer from './pokemon/pokemon_index_container';
 import PokemonDetailContainer from './pokemon/pokemon_detail_container';
+import PokemonFormContainer from './pokemon/pokemon_form_container';
 
 const Root = ({ store }) => (
   <Provider store={store}>
@@ -16,6 +17,7 @@ const Root = ({ store }) => (
 const App = () => (
   <section className="pokedex">
     <Route path="/pokemon/:pokemonId" component={PokemonDetailContainer}></Route>
+    <Route path="/" exact component={PokemonFormContainer}></Route>
     <Route path="/" component={PokemonIndexContainer}></Route>
   </section>
 )

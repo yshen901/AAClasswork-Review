@@ -111,3 +111,5 @@ TBD
 	W11D1:	Todos Part 3					(Bonus	disable update/delete when pending dispatch, expand tags, 
 									substeps w/ polymorphic associations and concerns, quill.js, sorting)
 	W11D2: Giphy HW, Jbuilder exercise			(ALL...save time and focus on pokedex)
+	W11D3: Pokedex						(Part 2/3: styling, redirecting, error handling, loading spinner, boostrap, and editPokemon)
+	W11D4: BenchBnb					(Everything...namely preloadedState and frontendAuth)
